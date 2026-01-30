@@ -11,6 +11,12 @@ public class EnemyBaseScript : MonoBehaviour
         Dead = 3
     }
 
+
+    // Physics and Controls
+
+    Rigidbody2D playerRb;
+    SpriteRenderer spriteRenderer;
+
     // Basic enemy stats and variables
 
     public float maxHealth = 100;
@@ -23,6 +29,12 @@ public class EnemyBaseScript : MonoBehaviour
 
     EnemyState enemyState = EnemyState.Idle;
 
+    public Vector3 startLocation;
+    public Vector3 targetLocation;
+
+    private int lookingAtDirection = 1;
+
+    public float patrolRange = 25;
     public float detectionRange = 20;
     public float attackRange = 5;
 
@@ -30,6 +42,12 @@ public class EnemyBaseScript : MonoBehaviour
     protected void Start()
     {
         currentHealth = maxHealth;
+
+        startLocation = gameObject.transform.position;
+
+        playerRb = GetComponent<Rigidbody2D>();
+        spriteRenderer = GetComponent<SpriteRenderer>();
+
     }
 
     // Update is called once per frame
@@ -86,6 +104,8 @@ public class EnemyBaseScript : MonoBehaviour
 
         // maybe move to patrol state after a second?
 
+        enemyState = EnemyState.Patrol;
+        CalculateNewTargetPosition();
     }
 
     public void patrolState()
@@ -97,11 +117,31 @@ public class EnemyBaseScript : MonoBehaviour
         // if true, move to attack state
 
         // else
-        // check if the enemy has a target location
-        // move to target location
 
-        // if reached target location, 
-        
+        // check if the enemy has a target location
+
+        if (targetLocation == null)
+        {
+            CalculateNewTargetPosition();
+        }
+
+        // check if player is in sight
+
+
+        if (gameObject.transform.position.x <= targetLocation.x + 1 && gameObject.transform.position.x >= targetLocation.x - 1)
+        {
+            // if reached target location, 
+
+            enemyState = EnemyState.Idle;
+        }
+        else
+        {
+            // move to target location
+            MoveTo();
+            
+        }
+
+
 
     }
 
@@ -109,7 +149,7 @@ public class EnemyBaseScript : MonoBehaviour
     {
        // What should the enemy do when they have seen an enemy?
 
-        // check ig in detection range
+        // check if in detection range
 
         // if no change state to patrol and return
 
@@ -135,5 +175,34 @@ public class EnemyBaseScript : MonoBehaviour
     public void Attack()
     {
 
+    }
+
+    public void CalculateNewTargetPosition()
+    {
+        targetLocation.x = Random.Range(startLocation.x - patrolRange, startLocation.x + patrolRange);
+
+        return;
+    }
+
+    public void MoveTo()
+    {
+        if (lookingAtDirection > 0)
+        {
+            if (targetLocation.x - gameObject.transform.position.x < 0)
+            {
+                lookingAtDirection = -1;
+                spriteRenderer.flipX = true;
+            }
+        }
+        else if (lookingAtDirection < 0)
+        {
+            if (targetLocation.x - gameObject.transform.position.x > 0)
+            {
+                lookingAtDirection = 1;
+                spriteRenderer.flipX = false;
+            }
+        }
+
+        playerRb.linearVelocity = new Vector2(lookingAtDirection * movementSpeed, playerRb.linearVelocityY);
     }
 }
