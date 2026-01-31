@@ -285,7 +285,7 @@ public class EnemyBaseScript : MonoBehaviour
     {
         if (!healthComponent.isDead && collision.gameObject.tag == "Player")
         {
-            healthComponent.DecreaseHealth(10);
+            healthComponent.DecreaseHealthBy(10);
             if (healthComponent.isDead)
             {
                 enemyState = EnemyState.Dead;

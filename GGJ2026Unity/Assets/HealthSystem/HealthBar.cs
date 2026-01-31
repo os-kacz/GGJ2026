@@ -6,10 +6,10 @@ public class HealthBar : MonoBehaviour
 {
 
     public GameObject healthBar;
-    // public GameObject previousHealthBar;
+    public GameObject previousHealthBar;
 
     private Slider healthBarSlider;
-    // private Slider previousHealthBarSlider;
+    private Slider previousHealthBarSlider;
 
     public GameObject character;
     private HealthComponent healthComponent;
@@ -20,7 +20,7 @@ public class HealthBar : MonoBehaviour
     void Start()
     {
         healthBarSlider = healthBar.GetComponent<Slider>();
-        // previousHealthBarSlider = previousHealthBar.GetComponent<Slider>();
+        previousHealthBarSlider = previousHealthBar.GetComponent<Slider>();
 
         healthComponent = character.GetComponent<HealthComponent>();
 
@@ -30,6 +30,14 @@ public class HealthBar : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        healthBarSlider.value = (healthComponent.GetHealth()) / healthComponent.GetMaxHealth();
+        healthBarSlider.value = healthComponent.GetHealth() / healthComponent.GetMaxHealth();
+
+     //if (healthComponent.damageDoneLastUpdate != 0)
+     //{
+     //    previousHealthBarSlider.value = (healthComponent.GetHealth() + healthComponent.damageDoneLastUpdate) / healthComponent.GetMaxHealth();
+     //}
+
     }
+
+    
 }
