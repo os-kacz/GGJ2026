@@ -6,10 +6,13 @@ using Unity.VisualScripting;
 using UnityEditor.Rendering;
 using UnityEngine.Events;
 using UnityEngine;
+using TMPro;
 
 public class HealthComponent : MonoBehaviour
 {
     public UnityEvent E_EntityHasDied;
+
+    public GameObject DamageNumberPrefab;
 
     [Flags]
     public enum StatusEffect
@@ -72,6 +75,8 @@ public class HealthComponent : MonoBehaviour
         {
             E_EntityHasDied = new UnityEvent();
         }
+
+        DamageNumberPrefab = GameObject.FindGameObjectWithTag("DamageNumber");
     }
 
     // Update is called once per frame
@@ -156,9 +161,7 @@ public class HealthComponent : MonoBehaviour
         }
     }
 
-    // todo - calculate white bar damage taken since last frame 0.5f and on damage refresh
     // - particle effects for damage numbers and statuseffect
-    // - make dying an event
 
     public void DecreaseHealthBy(int damageDealt)
     {
@@ -167,10 +170,24 @@ public class HealthComponent : MonoBehaviour
             currentHealth -= damageDealt;
             accumulateDamageDone += damageDealt;
             damageTimer = 0f;
+            CreateDamageNumber(damageDealt, StatusEffect.None);
             if (currentHealth < 0)
             {
                 E_EntityHasDied.Invoke();
             }
+        }
+    }
+
+    private void CreateDamageNumber(float damage, StatusEffect statusEffect)
+    {
+        if (DamageNumberPrefab != null)
+        {
+            var go = Instantiate(DamageNumberPrefab, transform.position, Quaternion.identity, transform);
+            go.GetComponent<TextMeshPro>().text = damage.ToString();
+        }
+        else
+        {
+            Debug.Log("No damage number hooked up");
         }
     }
 
