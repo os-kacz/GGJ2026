@@ -157,12 +157,10 @@ public class PlayerController : MonoBehaviour
         if (sprintActoin.IsPressed() && isGrounded == true)
         {
             speed = sprintSpeed;
-            _animator.SetBool("IsRunning", true);
         }
         else
         {
             speed = baseSpeed;
-            _animator.SetBool("IsRunning", false);
         }
     }
 
