@@ -19,9 +19,9 @@ public class HealthComponent : MonoBehaviour
         Bleeding = 16,
     }
 
-    [SerializeField] private int maxHealth;
+    [SerializeField] private float maxHealth;
 
-    [SerializeField] private int currentHealth;
+    [SerializeField] private float currentHealth;
 
     [SerializeField] public StatusEffect currentEffect = new();
 
@@ -155,12 +155,12 @@ public class HealthComponent : MonoBehaviour
         }
     }
 
-    public int GetHealth()
+    public float GetHealth()
     {
         return currentHealth;
     }
 
-    public int GetMaxHealth()
+    public float GetMaxHealth()
     {
         return maxHealth;
     }
