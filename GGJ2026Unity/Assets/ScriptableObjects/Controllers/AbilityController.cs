@@ -102,7 +102,7 @@ public class AbilityController : MonoBehaviour
 
     }
 
-    private GameObject[] CreateHitbox(int Height, int Width, Vector2 Offset, Color Colour)
+    private GameObject[] CreateHitbox(int Height, int Width, Vector2 Offset, Color Colour, AnimationClip VFX)
     {
         //VISUALS
 
@@ -112,6 +112,10 @@ public class AbilityController : MonoBehaviour
         GameObject NewHitbox = Instantiate(Hitbox, new Vector3(HitboxSpawn.x, HitboxSpawn.y, 0), Quaternion.identity);
         NewHitbox.transform.localScale = new Vector3(Width, Height, 1);
         NewHitbox.GetComponent<SpriteRenderer>().color = Colour;
+        Animation HitboxAnim = NewHitbox.GetComponent<Animation>();
+        HitboxAnim.AddClip(VFX, "Hitbox VFX");
+        HitboxAnim.Play();
+        
         // return an array of other things colliding (filter out self)
         Collider2D[] Colliders = Physics2D.OverlapCapsuleAll(HitboxSpawn, new Vector2(Width, Height), CapsuleDirection2D.Horizontal, 0f); // todo rotation value
 
@@ -129,13 +133,13 @@ public class AbilityController : MonoBehaviour
 
     private void HandleMaskDamage(NewMask Mask)
     {
-        GameObject[] CharactersHit = CreateHitbox(Mask.HitboxHeight, Mask.HitboxWidth, Mask.HitboxSpawnOffset, Mask.UIColour);
+        GameObject[] CharactersHit = CreateHitbox(Mask.HitboxHeight, Mask.HitboxWidth, Mask.HitboxSpawnOffset, Mask.UIColour, Mask.HitboxVfx);
 
         foreach(GameObject Character in CharactersHit)
         {
             // GET THE HEALTH COMPONENT AND DEAL DAMAGE AND APPLY STATUS EFFECTS
             HealthComponent CharacterHealth = Character.GetComponent<HealthComponent>();
-            CharacterHealth.DecreaseHealth(Mask.AbilityDamage);
+            CharacterHealth.DecreaseHealthBy(Mask.AbilityDamage);
 
             // add any debuffs the ability will inflict
             foreach(HealthComponent.StatusEffect Debuff in Mask.Debuffs){CharacterHealth.AddToCurrentStatus(Debuff); }
