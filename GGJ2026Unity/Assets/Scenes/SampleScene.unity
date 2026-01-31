@@ -488,6 +488,7 @@ GameObject:
   - component: {fileID: 572601719}
   - component: {fileID: 572601726}
   - component: {fileID: 572601727}
+  - component: {fileID: 572601729}
   - component: {fileID: 572601728}
   m_Layer: 0
   m_Name: Player
@@ -520,7 +521,7 @@ MonoBehaviour:
     m_Bits: 0
   feetPosition: {fileID: 1426578949}
   groundCheckCircle: 0.3
-  attackPosition: {fileID: 0}
+  attackPosition: {fileID: 913269812}
   attackSize: {x: 0.8, y: 0.1}
   enemyLayer:
     serializedVersion: 2
@@ -566,6 +567,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1426578949}
+  - {fileID: 913269812}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &572601724
@@ -679,8 +681,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_Size: {x: 2.41, y: 2.35}
+  m_Offset: {x: -0.0045957565, y: -0.016084433}
+  m_Size: {x: 0.18581079, y: 0.31448343}
   m_Direction: 0
 --- !u!114 &572601728
 MonoBehaviour:
@@ -712,6 +714,39 @@ MonoBehaviour:
   PlayerWeaponSlot1: {fileID: 11400000, guid: baf308d1fdbdb7141bfc32e32bbcb847, type: 2}
   UsableMasks: []
   EnemyWeapon: {fileID: 0}
+--- !u!114 &572601729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 572601718}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c01428af9a0aac042b1b033874f1a1f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  E_EntityHasDied:
+    m_PersistentCalls:
+      m_Calls: []
+  DamageNumberPrefab: {fileID: 0}
+  maxHealth: 0
+  currentHealth: 0
+  currentEffect: 0
+  isDead: 0
+  burningDuration: 3
+  stunnedDuration: 1
+  frozenDuration: 2
+  electrifiedDuration: 4
+  bleedingDuration: 6
+  burningInterval: 0.5
+  electrifiedInterval: 0.2
+  bleedingInterval: 1
+  burnDamage: 3
+  electrifiedDamage: 1
+  bleedDamage: 5
+  accumulateDamageDone: 0
+  damageDoneLastInstance: 0
 --- !u!1 &694852695
 GameObject:
   m_ObjectHideFlags: 0
@@ -843,6 +878,37 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &913269811
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 913269812}
+  m_Layer: 0
+  m_Name: AttackPosition
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &913269812
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 913269811}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.2, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 572601723}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1113584920
 PrefabInstance:
