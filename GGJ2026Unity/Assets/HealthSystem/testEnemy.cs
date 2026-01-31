@@ -17,7 +17,7 @@ public class testEnemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        healthComponent.DecreaseHealthBy(50);
+        healthComponent.DecreaseHealthBy(1);
     }
 
     void PoopDoer()
