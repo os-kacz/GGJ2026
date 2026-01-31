@@ -12,6 +12,8 @@ public class HealthComponent : MonoBehaviour
 {
     public UnityEvent E_EntityHasDied;
 
+    public UnityEvent E_EntityHasBeenDamaged;
+
     public GameObject DamageNumberPrefab;
 
     [Flags]
@@ -176,6 +178,10 @@ public class HealthComponent : MonoBehaviour
             if (currentHealth < 0)
             {
                 E_EntityHasDied.Invoke();
+            }
+            if (Mathf.Sign(damageDealt) == 1)
+            {
+                E_EntityHasBeenDamaged.Invoke();
             }
         }
     }
