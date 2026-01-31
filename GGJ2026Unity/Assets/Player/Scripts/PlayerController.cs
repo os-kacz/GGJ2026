@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using Unity.VisualScripting;
 using UnityEditor;
@@ -18,12 +19,17 @@ public class PlayerController : MonoBehaviour
     Rigidbody2D playerRb;
     SpriteRenderer spriteRenderer;
 
+    [SerializeField] private Animator _animator;
+
     // movement speed and jump force for player
     private float speed;
+    public float baseSpeed;
+    public float sprintSpeed;
     public float jumpForce;
 
     // jump variables for single jump and improvements
     public LayerMask groundLayer;
+    public LayerMask groundFloorLayer;
     private bool isGrounded;
     private bool isGroundFloor;
     private bool isOnEnemy;
@@ -59,7 +65,7 @@ public class PlayerController : MonoBehaviour
         // sets sprite renderer
         spriteRenderer = GetComponent<SpriteRenderer>();
                     
-        attackPosition.SetPositionAndRotation(new Vector3(transform.position.x + 2f,transform.position.y,0f), new Quaternion(0f,0f,0f,0f));
+        attackPosition.SetPositionAndRotation(new Vector3(transform.position.x + 0.4f,transform.position.y,0f), new Quaternion(0f,0f,0f,0f));
 
 
     }
@@ -76,6 +82,7 @@ public class PlayerController : MonoBehaviour
         }
         
         isGroundFloor = Physics2D.OverlapCircle(feetPosition.position, groundCheckCircle, groundLayer);
+        isGrounded = Physics2D.OverlapCircle(feetPosition.position, groundCheckCircle, groundFloorLayer);
         isOnEnemy = Physics2D.OverlapCircle(feetPosition.position, groundCheckCircle, enemyLayer);
 
     }
@@ -85,34 +92,26 @@ public class PlayerController : MonoBehaviour
         //gets the value from movement input
         moveValue = moveAction.ReadValue<Vector2>();
 
-
-    
-
-
         // checks which direction player is facing a flips the spirte
         if ( moveValue.x < 0)
         {
             spriteRenderer.flipX = true;
-            attackPosition.SetPositionAndRotation(new Vector3(transform.position.x - 2f,transform.position.y,0f), new Quaternion(0f,0f,0f,0f));
+            attackPosition.SetPositionAndRotation(new Vector3(transform.position.x - 0.4f,transform.position.y,0f), new Quaternion(0f,0f,0f,0f));
 
         }
         else if (moveValue.x > 0)
         {
             spriteRenderer.flipX = false;
-            attackPosition.SetPositionAndRotation(new Vector3(transform.position.x + 2f,transform.position.y,0f), new Quaternion(0f,0f,0f,0f));
+            attackPosition.SetPositionAndRotation(new Vector3(transform.position.x + 0.4f,transform.position.y,0f), new Quaternion(0f,0f,0f,0f));
 
         }
 
         //Move down through floors
-        if(moveValue.y < 0 && isGrounded == true)
+        if(moveValue.y < 0)
         {
-            if(isGroundFloor == false)
+            if(isGroundFloor == true && isOnEnemy == false)
             {
-                if(isOnEnemy == false)
-                {
-                    StartCoroutine(FallTimer());
-                }
-                
+                StartCoroutine(FallTimer());                
             }
 
         }
@@ -120,18 +119,32 @@ public class PlayerController : MonoBehaviour
         // player movement
  
         playerRb.linearVelocity = new Vector2(moveValue.x * speed, playerRb.linearVelocityY);
+        _animator.SetFloat("xVelocity", Math.Abs(playerRb.linearVelocityX));
+        _animator.SetFloat("yVelocity", playerRb.linearVelocityY);
 
+
+        if(playerRb.linearVelocityY != 0)
+        {
+            _animator.SetBool("IsJumping", true);
+        }
+        else
+        {
+            _animator.SetBool("IsJumping", false);
+
+        }
     }
 
     void Sprint()
     {
         if (sprintActoin.IsPressed() && isGrounded == true)
         {
-            speed = 15;
+            speed = sprintSpeed;
+            _animator.SetBool("IsRunning", true);
         }
         else
         {
-            speed = 10;
+            speed = baseSpeed;
+            _animator.SetBool("IsRunning", false);
         }
     }
 
@@ -142,22 +155,25 @@ public class PlayerController : MonoBehaviour
         put it at the players feet, 
         make it the same size as specified,
         check if the circle overlaps the ground*/
-        isGrounded = Physics2D.OverlapCircle(feetPosition.position, groundCheckCircle);
+        
         
         // player jump
-        if (isGrounded == true && jumpAction.WasPressedThisFrame())
+        if (isGrounded == true || isGroundFloor == true)
         {
-            playerRb.linearVelocity = Vector2.up * jumpForce;
+            if(jumpAction.WasPressedThisFrame())
+            {
+                playerRb.linearVelocity = Vector2.up * jumpForce;
+            }
+            
         }
     }
 
     IEnumerator FallTimer()
     {
         //removes collider for a small time
-        this.GetComponent<BoxCollider2D>().enabled = false;
+        this.GetComponent<CapsuleCollider2D>().enabled = false;
         yield return new WaitForSeconds(0.15f);
-        this.GetComponent<BoxCollider2D>().enabled = true;
-        
+        this.GetComponent<CapsuleCollider2D>().enabled = true;      
 
     }
 
@@ -174,10 +190,9 @@ public class PlayerController : MonoBehaviour
                 
                 //add ability.baseAttack function
             }
-
             
-        }
-
-        
+        }  
     }
+
+
 }
