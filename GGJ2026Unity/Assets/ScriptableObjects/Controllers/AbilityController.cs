@@ -135,7 +135,7 @@ public class AbilityController : MonoBehaviour
         {
             // GET THE HEALTH COMPONENT AND DEAL DAMAGE AND APPLY STATUS EFFECTS
             HealthComponent CharacterHealth = Character.GetComponent<HealthComponent>();
-            CharacterHealth.DecreaseHealth(Mask.AbilityDamage);
+            CharacterHealth.DecreaseHealthBy(Mask.AbilityDamage);
 
             // add any debuffs the ability will inflict
             foreach(HealthComponent.StatusEffect Debuff in Mask.Debuffs){CharacterHealth.AddToCurrentStatus(Debuff); }
