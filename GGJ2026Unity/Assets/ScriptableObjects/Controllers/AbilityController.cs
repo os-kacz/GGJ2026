@@ -109,13 +109,26 @@ public class AbilityController : MonoBehaviour
     private GameObject[] CreateHitbox(float Height, float Width, Vector2 Offset, AnimatorController HitboxVFX)
     {
         //VISUALS
+        float velocity = Self.GetComponent<Rigidbody2D>().linearVelocityX;
+        Debug.Log(velocity);
+        int direction = 1;
+        if(velocity < 0)
+        {
+            direction = -1;
+        }
 
-        Vector2 SpritePos = new Vector2(Self.transform.position.x, Self.transform.position.y);
+        Vector2 SpritePos = new Vector2(Self.transform.position.x * direction, Self.transform.position.y * direction);
         Vector2 HitboxSpawn = new Vector2(SpritePos.x + Offset.x, SpritePos.y + Offset.y);
 
         GameObject NewHitbox = Instantiate(Hitbox, new Vector3(HitboxSpawn.x, HitboxSpawn.y, 0), Quaternion.identity);
         NewHitbox.transform.localScale = new Vector3(Width, Height, 1);
         NewHitbox.GetComponent<Animator>().runtimeAnimatorController = HitboxVFX;
+
+
+        if(direction == -1)
+        {
+            NewHitbox.GetComponent<SpriteRenderer>().flipX = true;
+        }
     
         // return an array of other things colliding (filter out self)
         Collider2D[] Colliders = Physics2D.OverlapCapsuleAll(HitboxSpawn, new Vector2(Width, Height), CapsuleDirection2D.Horizontal, 0f); // todo rotation value
@@ -169,11 +182,13 @@ public class AbilityController : MonoBehaviour
 
     private void Blast(NewMask Mask)
     {
+        HandleMaskDamage(Mask);
         Debug.Log(Mask.AbilityName);
     }
 
     private void Inferno(NewMask Mask)
     {
+        HandleMaskDamage(Mask);
         Debug.Log(Mask.AbilityName);
     }
     
@@ -187,8 +202,11 @@ public class AbilityController : MonoBehaviour
     
     private void Teleport(NewMask Mask)
     {
+        HandleMaskDamage(Mask);
+
+        Self.transform.position = new Vector3(Self.transform.position.x + 5, Self.transform.position.y + 2, Self.transform.position.z);
         Debug.Log(Mask.AbilityName);
     }
-
-
 }
+
+//TODO: Hitbox destroy after vfx animation is complete, vfx can flip correctly, can get the direction the player is facing not reliant on the velocity

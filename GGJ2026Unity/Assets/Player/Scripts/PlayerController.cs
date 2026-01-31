@@ -75,7 +75,7 @@ public class PlayerController : MonoBehaviour
 
         abilityController = GetComponent<AbilityController>();
         abilityController.CollectMask("Swordsman Mastery", 1);
-        abilityController.CollectMask("Frozen Mask", 2);
+        abilityController.CollectMask("Void Oni Mask", 2);
     }
 
     void Update()
