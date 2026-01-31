@@ -487,6 +487,7 @@ GameObject:
   - component: {fileID: 572601721}
   - component: {fileID: 572601725}
   - component: {fileID: 572601719}
+  - component: {fileID: 572601726}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -662,6 +663,36 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 2.41, y: 2.35}
   m_EdgeRadius: 0
+--- !u!114 &572601726
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 572601718}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 946dfae85e582eb409ef677c11706b49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Self: {fileID: 572601718}
+  Hitbox: {fileID: 4767547439140498170, guid: 443da95d7f4730b4c9ee9d3891dd4f36, type: 3}
+  AllMasks:
+  - {fileID: 11400000, guid: 4027008fc55b1b943b5a314fb6dfa17a, type: 2}
+  - {fileID: 11400000, guid: ec8b80ba59e686844893b338890bcf07, type: 2}
+  - {fileID: 11400000, guid: 1e780c02262a31a43b4c2d95308622bb, type: 2}
+  - {fileID: 11400000, guid: da9a5b2d683d34244b287391c41a6cde, type: 2}
+  - {fileID: 11400000, guid: 9461e1e4503089f4b9c0cd4ad488ac1e, type: 2}
+  - {fileID: 11400000, guid: bb044107cae0504469141f893e78a337, type: 2}
+  AllWeapons:
+  - {fileID: 11400000, guid: baf308d1fdbdb7141bfc32e32bbcb847, type: 2}
+  - {fileID: 11400000, guid: 0f26196a045ba354bb1b70f47f7a9788, type: 2}
+  - {fileID: 11400000, guid: 6c8ccedbb7636ac44bfaa7de1c2472b0, type: 2}
+  - {fileID: 11400000, guid: 76bd847d3beebac46ad8e49860d28d11, type: 2}
+  - {fileID: 11400000, guid: e40e1bf665338204eb855d3a7f33f9fc, type: 2}
+  PlayerWeaponSlot1: {fileID: 11400000, guid: baf308d1fdbdb7141bfc32e32bbcb847, type: 2}
+  UsableMasks: []
+  EnemyWeapon: {fileID: 0}
 --- !u!1 &808401682
 GameObject:
   m_ObjectHideFlags: 0

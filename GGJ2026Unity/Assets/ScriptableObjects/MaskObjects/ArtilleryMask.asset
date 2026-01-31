@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaskName: Ballistics Mask
   MaskIcon: {fileID: 0}
-  UIColour: {r: 0.26031017, g: 1, b: 0, a: 0}
+  UIColour: {r: 0.26031017, g: 1, b: 0, a: 1}
   AbilityID: 2
   AbilityName: Expl0de
   AbilityDamage: 100
@@ -22,4 +22,8 @@ MonoBehaviour:
   Duration: 1
   Cooldown: 20
   ElementType: 0
+  Debuffs: 
+  HitboxHeight: 0
+  HitboxWidth: 0
+  HitboxSpawnOffset: {x: 0, y: 0}
   WeaponUnlocked: {fileID: 0}

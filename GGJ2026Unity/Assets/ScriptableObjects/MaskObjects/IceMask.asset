@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaskName: Frozen Mask
   MaskIcon: {fileID: 0}
-  UIColour: {r: 0, g: 0.9738939, b: 1, a: 0}
+  UIColour: {r: 0, g: 0.9738939, b: 1, a: 1}
   AbilityID: 4
   AbilityName: Bl1zzard
   AbilityDamage: 20
@@ -22,7 +22,8 @@ MonoBehaviour:
   Duration: 5
   Cooldown: 30
   ElementType: 2
-  HitboxHeight: 0
-  HitboxWidth: 0
-  HitboxSpawnOffset: 10
+  Debuffs: 
+  HitboxHeight: 3
+  HitboxWidth: 2
+  HitboxSpawnOffset: {x: 10, y: 0}
   WeaponUnlocked: {fileID: 0}

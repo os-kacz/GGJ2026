@@ -1,3 +1,5 @@
+using System.ComponentModel;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -6,6 +8,7 @@ using UnityEngine;
 public class AbilityController : MonoBehaviour
 {
     public GameObject Self; 
+    public GameObject Hitbox;
 
     //references to all the masks in the game
     [Header("Masks")]
@@ -99,14 +102,44 @@ public class AbilityController : MonoBehaviour
 
     }
 
-    private void CreateHitbox(int Height, int Width, Vector2 Offset)
+    private GameObject[] CreateHitbox(int Height, int Width, Vector2 Offset, Color Colour)
     {
+        //VISUALS
+
         Vector2 SpritePos = new Vector2(Self.transform.position.x, Self.transform.position.y);
         Vector2 HitboxSpawn = new Vector2(SpritePos.x + Offset.x, SpritePos.y + Offset.y);
 
+        GameObject NewHitbox = Instantiate(Hitbox, new Vector3(HitboxSpawn.x, HitboxSpawn.y, 0), Quaternion.identity);
+        NewHitbox.transform.localScale = new Vector3(Width, Height, 1);
+        NewHitbox.GetComponent<SpriteRenderer>().color = Colour;
         // return an array of other things colliding (filter out self)
-        Collider2D[] CharactersHit = Physics2D.OverlapCapsuleAll(HitboxSpawn, new Vector2(Height, Width), CapsuleDirection2D.Horizontal, 0f); // sprite position + offset
-        Debug.Log(CharactersHit);
+        Collider2D[] Colliders = Physics2D.OverlapCapsuleAll(HitboxSpawn, new Vector2(Width, Height), CapsuleDirection2D.Horizontal, 0f); // todo rotation value
+
+        GameObject[] CharactersHit = {};
+        foreach(Collider2D Box in Colliders)
+        {
+            if(Box.gameObject.layer != Self.layer && Box.gameObject.layer != 1 && Box.gameObject.layer != 2 && Box.gameObject.layer != 3 && Box.gameObject.layer != 4 && Box.gameObject.layer != 5 && Box.gameObject.layer != 6)
+            {
+                CharactersHit.Append(Box.gameObject);
+            }
+        }
+
+        return CharactersHit;
+    }
+
+    private void HandleMaskDamage(NewMask Mask)
+    {
+        GameObject[] CharactersHit = CreateHitbox(Mask.HitboxHeight, Mask.HitboxWidth, Mask.HitboxSpawnOffset, Mask.UIColour);
+
+        foreach(GameObject Character in CharactersHit)
+        {
+            // GET THE HEALTH COMPONENT AND DEAL DAMAGE AND APPLY STATUS EFFECTS
+            HealthComponent CharacterHealth = Character.GetComponent<HealthComponent>();
+            CharacterHealth.DecreaseHealth(Mask.AbilityDamage);
+
+            // add any debuffs the ability will inflict
+            foreach(HealthComponent.StatusEffect Debuff in Mask.Debuffs){CharacterHealth.AddToCurrentStatus(Debuff); }
+        }
     }
 
     private void BasicAttack(NewWeapon WeaponToUse)
@@ -124,7 +157,7 @@ public class AbilityController : MonoBehaviour
     // ability functions 
     private void Slam(NewMask Mask)
     {
-        CreateHitbox(Mask.HitboxHeight, Mask.HitboxWidth, Mask.HitboxSpawnOffset);
+        HandleMaskDamage(Mask);
         // handle cooldowns
         Debug.Log(Mask.AbilityName);
     }
@@ -142,6 +175,7 @@ public class AbilityController : MonoBehaviour
 
     private void Blizzard(NewMask Mask)
     {
+        HandleMaskDamage(Mask);
         Debug.Log(Mask.AbilityName);
     }
     

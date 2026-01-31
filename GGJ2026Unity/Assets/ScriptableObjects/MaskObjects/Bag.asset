@@ -14,7 +14,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   MaskName: Paper Bag
   MaskIcon: {fileID: 0}
-  UIColour: {r: 0.49685526, g: 0.42670205, b: 0.3921719, a: 0}
-  MaskAbility: 0
-  WeaponUnlocked: {fileID: 0}
+  UIColour: {r: 0.49685526, g: 0.42670205, b: 0.3921719, a: 1}
+  AbilityID: 0
+  AbilityName: 
+  AbilityDamage: 0
+  AbilityKnockback: 0
+  Duration: 0
+  Cooldown: 0
   ElementType: 0
+  Debuffs: 
+  HitboxHeight: 0
+  HitboxWidth: 0
+  HitboxSpawnOffset: {x: 0, y: 0}
+  WeaponUnlocked: {fileID: 0}
