@@ -22,4 +22,7 @@ MonoBehaviour:
   Duration: 1
   Cooldown: 20
   ElementType: 0
+  HitboxHeight: 5
+  HitboxWidth: 25
+  HitboxSpawnOffset: {x: 3, y: 0}
   WeaponUnlocked: {fileID: 11400000, guid: 6c8ccedbb7636ac44bfaa7de1c2472b0, type: 2}

@@ -11,6 +11,17 @@ public class NewMask : ScriptableObject
         Ice = 2,
         Electric = 3,
     }
+
+    public enum StatusEffect
+    {
+        None = 0,
+        Burning = 1,
+        Stun = 2,
+        Frozen = 4,
+        Electrified = 8,
+        Bleeding = 16
+    }
+
     public enum Ability
     {
         None = 0,
@@ -36,6 +47,11 @@ public class NewMask : ScriptableObject
     public int Duration;
     public int Cooldown;
     public Element ElementType;
+
+    [Header("Hitbox Data")]
+    public int HitboxHeight;
+    public int HitboxWidth;
+    public Vector2 HitboxSpawnOffset;
 
     [Header("Unlock Data")]
     public NewWeapon WeaponUnlocked;

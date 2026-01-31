@@ -652,6 +652,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 946dfae85e582eb409ef677c11706b49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  Self: {fileID: 572601718}
   AllMasks:
   - {fileID: 11400000, guid: 4027008fc55b1b943b5a314fb6dfa17a, type: 2}
   - {fileID: 11400000, guid: ec8b80ba59e686844893b338890bcf07, type: 2}

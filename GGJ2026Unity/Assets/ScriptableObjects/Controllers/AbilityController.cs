@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class AbilityController : MonoBehaviour
 {
+    public GameObject Self; 
 
     //references to all the masks in the game
     [Header("Masks")]
@@ -98,6 +99,16 @@ public class AbilityController : MonoBehaviour
 
     }
 
+    private void CreateHitbox(int Height, int Width, Vector2 Offset)
+    {
+        Vector2 SpritePos = new Vector2(Self.transform.position.x, Self.transform.position.y);
+        Vector2 HitboxSpawn = new Vector2(SpritePos.x + Offset.x, SpritePos.y + Offset.y);
+
+        // return an array of other things colliding (filter out self)
+        Collider2D[] CharactersHit = Physics2D.OverlapCapsuleAll(HitboxSpawn, new Vector2(Height, Width), CapsuleDirection2D.Horizontal, 0f); // sprite position + offset
+        Debug.Log(CharactersHit);
+    }
+
     private void BasicAttack(NewWeapon WeaponToUse)
     {
         if(WeaponToUse.WeaponType == NewWeapon.Weapon.Melee)
@@ -113,6 +124,8 @@ public class AbilityController : MonoBehaviour
     // ability functions 
     private void Slam(NewMask Mask)
     {
+        CreateHitbox(Mask.HitboxHeight, Mask.HitboxWidth, Mask.HitboxSpawnOffset);
+        // handle cooldowns
         Debug.Log(Mask.AbilityName);
     }
 
