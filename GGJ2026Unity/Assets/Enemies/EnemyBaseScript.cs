@@ -71,6 +71,8 @@ public class EnemyBaseScript : MonoBehaviour
         currentSpeed = walkSpeed;
 
         attackTimer = attackTime;
+        healthComponent.E_EntityHasDied.AddListener(DeathState);
+
 
     }
 
@@ -107,8 +109,6 @@ public class EnemyBaseScript : MonoBehaviour
                  break;
 
              case EnemyState.Dead:
-
-                DeathState();
 
                 break;
 
@@ -286,16 +286,6 @@ public class EnemyBaseScript : MonoBehaviour
         if (!healthComponent.isDead && collision.gameObject.CompareTag("Player"))
         {
             healthComponent.DecreaseHealthBy(10);
-            healthComponent.AddToCurrentStatus(HealthComponent.StatusEffect.Bleeding);
-            if (healthComponent.isDead)
-            {
-                enemyState = EnemyState.Dead;
-            }
-        }
-
-        if (healthComponent.isDead)
-        {
-            enemyState = EnemyState.Dead;
         }
     }
 }

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 3279476749678418056}
   - component: {fileID: 3740370623929796085}
   - component: {fileID: 7694209069030473705}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: StatsCanvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -116,7 +116,7 @@ GameObject:
   - component: {fileID: 1641707933979135973}
   - component: {fileID: 2108799173815892698}
   - component: {fileID: 3430231648021277082}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: BaseEnemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -216,7 +216,7 @@ Rigidbody2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 1
@@ -237,7 +237,7 @@ BoxCollider2D:
     m_Bits: 0
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
   m_LayerOverridePriority: 0
   m_ForceSendLayers:
     serializedVersion: 2
@@ -300,10 +300,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c01428af9a0aac042b1b033874f1a1f4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  E_EntityHasDied:
+    m_PersistentCalls:
+      m_Calls: []
   maxHealth: 100
   currentHealth: 0
   currentEffect: 0
   isDead: 0
+  burningDuration: 3
+  stunnedDuration: 1
+  frozenDuration: 2
+  electrifiedDuration: 4
+  bleedingDuration: 6
+  burningInterval: 0.5
+  electrifiedInterval: 0.2
+  bleedingInterval: 1
+  burnDamage: 3
+  electrifiedDamage: 1
+  bleedDamage: 5
+  accumulateDamageDone: 0
+  damageDoneLastInstance: 0
 --- !u!1001 &3830791356877602970
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -396,6 +412,30 @@ PrefabInstance:
       propertyPath: m_Name
       value: HealthBar
       objectReference: {fileID: 0}
+    - target: {fileID: 950759267343053557, guid: ef488ee044a72284b8a9509186cadf28, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 1228790920623194958, guid: ef488ee044a72284b8a9509186cadf28, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1228790920623194958, guid: ef488ee044a72284b8a9509186cadf28, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1477692559162039044, guid: ef488ee044a72284b8a9509186cadf28, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 2354898168115307672, guid: ef488ee044a72284b8a9509186cadf28, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2354898168115307672, guid: ef488ee044a72284b8a9509186cadf28, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3693495472119656168, guid: ef488ee044a72284b8a9509186cadf28, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -403,6 +443,26 @@ PrefabInstance:
     - target: {fileID: 3693495472119656168, guid: ef488ee044a72284b8a9509186cadf28, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4314093051338525525, guid: ef488ee044a72284b8a9509186cadf28, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7087763868131638224, guid: ef488ee044a72284b8a9509186cadf28, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 7750110024052293921, guid: ef488ee044a72284b8a9509186cadf28, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8427367301468524447, guid: ef488ee044a72284b8a9509186cadf28, type: 3}
+      propertyPath: m_Layer
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8674726123296588040, guid: ef488ee044a72284b8a9509186cadf28, type: 3}
+      propertyPath: m_Layer
+      value: 7
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
