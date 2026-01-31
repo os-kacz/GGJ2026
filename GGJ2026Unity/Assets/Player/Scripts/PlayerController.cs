@@ -20,6 +20,8 @@ public class PlayerController : MonoBehaviour
     SpriteRenderer spriteRenderer;
     AbilityController abilityController;
 
+    HealthComponent _healthComponent;
+
     [SerializeField] private Animator _animator;
 
     // movement speed and jump force for player
@@ -61,12 +63,15 @@ public class PlayerController : MonoBehaviour
         abilityAction_2 = InputSystem.actions.FindAction("Ability2");
         dodgeAction = InputSystem.actions.FindAction("Dodge");
         sprintActoin = InputSystem.actions.FindAction("Sprint");
+
+        _healthComponent = GetComponent<HealthComponent>();
+        _healthComponent.E_EntityHasDied.AddListener(IsDead);
         //sets rigidbody
         playerRb = GetComponent<Rigidbody2D>();
         // sets sprite renderer
         spriteRenderer = GetComponent<SpriteRenderer>();
                     
-        attackPosition.SetPositionAndRotation(new Vector3(transform.position.x + 0.4f,transform.position.y,0f), new Quaternion(0f,0f,0f,0f));
+        attackPosition.SetPositionAndRotation(new Vector3(transform.position.x + 0.2f,transform.position.y,0f), new Quaternion(0f,0f,0f,0f));
 
         abilityController = GetComponent<AbilityController>();
         abilityController.CollectMask("Swordsman Mastery", 1);
@@ -109,13 +114,13 @@ public class PlayerController : MonoBehaviour
         if ( moveValue.x < 0)
         {
             spriteRenderer.flipX = true;
-            attackPosition.SetPositionAndRotation(new Vector3(transform.position.x - 0.4f,transform.position.y,0f), new Quaternion(0f,0f,0f,0f));
+            attackPosition.SetPositionAndRotation(new Vector3(transform.position.x - 0.2f,transform.position.y,0f), new Quaternion(0f,0f,0f,0f));
 
         }
         else if (moveValue.x > 0)
         {
             spriteRenderer.flipX = false;
-            attackPosition.SetPositionAndRotation(new Vector3(transform.position.x + 0.4f,transform.position.y,0f), new Quaternion(0f,0f,0f,0f));
+            attackPosition.SetPositionAndRotation(new Vector3(transform.position.x + 0.2f,transform.position.y,0f), new Quaternion(0f,0f,0f,0f));
 
         }
 
@@ -199,6 +204,7 @@ public class PlayerController : MonoBehaviour
             if(hitEnemy == true)
             {
                 Debug.Log("Hit");
+                abilityController.PlayerAttack();
                 timer = 0f;
                 
                 //add ability.baseAttack function
@@ -207,5 +213,17 @@ public class PlayerController : MonoBehaviour
         }  
     }
 
+    void Ability1()
+    {
+        
+    }
 
+    void Ability2()
+    {
+        
+    }
+    void IsDead()
+    {
+        _animator.SetBool("IsDead", true);
+    }
 }
