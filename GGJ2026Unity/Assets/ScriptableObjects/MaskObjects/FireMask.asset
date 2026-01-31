@@ -15,6 +15,7 @@ MonoBehaviour:
   MaskName: Fire Oni Mask
   MaskIcon: {fileID: 0}
   UIColour: {r: 1, g: 0.6144982, b: 0, a: 1}
+  PlayAnimation: 0
   AbilityID: 3
   AbilityName: 1nferno
   AbilityDamage: 50
@@ -23,7 +24,8 @@ MonoBehaviour:
   Cooldown: 15
   ElementType: 1
   Debuffs: 01000000
-  HitboxHeight: 0
-  HitboxWidth: 0
-  HitboxSpawnOffset: {x: 0, y: 0}
+  HitboxHeight: 2
+  HitboxWidth: 2
+  HitboxSpawnOffset: {x: 2, y: 0}
+  HitboxVfx: {fileID: 9100000, guid: 114adbcd4ea55da4885720516c96dd07, type: 2}
   WeaponUnlocked: {fileID: 0}
