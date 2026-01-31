@@ -28,7 +28,7 @@ RectTransform:
   m_GameObject: {fileID: 6089098107164335214}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.00031131622, y: 0.00031131622, z: 0.00031131622}
+  m_LocalScale: {x: 0.0022638077, y: 0.0022638077, z: 0.0022638077}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4169186585015495976}
@@ -36,7 +36,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0.001, y: 0.159}
+  m_AnchoredPosition: {x: -0.02, y: 1.602}
   m_SizeDelta: {x: 1470, y: 719}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &3279476749678418056
@@ -116,7 +116,6 @@ GameObject:
   - component: {fileID: 1641707933979135973}
   - component: {fileID: 2108799173815892698}
   - component: {fileID: 3430231648021277082}
-  - component: {fileID: 8941518590760100573}
   m_Layer: 7
   m_Name: BaseEnemy
   m_TagString: Untagged
@@ -134,7 +133,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 7.25, y: 1.33, z: 0}
-  m_LocalScale: {x: 3, y: 3, z: 1}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1831397707395263583}
@@ -184,8 +183,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: -1388424507, guid: 77cf4ab3ef4ee4d489a60180d1926b9f, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 014cf7f3a6919984097bacc176d73180, type: 3}
+  m_Color: {r: 1, g: 0, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -256,17 +255,17 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: -0.055733196}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.8, y: 0.8}
+    oldSize: {x: 2.41, y: 2.35}
     newSize: {x: 0.16, y: 0.16}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.45, y: 0.38444418}
+  m_Size: {x: 2.41, y: 2.35}
   m_EdgeRadius: 0
 --- !u!114 &2108799173815892698
 MonoBehaviour:
@@ -282,14 +281,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enemyName: Enemy
   damageMultiplier: 1
-  speed: 3
+  walkSpeed: 3
+  runSpeed: 5
   attackSpeedMultiplier: 1
   attackTime: 1
-  idleTime: 1
-  deathTime: 2
   patrolRange: 10
-  detectionRange: 5
-  attackRange: 1
+  detectionRange: 8
+  attackRange: 3
 --- !u!114 &3430231648021277082
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -305,10 +303,6 @@ MonoBehaviour:
   E_EntityHasDied:
     m_PersistentCalls:
       m_Calls: []
-  E_EntityHasBeenDamaged:
-    m_PersistentCalls:
-      m_Calls: []
-  DamageNumberPrefab: {fileID: 0}
   maxHealth: 100
   currentHealth: 0
   currentEffect: 0
@@ -326,28 +320,6 @@ MonoBehaviour:
   bleedDamage: 5
   accumulateDamageDone: 0
   damageDoneLastInstance: 0
---- !u!95 &8941518590760100573
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7069614169959460007}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: fc07e2edd4e86064c8e769efcdb0842e, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1001 &3830791356877602970
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -464,10 +436,6 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2776003443299411859, guid: ef488ee044a72284b8a9509186cadf28, type: 3}
-      propertyPath: character
-      value: 
-      objectReference: {fileID: 7069614169959460007}
     - target: {fileID: 3693495472119656168, guid: ef488ee044a72284b8a9509186cadf28, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0

@@ -1,4 +1,3 @@
-using System;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -20,7 +19,6 @@ public class EnemyBaseScript : MonoBehaviour
     Rigidbody2D playerRb;
     SpriteRenderer spriteRenderer;
     HealthComponent healthComponent;
-    Animator animator;
 
     // Basic enemy stats and variables
 
@@ -30,13 +28,14 @@ public class EnemyBaseScript : MonoBehaviour
 
     public float damageMultiplier = 1f;
 
-    public float speed = 4f;
+    public float walkSpeed = 3f;
+    public float runSpeed = 5f;
 
     private float currentSpeed = 0f;
     public float attackSpeedMultiplier = 1f;
 
-    public float idleTime = 1f;
-    private float idleTimer = 0f;
+    public float attackTime = 1f;
+    private float attackTimer = 0f;
 
     // AI
     [Header("AI")]
@@ -69,11 +68,11 @@ public class EnemyBaseScript : MonoBehaviour
 
         targetPlayer = GameObject.FindGameObjectWithTag("Player");
 
-        currentSpeed = speed;
+        currentSpeed = walkSpeed;
 
+        attackTimer = attackTime;
         healthComponent.E_EntityHasDied.AddListener(DeathState);
 
-        animator = GetComponent<Animator>();
 
     }
 
@@ -81,56 +80,48 @@ public class EnemyBaseScript : MonoBehaviour
     protected void Update()
     {
         // state tree
-       
-       switch (enemyState)
-       {
-           case EnemyState.Idle:
 
-               idleTimer += Time.deltaTime;
-               IdleState();
+         switch (enemyState)
+         {
+             case EnemyState.Idle:
 
-               break;
+                 IdleState();
 
-           case EnemyState.Patrol:
+                 break;
 
-               patrolState();
+             case EnemyState.Patrol:
 
-               break;
+                 currentSpeed = walkSpeed;
+                 patrolState();
 
-           case EnemyState.Chase:
+                 break;
 
-               chaseState();
+             case EnemyState.Chase:
 
-               break;
+                 currentSpeed = runSpeed;
+                 chaseState();
 
-           case EnemyState.Attacking:
+                 break;
 
-               AttackState();
-               break;
+             case EnemyState.Attacking:
 
-           case EnemyState.Dead:
+                 AttackState();
+                 break;
 
+             case EnemyState.Dead:
 
-               if (animator.GetBool("CanBeDestroyed"))
-               {
-                   Destroy(gameObject);
-               }
+                break;
 
-               break;
-
-       }
-       
-         
+         }
+      
+        
+        
     }
 
     public void DeathState()
     {
-        // vfx, sfx and other death additions
-        animator.SetBool("IsDead", true);
-        animator.SetBool("HasBeenHit", false);
-
-        enemyState = EnemyState.Dead;
-        animator.SetFloat("VelocityX", -1);
+        // vfx, sfx and other daeth additions
+        Destroy(gameObject);
     }
 
     public void IdleState()
@@ -138,21 +129,9 @@ public class EnemyBaseScript : MonoBehaviour
         // Idle animation / features
 
         // maybe move to patrol state after a second?
-        if (isPlayerInRange(detectionRange))
-        {
-            enemyState = EnemyState.Chase;
-        }
-        else
-        {
-            if (idleTimer >= idleTime)
-            {
-                enemyState = EnemyState.Patrol;
-                CalculateNewTargetPosition();
-                idleTimer = 0f;
-            }
-            MoveTo(0);
-        }
-            
+
+        enemyState = EnemyState.Patrol;
+        CalculateNewTargetPosition();
     }
 
     public void patrolState()
@@ -180,13 +159,13 @@ public class EnemyBaseScript : MonoBehaviour
         if (gameObject.transform.position.x <= targetLocation.x + 1 && gameObject.transform.position.x >= targetLocation.x - 1)
         {
             // if reached target location, 
-            idleTimer = 0f;
+
             enemyState = EnemyState.Idle;
         }
         else
         {
             // move to target location
-            MoveTo(lookingAtDirection);
+            MoveTo();
             
         }
 
@@ -221,7 +200,7 @@ public class EnemyBaseScript : MonoBehaviour
         {
             // if no move to the enemy
             targetLocation = targetPlayer.transform.position;
-            MoveTo(lookingAtDirection);
+            MoveTo();
         }
 
 
@@ -251,19 +230,22 @@ public class EnemyBaseScript : MonoBehaviour
 
     public void AttackState()
     {
+        attackTimer += Time.deltaTime;
 
         playerRb.linearVelocity = new Vector2(0, 0);
+        spriteRenderer.color = Color.blue;
 
         if (isPlayerInRange(attackRange))
         {
-            if (!animator.GetBool("IsAttacking"))
+            if (attackTimer >= attackTime)
             {
-                animator.SetBool("IsAttacking", true);
+                Debug.Log("Attack");
+                attackTimer = 0f;
             }
-
         }
         else
         {
+            spriteRenderer.color = Color.red;
 
             enemyState = EnemyState.Chase;
         }
@@ -272,12 +254,12 @@ public class EnemyBaseScript : MonoBehaviour
 
     public void CalculateNewTargetPosition()
     {
-        targetLocation.x = UnityEngine.Random.Range(startLocation.x - patrolRange, startLocation.x + patrolRange);
+        targetLocation.x = Random.Range(startLocation.x - patrolRange, startLocation.x + patrolRange);
 
         return;
     }
 
-    public void MoveTo(float direction)
+    public void MoveTo()
     {
         if (lookingAtDirection > 0)
         {
@@ -296,17 +278,14 @@ public class EnemyBaseScript : MonoBehaviour
             }
         }
 
-        playerRb.linearVelocity = new Vector2(direction * currentSpeed, playerRb.linearVelocityY);
-
-        animator.SetFloat("VelocityX",  Math.Abs(playerRb.linearVelocityX));
+        playerRb.linearVelocity = new Vector2(lookingAtDirection * currentSpeed, playerRb.linearVelocityY);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (!healthComponent.isDead && collision.gameObject.CompareTag("Player") && !animator.GetBool("HasBeenHit"))
+        if (!healthComponent.isDead && collision.gameObject.CompareTag("Player"))
         {
             healthComponent.DecreaseHealthBy(10);
-            animator.SetBool("HasBeenHit", true);
         }
     }
 }
