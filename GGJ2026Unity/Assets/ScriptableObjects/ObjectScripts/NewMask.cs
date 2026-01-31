@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "NewMask", menuName = "Create new items/Mask")]
@@ -14,11 +15,17 @@ public class NewMask : ScriptableObject
     {
         None = 0,
         Teleport = 1,
-
     }
 
+    [Header("Information")]
     public string MaskName;
-    public Element ElementType;
-    public AbilityFunctions MaskAbility;
     public Sprite MaskIcon;
+    public Color UIColour;
+
+     [Header("Unlock Data")]
+    public AbilityFunctions MaskAbility;
+    public ScriptableObject WeaponUnlocked;
+
+    [Header("Elemental Data")]
+    public Element ElementType;
 }

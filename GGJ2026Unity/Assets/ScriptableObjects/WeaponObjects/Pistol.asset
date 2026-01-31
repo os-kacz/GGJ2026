@@ -9,10 +9,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0024d80120df00449743a9cab55ab1c, type: 3}
-  m_Name: Bag
+  m_Script: {fileID: 11500000, guid: 3a4156715eb02f34babcd4db311e4399, type: 3}
+  m_Name: Pistol
   m_EditorClassIdentifier: 
-  MaskName: Paper Bag
+  WeaponName: Pistol
+  WeaponType: 1
+  WeaponIcon: {fileID: 0}
+  UIColour: {r: 0, g: 0, b: 0, a: 0}
+  Damage: 20
+  Knockback: 2
   ElementType: 0
-  MaskAbility: 0
-  MaskIcon: {fileID: 0}

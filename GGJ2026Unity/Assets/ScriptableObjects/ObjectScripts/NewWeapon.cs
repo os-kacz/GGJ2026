@@ -17,9 +17,17 @@ public class NewWeapon : ScriptableObject
         Electric = 3,
     }
 
+    [Header("Weapon Information")]
     public string WeaponName;
     public Weapon WeaponType;
-    public int Damage;
-    public Element ElementType;
     public Sprite WeaponIcon;
+    public Color UIColour;
+
+    [Header("Weapon Values")]
+    public int Damage;
+    public int Knockback;
+    public int AttackSpeed;
+
+    [Header("Elemental Data")]
+    public Element ElementType;
 }
