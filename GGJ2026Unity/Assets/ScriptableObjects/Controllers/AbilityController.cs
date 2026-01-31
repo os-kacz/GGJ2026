@@ -1,6 +1,7 @@
 using System.ComponentModel;
 using System.Linq;
 using Unity.VisualScripting;
+using UnityEditor.Animations;
 using UnityEngine;
 
 // TODO: handle cooldowns for mask abilities
@@ -88,21 +89,24 @@ public class AbilityController : MonoBehaviour
         //cycle through the masks the enemy can use, if they are not on cooldown then add them to available masks and pick a random one to use from that set
     }
 
-    public void TriggerAbility1()
+    public NewMask.AnimationState TriggerAbility1()
     {
-        if(!PlayerMaskSlot1){return;} // some kind of feedback that there is no ability?
+        if(!PlayerMaskSlot1){return NewMask.AnimationState.None;} // some kind of feedback that there is no ability?
         RunMaskAbility(PlayerMaskSlot1);
 
+        return PlayerMaskSlot1.PlayAnimation;
     }
 
-    public void TriggerAbility2()
+    public NewMask.AnimationState TriggerAbility2()
     {
-        if(!PlayerMaskSlot2){return;} // some kind of feedback that there is no ability?
+        if(!PlayerMaskSlot2){return NewMask.AnimationState.None;} // some kind of feedback that there is no ability?
         RunMaskAbility(PlayerMaskSlot2);
 
+        return PlayerMaskSlot2.PlayAnimation;
+
     }
 
-    private GameObject[] CreateHitbox(int Height, int Width, Vector2 Offset, Color Colour)
+    private GameObject[] CreateHitbox(float Height, float Width, Vector2 Offset, AnimatorController HitboxVFX)
     {
         //VISUALS
 
@@ -111,7 +115,8 @@ public class AbilityController : MonoBehaviour
 
         GameObject NewHitbox = Instantiate(Hitbox, new Vector3(HitboxSpawn.x, HitboxSpawn.y, 0), Quaternion.identity);
         NewHitbox.transform.localScale = new Vector3(Width, Height, 1);
-        NewHitbox.GetComponent<SpriteRenderer>().color = Colour;
+        NewHitbox.GetComponent<Animator>().runtimeAnimatorController = HitboxVFX;
+    
         // return an array of other things colliding (filter out self)
         Collider2D[] Colliders = Physics2D.OverlapCapsuleAll(HitboxSpawn, new Vector2(Width, Height), CapsuleDirection2D.Horizontal, 0f); // todo rotation value
 
@@ -129,7 +134,7 @@ public class AbilityController : MonoBehaviour
 
     private void HandleMaskDamage(NewMask Mask)
     {
-        GameObject[] CharactersHit = CreateHitbox(Mask.HitboxHeight, Mask.HitboxWidth, Mask.HitboxSpawnOffset, Mask.UIColour);
+        GameObject[] CharactersHit = CreateHitbox(Mask.HitboxHeight, Mask.HitboxWidth, Mask.HitboxSpawnOffset, Mask.HitboxVfx);
 
         foreach(GameObject Character in CharactersHit)
         {
