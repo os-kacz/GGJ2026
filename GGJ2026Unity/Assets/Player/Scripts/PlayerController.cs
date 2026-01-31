@@ -1,5 +1,6 @@
 using System.Collections;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -24,8 +25,23 @@ public class PlayerController : MonoBehaviour
     // jump variables for single jump and improvements
     public LayerMask groundLayer;
     private bool isGrounded;
+    private bool isGroundFloor;
+    private bool isOnEnemy;
     public Transform feetPosition;
     public float groundCheckCircle;
+
+    private Collider2D currentFloor;
+
+    private bool hitEnemy;
+    public Transform attackPosition;
+    public Vector2 attackSize;
+    public LayerMask enemyLayer;
+
+    private Vector2 moveValue;
+
+    float timer = 1f;
+
+
 
     void Start()
     {
@@ -42,37 +58,63 @@ public class PlayerController : MonoBehaviour
         playerRb = GetComponent<Rigidbody2D>();
         // sets sprite renderer
         spriteRenderer = GetComponent<SpriteRenderer>();
+                    
+        attackPosition.SetPositionAndRotation(new Vector3(transform.position.x + 2f,transform.position.y,0f), new Quaternion(0f,0f,0f,0f));
+
 
     }
 
     void Update()
     {
+        timer += Time.deltaTime;
+        
         Jump();
         Sprint();
+        if(timer >= 0.5f)
+        {
+            Attack();
+        }
+        
+        isGroundFloor = Physics2D.OverlapCircle(feetPosition.position, groundCheckCircle, groundLayer);
+        isOnEnemy = Physics2D.OverlapCircle(feetPosition.position, groundCheckCircle, enemyLayer);
 
     }
 
     void FixedUpdate()
     {
         //gets the value from movement input
-        Vector2 moveValue = moveAction.ReadValue<Vector2>();
+        moveValue = moveAction.ReadValue<Vector2>();
+
+
+    
+
 
         // checks which direction player is facing a flips the spirte
         if ( moveValue.x < 0)
         {
             spriteRenderer.flipX = true;
+            attackPosition.SetPositionAndRotation(new Vector3(transform.position.x - 2f,transform.position.y,0f), new Quaternion(0f,0f,0f,0f));
 
         }
         else if (moveValue.x > 0)
         {
             spriteRenderer.flipX = false;
+            attackPosition.SetPositionAndRotation(new Vector3(transform.position.x + 2f,transform.position.y,0f), new Quaternion(0f,0f,0f,0f));
 
         }
 
         //Move down through floors
         if(moveValue.y < 0 && isGrounded == true)
         {
-            StartCoroutine(FallTimer());
+            if(isGroundFloor == false)
+            {
+                if(isOnEnemy == false)
+                {
+                    StartCoroutine(FallTimer());
+                }
+                
+            }
+
         }
 
         // player movement
@@ -100,7 +142,7 @@ public class PlayerController : MonoBehaviour
         put it at the players feet, 
         make it the same size as specified,
         check if the circle overlaps the ground*/
-        isGrounded = Physics2D.OverlapCircle(feetPosition.position, groundCheckCircle, groundLayer);
+        isGrounded = Physics2D.OverlapCircle(feetPosition.position, groundCheckCircle);
         
         // player jump
         if (isGrounded == true && jumpAction.WasPressedThisFrame())
@@ -111,7 +153,6 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator FallTimer()
     {
-        Debug.Log("returned");
         //removes collider for a small time
         this.GetComponent<BoxCollider2D>().enabled = false;
         yield return new WaitForSeconds(0.15f);
@@ -120,4 +161,23 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    void Attack()
+    {
+        if(attackAction.WasPressedThisFrame())
+        {
+            hitEnemy = Physics2D.OverlapCapsule(attackPosition.position, attackSize, CapsuleDirection2D.Horizontal, 0f, enemyLayer, -1f, 1f);
+            
+            if(hitEnemy == true)
+            {
+                Debug.Log("Hit");
+                timer = 0f;
+                
+                //add ability.baseAttack function
+            }
+
+            
+        }
+
+        
+    }
 }
