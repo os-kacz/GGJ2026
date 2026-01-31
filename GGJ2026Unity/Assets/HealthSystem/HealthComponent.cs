@@ -4,10 +4,13 @@ using System.Runtime.CompilerServices;
 using System.Timers;
 using Unity.VisualScripting;
 using UnityEditor.Rendering;
+using UnityEngine.Events;
 using UnityEngine;
 
 public class HealthComponent : MonoBehaviour
 {
+    public UnityEvent E_EntityHasDied;
+
     [Flags]
     public enum StatusEffect
     {
@@ -64,6 +67,11 @@ public class HealthComponent : MonoBehaviour
     void Start()
     {
         currentHealth = maxHealth;
+
+        if (E_EntityHasDied == null)
+        {
+            E_EntityHasDied = new UnityEvent();
+        }
     }
 
     // Update is called once per frame
@@ -150,6 +158,7 @@ public class HealthComponent : MonoBehaviour
 
     // todo - calculate white bar damage taken since last frame 0.5f and on damage refresh
     // - particle effects for damage numbers and statuseffect
+    // - make dying an event
 
     public void DecreaseHealthBy(int damageDealt)
     {
@@ -158,7 +167,7 @@ public class HealthComponent : MonoBehaviour
         damageTimer = 0f;
         if (currentHealth < 0)
         {
-            isDead = true;
+            E_EntityHasDied.Invoke();
         }
     }
 
