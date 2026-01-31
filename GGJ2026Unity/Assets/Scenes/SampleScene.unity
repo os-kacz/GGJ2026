@@ -506,13 +506,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7dd297eea525d554f926aabc46a70f20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
-  jumpForce: 0
+  jumpForce: 30
   groundLayer:
     serializedVersion: 2
-    m_Bits: 0
-  feetPosition: {fileID: 0}
-  groundCheckCircle: 0
+    m_Bits: 64
+  feetPosition: {fileID: 1426578949}
+  groundCheckCircle: 0.3
 --- !u!50 &572601721
 Rigidbody2D:
   serializedVersion: 5
@@ -691,13 +690,19 @@ MonoBehaviour:
   currentHealth: 0
   currentEffect: 0
   isDead: 0
+  burningDuration: 3
+  stunnedDuration: 1
+  frozenDuration: 2
+  electrifiedDuration: 4
+  bleedingDuration: 6
   burningInterval: 0.5
   electrifiedInterval: 0.2
   bleedingInterval: 1
   burnDamage: 3
   electrifiedDamage: 1
   bleedDamage: 5
-  damageDoneLastUpdate: 0
+  accumulateDamageDone: 0
+  damageDoneLastInstance: 0
 --- !u!114 &694852697
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -797,6 +802,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5177045244550693393, guid: 915a9dc653ce86b4fbb13728cce34dff, type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5177045244550693393, guid: 915a9dc653ce86b4fbb13728cce34dff, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5177045244550693393, guid: 915a9dc653ce86b4fbb13728cce34dff, type: 3}
+      propertyPath: m_AnchorMin.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7075516156933310332, guid: 915a9dc653ce86b4fbb13728cce34dff, type: 3}
@@ -1253,6 +1266,14 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2604275365696963540, guid: be34118ac703db5499b8304c1711cabc, type: 3}
+      propertyPath: m_AnchorMin.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2604275365696963540, guid: be34118ac703db5499b8304c1711cabc, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6469013129570255307, guid: be34118ac703db5499b8304c1711cabc, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1276,7 +1297,6 @@ SceneRoots:
   - {fileID: 96259777}
   - {fileID: 1705181748}
   - {fileID: 1669635685}
-  - {fileID: 808401683}
   - {fileID: 572601723}
   - {fileID: 1908558768}
   - {fileID: 694852698}

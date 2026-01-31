@@ -283,13 +283,19 @@ public class EnemyBaseScript : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (!healthComponent.isDead && collision.gameObject.tag == "Player")
+        if (!healthComponent.isDead && collision.gameObject.CompareTag("Player"))
         {
             healthComponent.DecreaseHealthBy(10);
+            healthComponent.AddToCurrentStatus(HealthComponent.StatusEffect.Bleeding);
             if (healthComponent.isDead)
             {
                 enemyState = EnemyState.Dead;
             }
+        }
+
+        if (healthComponent.isDead)
+        {
+            enemyState = EnemyState.Dead;
         }
     }
 }

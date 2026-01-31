@@ -31,11 +31,8 @@ public class HealthBar : MonoBehaviour
     void Update()
     {
         healthBarSlider.value = healthComponent.GetHealth() / healthComponent.GetMaxHealth();
-
-     //if (healthComponent.damageDoneLastUpdate != 0)
-     //{
-     //    previousHealthBarSlider.value = (healthComponent.GetHealth() + healthComponent.damageDoneLastUpdate) / healthComponent.GetMaxHealth();
-     //}
+       
+        previousHealthBarSlider.value = (healthComponent.GetHealth() + healthComponent.accumulateDamageDone) / healthComponent.GetMaxHealth();
 
     }
 
