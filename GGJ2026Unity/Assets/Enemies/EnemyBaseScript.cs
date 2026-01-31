@@ -1,5 +1,7 @@
 using System.Runtime.CompilerServices;
 using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.Rendering;
 
 public class EnemyBaseScript : MonoBehaviour
 {
@@ -8,7 +10,8 @@ public class EnemyBaseScript : MonoBehaviour
         Idle = 0,
         Patrol = 1,
         Chase = 2,
-        Dead = 3
+        Attacking = 3,
+        Dead = 4
     }
 
 
@@ -19,24 +22,35 @@ public class EnemyBaseScript : MonoBehaviour
 
     // Basic enemy stats and variables
 
-    public float maxHealth = 100;
-    private float currentHealth = 100;
+    public float maxHealth = 100f;
+    private float currentHealth = 100f;
 
-    public float damageMultiplier = 1;
+    public float damageMultiplier = 1f;
 
-    public float movementSpeed = 1;
-    public float attackSpeedMultiplier = 1;
+    public float walkSpeed = 3f;
+    public float runSpeed = 5f;
 
+    private float currentSpeed = 0f;
+    public float attackSpeedMultiplier = 1f;
+
+    public float attackTime = 1f;
+    private float attackTimer = 0f;
+
+    // AI
     EnemyState enemyState = EnemyState.Idle;
 
-    public Vector3 startLocation;
-    public Vector3 targetLocation;
+    // Movement / Pathfinding
+    private Vector3 startLocation;
+    private Vector3 targetLocation;
+
+    private GameObject targetPlayer;
 
     private int lookingAtDirection = 1;
 
-    public float patrolRange = 25;
-    public float detectionRange = 20;
-    public float attackRange = 5;
+    // Ranges
+    public float patrolRange = 10f;
+    public float detectionRange = 4f;
+    public float attackRange = 1f;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     protected void Start()
@@ -47,6 +61,12 @@ public class EnemyBaseScript : MonoBehaviour
 
         playerRb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+
+        targetPlayer = GameObject.FindGameObjectWithTag("Player");
+
+        currentSpeed = walkSpeed;
+
+        attackTimer = attackTime;
 
     }
 
@@ -64,19 +84,24 @@ public class EnemyBaseScript : MonoBehaviour
            
            case EnemyState.Patrol:
 
+                currentSpeed = walkSpeed;
                 patrolState();
 
                 break;
 
            case EnemyState.Chase:
 
+                currentSpeed = runSpeed;
                 chaseState();
 
                 break;
 
-           case EnemyState.Dead:
+            case EnemyState.Attacking:
 
-                onDeath();
+                AttackState();
+                break;
+
+           case EnemyState.Dead:
 
                 break;
         }
@@ -114,9 +139,11 @@ public class EnemyBaseScript : MonoBehaviour
 
         // check if player is in detection range
 
-        // if true, move to attack state
-
-        // else
+        if (isPlayerInRange(detectionRange))
+        {
+            enemyState = EnemyState.Chase;
+            return;
+        }
 
         // check if the enemy has a target location
 
@@ -141,40 +168,87 @@ public class EnemyBaseScript : MonoBehaviour
             
         }
 
-
+        return;
 
     }
 
     public void chaseState()
     {
-       // What should the enemy do when they have seen an enemy?
+        // What should the enemy do when they have seen the player?
 
         // check if in detection range
 
-        // if no change state to patrol and return
+        if (!isPlayerInRange(detectionRange))
+        {
+            // if no change state to patrol and return
 
-        // create new target location
+            enemyState = EnemyState.Patrol;
+            CalculateNewTargetPosition();
+            return;
+        }
 
         // check if player is in the attack range
 
-        // if yes attack
+        if (isPlayerInRange(attackRange))
+        {
+            // if yes attack
 
-        // if no move to the enemy
+            enemyState = EnemyState.Attacking;
+        }
+        else
+        {
+            // if no move to the enemy
+            targetLocation = targetPlayer.transform.position;
+            MoveTo();
+        }
+
+
     }
 
-    public void isPlayerInRange(float range)
+    public bool isPlayerInRange(float range)
     {
 
-        // check if the player is in range of the enemy (allow for any range to be entered e.g. attack and detection)
+        switch (lookingAtDirection)
+        {
+            case -1:
+                if (gameObject.transform.position.x - range < targetPlayer.transform.position.x && targetPlayer.transform.position.x < gameObject.transform.position.x)
+                {
+                    return true;
+                }
+                break;
 
-        // get player location, get enemy location, find distance between them
-
-        // return yes, if its less than the range
+            case 1:
+                if (gameObject.transform.position.x + range > targetPlayer.transform.position.x && targetPlayer.transform.position.x > gameObject.transform.position.x)
+                {
+                    return true;
+                }
+                break;
+        }
+        return false;
     }
 
-    public void Attack()
+    public void AttackState()
     {
+        attackTimer += Time.deltaTime;
 
+        playerRb.linearVelocity = new Vector2(0, 0);
+        spriteRenderer.color = Color.blue;
+
+        if (isPlayerInRange(attackRange))
+        {
+            if (attackTimer >= attackTime)
+            {
+                Debug.Log("Attack");
+                attackTimer = 0f;
+            }
+        }
+        else
+        {
+            spriteRenderer.color = Color.red;
+
+            enemyState = EnemyState.Chase;
+        }
+        
     }
 
     public void CalculateNewTargetPosition()
@@ -203,6 +277,8 @@ public class EnemyBaseScript : MonoBehaviour
             }
         }
 
-        playerRb.linearVelocity = new Vector2(lookingAtDirection * movementSpeed, playerRb.linearVelocityY);
+        playerRb.linearVelocity = new Vector2(lookingAtDirection * currentSpeed, playerRb.linearVelocityY);
     }
 }
+
+
