@@ -27,11 +27,12 @@ public class HealthComponent : MonoBehaviour
 
     public bool isDead = false;
 
-    private float burningDuration = 3f;
-    private float stunnedDuration = 1f;
-    private float frozenDuration = 2f;
-    private float electrifiedDuration = 4f;
-    private float bleedingDuration = 6f;
+    [Header("Status Effect Duration")]
+    [SerializeField] private float burningDuration = 3f;
+    [SerializeField] private float stunnedDuration = 1f;
+    [SerializeField] private float frozenDuration = 2f;
+    [SerializeField] private float electrifiedDuration = 4f;
+    [SerializeField] private float bleedingDuration = 6f;
 
     private float timerBurn;
     private float timerStun;
@@ -53,10 +54,11 @@ public class HealthComponent : MonoBehaviour
     [SerializeField] private int electrifiedDamage = 1;
     [SerializeField] private int bleedDamage = 5;
 
-    private float accumulateDamageDone;
+    [Header("Damage Done Last Instance")]
+    public float accumulateDamageDone;
+    public float damageDoneLastInstance;
 
-    [Header("Damage Done Last Frame")]
-    public float damageDoneLastUpdate;
+    private float damageTimer;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -67,6 +69,15 @@ public class HealthComponent : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        damageTimer += Time.deltaTime;
+        Debug.Log(damageTimer);
+        if (damageTimer > 1f)
+        {
+            damageTimer = 0;
+            damageDoneLastInstance = accumulateDamageDone;
+            accumulateDamageDone = 0;
+        }
+
         if (currentEffect.HasFlag(StatusEffect.Burning))
         {
             timerBurn -= Time.deltaTime;
@@ -137,11 +148,6 @@ public class HealthComponent : MonoBehaviour
         }
     }
 
-    private void LateUpdate()
-    {
-        accumulateDamageDone = damageDoneLastUpdate;
-    }
-
     // todo - calculate white bar damage taken since last frame 0.5f and on damage refresh
     // - particle effects for damage numbers and statuseffect
 
@@ -149,6 +155,7 @@ public class HealthComponent : MonoBehaviour
     {
         currentHealth -= damageDealt;
         accumulateDamageDone += damageDealt;
+        damageTimer = 0f;
         if (currentHealth < 0)
         {
             isDead = true;
