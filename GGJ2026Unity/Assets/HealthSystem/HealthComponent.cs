@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Runtime.CompilerServices;
 using System.Timers;
+using Unity.VisualScripting;
 using UnityEditor.Rendering;
 using UnityEngine;
 
@@ -22,7 +23,7 @@ public class HealthComponent : MonoBehaviour
 
     [SerializeField] private int currentHealth;
 
-    [SerializeField] private StatusEffect currentEffect = new();
+    [SerializeField] public StatusEffect currentEffect = new();
 
     public bool isDead = false;
 
@@ -38,6 +39,25 @@ public class HealthComponent : MonoBehaviour
     private float timerElec;
     private float timerBleed;
 
+    [Header("Status Effect Tick Rate")]
+    [SerializeField] private float burningInterval = 0.5f;
+    [SerializeField] private float electrifiedInterval = 0.2f;
+    [SerializeField] private float bleedingInterval = 1f;
+
+    private float elapsedBurn;
+    private float elapsedElec;
+    private float elapsedBleed;
+
+    [Header("Status Effect Damage")]
+    [SerializeField] private int burnDamage = 3;
+    [SerializeField] private int electrifiedDamage = 1;
+    [SerializeField] private int bleedDamage = 5;
+
+    private float accumulateDamageDone;
+
+    [Header("Damage Done Last Frame")]
+    public float damageDoneLastUpdate;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -50,14 +70,15 @@ public class HealthComponent : MonoBehaviour
         if (currentEffect.HasFlag(StatusEffect.Burning))
         {
             timerBurn -= Time.deltaTime;
+            elapsedBurn += Time.deltaTime;
             if (timerBurn < 0)
             {
                 currentEffect &= ~StatusEffect.Burning;
             }
-            //Debug.Log(timerBurn % 0.5);
-            if (timerBurn % 0.5 <= 0.01f)
+            if (elapsedBurn > burningInterval)
             {
-                Debug.Log("OOF!");
+                DecreaseHealthBy(burnDamage);
+                elapsedBurn = 0;
             }
             // burning
         }
@@ -86,9 +107,15 @@ public class HealthComponent : MonoBehaviour
         if (currentEffect.HasFlag(StatusEffect.Electrified))
         {
             timerElec -= Time.deltaTime;
+            elapsedElec += Time.deltaTime;
             if (timerElec < 0)
             {
                 currentEffect &= ~StatusEffect.Electrified;
+            }
+            if (elapsedElec > electrifiedInterval)
+            {
+                DecreaseHealthBy(electrifiedDamage);
+                elapsedElec = 0;
             }
             // electrified
         }
@@ -96,17 +123,32 @@ public class HealthComponent : MonoBehaviour
         if (currentEffect.HasFlag(StatusEffect.Bleeding))
         {
             timerBleed -= Time.deltaTime;
+            elapsedBleed += Time.deltaTime;
             if (timerBleed < 0)
             {
                 currentEffect &= ~StatusEffect.Bleeding;
+            }
+            if (elapsedBleed > bleedingInterval)
+            {
+                DecreaseHealthBy(bleedDamage);
+                elapsedBleed = 0;
             }
             // bleeding
         }
     }
 
-    public void DecreaseHealth(int damageDealt)
+    private void LateUpdate()
+    {
+        accumulateDamageDone = damageDoneLastUpdate;
+    }
+
+    // todo - calculate white bar damage taken since last frame 0.5f and on damage refresh
+    // - particle effects for damage numbers and statuseffect
+
+    public void DecreaseHealthBy(int damageDealt)
     {
         currentHealth -= damageDealt;
+        accumulateDamageDone += damageDealt;
         if (currentHealth < 0)
         {
             isDead = true;
