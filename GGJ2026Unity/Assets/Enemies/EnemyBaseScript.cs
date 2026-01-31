@@ -16,11 +16,14 @@ public class EnemyBaseScript : MonoBehaviour
 
 
     // Physics and Controls
-
     Rigidbody2D playerRb;
     SpriteRenderer spriteRenderer;
 
     // Basic enemy stats and variables
+
+    [Header("Base stats")]
+
+    public string enemyName = "Enemy";
 
     public float maxHealth = 100f;
     private float currentHealth = 100f;
@@ -37,9 +40,10 @@ public class EnemyBaseScript : MonoBehaviour
     private float attackTimer = 0f;
 
     // AI
+    [Header("AI")]
+
     EnemyState enemyState = EnemyState.Idle;
 
-    // Movement / Pathfinding
     private Vector3 startLocation;
     private Vector3 targetLocation;
 
@@ -48,6 +52,8 @@ public class EnemyBaseScript : MonoBehaviour
     private int lookingAtDirection = 1;
 
     // Ranges
+    [Header("Ranges")]
+
     public float patrolRange = 10f;
     public float detectionRange = 4f;
     public float attackRange = 1f;
