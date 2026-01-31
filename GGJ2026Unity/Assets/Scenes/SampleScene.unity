@@ -672,6 +672,7 @@ MonoBehaviour:
   maxHealth: 20
   currentHealth: 0
   currentEffect: 0
+  isDead: 0
 --- !u!114 &694852697
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -699,6 +700,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &830889459 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7069614169959460007, guid: be34118ac703db5499b8304c1711cabc, type: 3}
+  m_PrefabInstance: {fileID: 1908558768}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -1120,6 +1126,18 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1418612017719994121, guid: be34118ac703db5499b8304c1711cabc, type: 3}
+      propertyPath: character
+      value: 
+      objectReference: {fileID: 830889459}
+    - target: {fileID: 1551475887162565634, guid: be34118ac703db5499b8304c1711cabc, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1551475887162565634, guid: be34118ac703db5499b8304c1711cabc, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6469013129570255307, guid: be34118ac703db5499b8304c1711cabc, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -1145,3 +1163,4 @@ SceneRoots:
   - {fileID: 1669635685}
   - {fileID: 572601723}
   - {fileID: 1908558768}
+  - {fileID: 694852698}

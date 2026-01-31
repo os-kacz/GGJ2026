@@ -18,15 +18,13 @@ public class EnemyBaseScript : MonoBehaviour
     // Physics and Controls
     Rigidbody2D playerRb;
     SpriteRenderer spriteRenderer;
+    HealthComponent healthComponent;
 
     // Basic enemy stats and variables
 
     [Header("Base stats")]
 
     public string enemyName = "Enemy";
-
-    public float maxHealth = 100f;
-    private float currentHealth = 100f;
 
     public float damageMultiplier = 1f;
 
@@ -61,12 +59,12 @@ public class EnemyBaseScript : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     protected void Start()
     {
-        currentHealth = maxHealth;
 
         startLocation = gameObject.transform.position;
 
         playerRb = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        healthComponent = GetComponent<HealthComponent>();
 
         targetPlayer = GameObject.FindGameObjectWithTag("Player");
 
@@ -80,50 +78,47 @@ public class EnemyBaseScript : MonoBehaviour
     protected void Update()
     {
         // state tree
-        switch (enemyState)
-        {
-           case EnemyState.Idle:
 
-                IdleState();
+         switch (enemyState)
+         {
+             case EnemyState.Idle:
+
+                 IdleState();
+
+                 break;
+
+             case EnemyState.Patrol:
+
+                 currentSpeed = walkSpeed;
+                 patrolState();
+
+                 break;
+
+             case EnemyState.Chase:
+
+                 currentSpeed = runSpeed;
+                 chaseState();
+
+                 break;
+
+             case EnemyState.Attacking:
+
+                 AttackState();
+                 break;
+
+             case EnemyState.Dead:
+
+                DeathState();
 
                 break;
-           
-           case EnemyState.Patrol:
 
-                currentSpeed = walkSpeed;
-                patrolState();
-
-                break;
-
-           case EnemyState.Chase:
-
-                currentSpeed = runSpeed;
-                chaseState();
-
-                break;
-
-            case EnemyState.Attacking:
-
-                AttackState();
-                break;
-
-           case EnemyState.Dead:
-
-                break;
-        }
+         }
+      
+        
+        
     }
 
-    public void TakeDamage(float damage)
-    {
-        // damage functions
-        currentHealth -= damage;
-        if (currentHealth <= 0)
-        {
-            onDeath();
-        }
-    }
-
-    public void onDeath()
+    public void DeathState()
     {
         // vfx, sfx and other daeth additions
         Destroy(gameObject);
@@ -284,6 +279,18 @@ public class EnemyBaseScript : MonoBehaviour
         }
 
         playerRb.linearVelocity = new Vector2(lookingAtDirection * currentSpeed, playerRb.linearVelocityY);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (!healthComponent.isDead && collision.gameObject.tag == "Player")
+        {
+            healthComponent.DecreaseHealth(10);
+            if (healthComponent.isDead)
+            {
+                enemyState = EnemyState.Dead;
+            }
+        }
     }
 }
 
