@@ -6,10 +6,15 @@ using Unity.VisualScripting;
 using UnityEditor.Rendering;
 using UnityEngine.Events;
 using UnityEngine;
+using TMPro;
 
 public class HealthComponent : MonoBehaviour
 {
     public UnityEvent E_EntityHasDied;
+
+    public UnityEvent E_EntityHasBeenDamaged;
+
+    public GameObject DamageNumberPrefab;
 
     [Flags]
     public enum StatusEffect
@@ -72,13 +77,17 @@ public class HealthComponent : MonoBehaviour
         {
             E_EntityHasDied = new UnityEvent();
         }
+
+        if (DamageNumberPrefab == null)
+        {
+            DamageNumberPrefab = GameObject.FindGameObjectWithTag("DamageNumber");
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
         damageTimer += Time.deltaTime;
-        Debug.Log(damageTimer);
         if (damageTimer > 1f)
         {
             damageTimer = 0;
@@ -149,25 +158,58 @@ public class HealthComponent : MonoBehaviour
             }
             if (elapsedBleed > bleedingInterval)
             {
-                DecreaseHealthBy(bleedDamage);
+                DecreaseHealthBy(bleedDamage, StatusEffect.Bleeding);
                 elapsedBleed = 0;
             }
             // bleeding
         }
     }
 
-    // todo - calculate white bar damage taken since last frame 0.5f and on damage refresh
     // - particle effects for damage numbers and statuseffect
-    // - make dying an event
 
-    public void DecreaseHealthBy(int damageDealt)
+    public void DecreaseHealthBy(int damageDealt, StatusEffect statusEffect = StatusEffect.None)
     {
-        currentHealth -= damageDealt;
-        accumulateDamageDone += damageDealt;
-        damageTimer = 0f;
-        if (currentHealth < 0)
+        if (!isDead)
         {
-            E_EntityHasDied.Invoke();
+            currentHealth -= damageDealt;
+            accumulateDamageDone += damageDealt;
+            damageTimer = 0f;
+            CreateDamageNumber(damageDealt, statusEffect);
+            if (currentHealth < 0)
+            {
+                E_EntityHasDied.Invoke();
+            }
+            if (Mathf.Sign(damageDealt) == 1)
+            {
+                E_EntityHasBeenDamaged.Invoke();
+            }
+        }
+    }
+
+    private void CreateDamageNumber(float damage, StatusEffect statusEffect)
+    {
+        var textColour = Color.white;
+        if (DamageNumberPrefab != null)
+        {
+            switch (statusEffect)
+            {
+                case StatusEffect.Burning:
+                    textColour = Color.orangeRed;
+                    break;
+                case StatusEffect.Electrified:
+                    textColour = Color.aliceBlue;
+                    break;
+                case StatusEffect.Bleeding:
+                    textColour = Color.darkRed;
+                    break;
+            }
+            var go = Instantiate(DamageNumberPrefab, transform.position, Quaternion.identity, transform);
+            go.GetComponent<TextMeshPro>().text = damage.ToString();
+            go.GetComponent<TextMeshPro>().color = textColour;
+        }
+        else
+        {
+            Debug.Log("No damage number hooked up in prefab slot");
         }
     }
 
