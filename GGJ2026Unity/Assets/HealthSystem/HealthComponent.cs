@@ -1,4 +1,7 @@
 using System;
+using System.Collections;
+using System.Runtime.CompilerServices;
+using System.Timers;
 using UnityEditor.Rendering;
 using UnityEngine;
 
@@ -21,48 +24,83 @@ public class HealthComponent : MonoBehaviour
 
     [SerializeField] private StatusEffect currentEffect = new();
 
-    private bool isDead = false;
+    public bool isDead = false;
 
-    private float timer = 0f;
+    private float burningDuration = 3f;
+    private float stunnedDuration = 1f;
+    private float frozenDuration = 2f;
+    private float electrifiedDuration = 4f;
+    private float bleedingDuration = 6f;
+
+    private float timerBurn;
+    private float timerStun;
+    private float timerFrozen;
+    private float timerElec;
+    private float timerBleed;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        Debug.Log(currentEffect);
+        currentHealth = maxHealth;
     }
 
     // Update is called once per frame
     void Update()
     {
-
         if (currentEffect.HasFlag(StatusEffect.Burning))
         {
+            timerBurn -= Time.deltaTime;
+            if (timerBurn < 0)
+            {
+                currentEffect &= ~StatusEffect.Burning;
+            }
+            //Debug.Log(timerBurn % 0.5);
+            if (timerBurn % 0.5 <= 0.01f)
+            {
+                Debug.Log("OOF!");
+            }
             // burning
-            Debug.Log("Burning");
         }
 
         if (currentEffect.HasFlag(StatusEffect.Stunned))
         {
+            timerStun -= Time.deltaTime;
+            if (timerStun < 0)
+            {
+                currentEffect &= ~StatusEffect.Stunned;
+            }
+
             // stunned
-            Debug.Log("Stunned");
         }
 
         if (currentEffect.HasFlag(StatusEffect.Frozen))
         {
+            timerFrozen -= Time.deltaTime;
+            if (timerFrozen < 0)
+            {
+                currentEffect &= ~StatusEffect.Frozen;
+            }
             // frozen
-            Debug.Log("Frozen");
         }
 
         if (currentEffect.HasFlag(StatusEffect.Electrified))
         {
+            timerElec -= Time.deltaTime;
+            if (timerElec < 0)
+            {
+                currentEffect &= ~StatusEffect.Electrified;
+            }
             // electrified
-            Debug.Log("Electrified");
         }
 
         if (currentEffect.HasFlag(StatusEffect.Bleeding))
         {
+            timerBleed -= Time.deltaTime;
+            if (timerBleed < 0)
+            {
+                currentEffect &= ~StatusEffect.Bleeding;
+            }
             // bleeding
-            Debug.Log("Bleeding");
         }
     }
 
@@ -75,8 +113,36 @@ public class HealthComponent : MonoBehaviour
         }
     }
 
+    public int GetHealth()
+    {
+        return currentHealth;
+    }
+
+    public int GetMaxHealth()
+    {
+        return maxHealth;
+    }
+
     public void AddToCurrentStatus(StatusEffect statusEffect)
     {
-        currentEffect = statusEffect;
+        currentEffect = currentEffect | statusEffect;
+        switch (statusEffect)
+        {
+            case StatusEffect.Burning:
+                timerBurn = burningDuration;
+                break;
+            case StatusEffect.Stunned:
+                timerStun = stunnedDuration;
+                break;
+            case StatusEffect.Electrified:
+                timerElec = electrifiedDuration;
+                break;
+            case StatusEffect.Frozen:
+                timerFrozen = frozenDuration;
+                break;
+            case StatusEffect.Bleeding:
+                timerBleed = bleedingDuration;
+                break;
+        }
     }
 }

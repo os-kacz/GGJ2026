@@ -8,9 +8,9 @@ public class testEnemy : MonoBehaviour
     {
         healthComponent = GetComponent<HealthComponent>();
 
-        healthComponent.AddToCurrentStatus(HealthComponent.StatusEffect.Electrified);
-
         healthComponent.AddToCurrentStatus(HealthComponent.StatusEffect.Burning);
+        healthComponent.AddToCurrentStatus(HealthComponent.StatusEffect.Electrified);
+        healthComponent.AddToCurrentStatus(HealthComponent.StatusEffect.Bleeding);
     }
 
     // Update is called once per frame
