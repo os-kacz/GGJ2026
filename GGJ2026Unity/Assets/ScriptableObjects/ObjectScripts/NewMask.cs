@@ -11,10 +11,14 @@ public class NewMask : ScriptableObject
         Ice = 2,
         Electric = 3,
     }
-    public enum AbilityFunctions
+    public enum Ability
     {
         None = 0,
-        Teleport = 1,
+        Slam = 1,
+        Blast = 2,
+        Inferno = 3,
+        Blizzard = 4,
+        Teleport = 5,
     }
 
     [Header("Information")]
@@ -22,10 +26,17 @@ public class NewMask : ScriptableObject
     public Sprite MaskIcon;
     public Color UIColour;
 
-     [Header("Unlock Data")]
-    public AbilityFunctions MaskAbility;
-    public ScriptableObject WeaponUnlocked;
 
-    [Header("Elemental Data")]
+    [Header("Ability Data")]
+    public Ability AbilityID;
+    public string AbilityName;
+    [Tooltip("Damage per second")]
+    public int AbilityDamage; 
+    public int AbilityKnockback;
+    public int Duration;
+    public int Cooldown;
     public Element ElementType;
+
+    [Header("Unlock Data")]
+    public NewWeapon WeaponUnlocked;
 }

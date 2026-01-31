@@ -15,6 +15,11 @@ MonoBehaviour:
   MaskName: Ballistics Mask
   MaskIcon: {fileID: 0}
   UIColour: {r: 0.26031017, g: 1, b: 0, a: 0}
-  MaskAbility: 0
-  WeaponUnlocked: {fileID: 0}
+  AbilityID: 2
+  AbilityName: Expl0de
+  AbilityDamage: 100
+  AbilityKnockback: 100
+  Duration: 1
+  Cooldown: 20
   ElementType: 0
+  WeaponUnlocked: {fileID: 0}

@@ -4,10 +4,7 @@ MonoImporter:
   externalObjects: {}
   serializedVersion: 2
   defaultReferences:
-  - PaperBag: {fileID: 11400000, guid: ec8b80ba59e686844893b338890bcf07, type: 2}
-  - Greatsword: {instanceID: 0}
-  - Dagger: {fileID: 11400000, guid: baf308d1fdbdb7141bfc32e32bbcb847, type: 2}
-  - Pistol: {fileID: 11400000, guid: 76bd847d3beebac46ad8e49860d28d11, type: 2}
+  - PlayerWeaponSlot1: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

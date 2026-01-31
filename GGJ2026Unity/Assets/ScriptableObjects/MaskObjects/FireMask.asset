@@ -15,6 +15,11 @@ MonoBehaviour:
   MaskName: Fire Oni Mask
   MaskIcon: {fileID: 0}
   UIColour: {r: 1, g: 0.6144982, b: 0, a: 0}
-  MaskAbility: 0
-  WeaponUnlocked: {fileID: 0}
+  AbilityID: 3
+  AbilityName: 1nferno
+  AbilityDamage: 50
+  AbilityKnockback: 25
+  Duration: 1
+  Cooldown: 15
   ElementType: 1
+  WeaponUnlocked: {fileID: 0}

@@ -15,6 +15,11 @@ MonoBehaviour:
   MaskName: Frozen Mask
   MaskIcon: {fileID: 0}
   UIColour: {r: 0, g: 0.9738939, b: 1, a: 0}
-  MaskAbility: 0
-  WeaponUnlocked: {fileID: 0}
+  AbilityID: 4
+  AbilityName: Bl1zzard
+  AbilityDamage: 20
+  AbilityKnockback: 10
+  Duration: 5
+  Cooldown: 30
   ElementType: 2
+  WeaponUnlocked: {fileID: 0}
