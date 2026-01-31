@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
     InputAction sprintActoin;
     Rigidbody2D playerRb;
     SpriteRenderer spriteRenderer;
+    AbilityController abilityController;
 
     [SerializeField] private Animator _animator;
 
@@ -67,7 +68,9 @@ public class PlayerController : MonoBehaviour
                     
         attackPosition.SetPositionAndRotation(new Vector3(transform.position.x + 0.4f,transform.position.y,0f), new Quaternion(0f,0f,0f,0f));
 
-
+        abilityController = GetComponent<AbilityController>();
+        abilityController.CollectMask("Swordsman Mastery", 1);
+        abilityController.CollectMask("Frozen Mask", 2);
     }
 
     void Update()
@@ -81,6 +84,16 @@ public class PlayerController : MonoBehaviour
             Attack();
         }
         
+        if(abilityAction_1.WasPressedThisFrame())
+        {
+            abilityController.TriggerAbility1();
+        }
+
+         if(abilityAction_2.WasPressedThisFrame())
+        {
+            abilityController.TriggerAbility2();
+        }
+
         isGroundFloor = Physics2D.OverlapCircle(feetPosition.position, groundCheckCircle, groundLayer);
         isGrounded = Physics2D.OverlapCircle(feetPosition.position, groundCheckCircle, groundFloorLayer);
         isOnEnemy = Physics2D.OverlapCircle(feetPosition.position, groundCheckCircle, enemyLayer);
