@@ -84,24 +84,40 @@ public class PlayerController : MonoBehaviour
         
         Jump();
         Sprint();
+        Dodge();
         if(timer >= 0.5f)
         {
             Attack();
         }
-        
-        if(abilityAction_1.WasPressedThisFrame())
-        {
-            abilityController.TriggerAbility1();
-        }
 
-         if(abilityAction_2.WasPressedThisFrame())
-        {
-            abilityController.TriggerAbility2();
-        }
+        Ability1();
+        Ability2();
+
+
 
         isGroundFloor = Physics2D.OverlapCircle(feetPosition.position, groundCheckCircle, groundLayer);
         isGrounded = Physics2D.OverlapCircle(feetPosition.position, groundCheckCircle, groundFloorLayer);
         isOnEnemy = Physics2D.OverlapCircle(feetPosition.position, groundCheckCircle, enemyLayer);
+
+        if(attackAction.WasReleasedThisFrame())
+        {
+            _animator.SetBool("IsAttacking", false);
+        }
+
+        if(dodgeAction.WasReleasedThisFrame())
+        {
+            _animator.SetBool("IsDashing", false);
+        }
+
+        if(abilityAction_1.WasReleasedThisFrame())
+        {
+            _animator.SetBool("IsSlamming", true);
+        }
+
+        if(abilityAction_2.WasReleasedThisFrame())
+        {
+            _animator.SetBool("IsSlamming", true);
+        }
 
     }
 
@@ -150,6 +166,8 @@ public class PlayerController : MonoBehaviour
             _animator.SetBool("IsJumping", false);
 
         }
+
+
     }
 
     void Sprint()
@@ -157,12 +175,10 @@ public class PlayerController : MonoBehaviour
         if (sprintActoin.IsPressed() && isGrounded == true)
         {
             speed = sprintSpeed;
-            _animator.SetBool("IsRunning", true);
         }
         else
         {
             speed = baseSpeed;
-            _animator.SetBool("IsRunning", false);
         }
     }
 
@@ -199,11 +215,12 @@ public class PlayerController : MonoBehaviour
     {
         if(attackAction.WasPressedThisFrame())
         {
+            _animator.SetBool("IsAttacking", true);
             hitEnemy = Physics2D.OverlapCapsule(attackPosition.position, attackSize, CapsuleDirection2D.Horizontal, 0f, enemyLayer, -1f, 1f);
             
             if(hitEnemy == true)
             {
-                Debug.Log("Hit");
+                
                 abilityController.PlayerAttack();
                 timer = 0f;
                 
@@ -211,15 +228,55 @@ public class PlayerController : MonoBehaviour
             }
             
         }  
+
+        
     }
 
     void Ability1()
     {
+        if(abilityAction_1.WasPressedThisFrame())
+        {
+            abilityController.TriggerAbility1();
+
+            // NewMask.AnimationState AnimID = abilityController.TriggerAbility1();
+            // switch(AnimID)
+            // {
+            //     case NewMask.AnimationState.Slam:
+            //     _animator.SetBool("IsSlamming", true);
+            //     break;
+            // }
+
+        }
         
     }
 
     void Ability2()
     {
+        if(abilityAction_2.WasPressedThisFrame())
+        {
+            abilityController.TriggerAbility2();
+        }
+    }
+
+    void Dodge()
+    {
+        if(dodgeAction.WasPressedThisFrame())
+        {
+            if(playerRb.linearVelocityY == 0)
+            {
+                if(playerRb.linearVelocityX == 0)
+                {
+                    
+                }
+                else
+                {
+                    
+                }
+                this.transform.position = new Vector3(transform.position.x + 5, transform.position.y, transform.position.z);
+                _animator.SetBool("IsDashing", true);
+            }
+
+        }
         
     }
     void IsDead()
