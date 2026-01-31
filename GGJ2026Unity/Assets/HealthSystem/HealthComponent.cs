@@ -162,12 +162,15 @@ public class HealthComponent : MonoBehaviour
 
     public void DecreaseHealthBy(int damageDealt)
     {
-        currentHealth -= damageDealt;
-        accumulateDamageDone += damageDealt;
-        damageTimer = 0f;
-        if (currentHealth < 0)
+        if (!isDead)
         {
-            E_EntityHasDied.Invoke();
+            currentHealth -= damageDealt;
+            accumulateDamageDone += damageDealt;
+            damageTimer = 0f;
+            if (currentHealth < 0)
+            {
+                E_EntityHasDied.Invoke();
+            }
         }
     }
 
