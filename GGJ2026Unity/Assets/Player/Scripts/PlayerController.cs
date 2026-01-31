@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using TreeEditor;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
@@ -39,7 +40,13 @@ public class PlayerController : MonoBehaviour
     public Transform feetPosition;
     public float groundCheckCircle;
 
-    private Collider2D currentFloor;
+    public LayerMask wallLayer;
+    private bool onWallLeft;
+    private bool onWallRight;
+    public Transform wallPositionLeft;
+    public Transform wallPositionRight;
+
+    public float wallSlideSpeed;
 
     private bool hitEnemy;
     public Transform attackPosition;
@@ -94,6 +101,9 @@ public class PlayerController : MonoBehaviour
         Ability2();
 
 
+        CheckLeftWall();
+        CheckRightWall();
+
 
         isGroundFloor = Physics2D.OverlapCircle(feetPosition.position, groundCheckCircle, groundLayer);
         isGrounded = Physics2D.OverlapCircle(feetPosition.position, groundCheckCircle, groundFloorLayer);
@@ -118,6 +128,7 @@ public class PlayerController : MonoBehaviour
         {
             _animator.SetBool("IsSlamming", true);
         }
+
 
     }
 
@@ -264,20 +275,62 @@ public class PlayerController : MonoBehaviour
         {
             if(playerRb.linearVelocityY == 0)
             {
-                if(playerRb.linearVelocityX == 0)
+                if(moveValue.x > 0)
                 {
-                    
+                    this.transform.position = new Vector3(transform.position.x + 2.5f, transform.position.y, transform.position.z);
                 }
-                else
+                else if(moveValue.x < 0)
                 {
-                    
+                    this.transform.position = new Vector3(transform.position.x - 2.5f, transform.position.y, transform.position.z);
                 }
-                this.transform.position = new Vector3(transform.position.x + 5, transform.position.y, transform.position.z);
+                else if(moveValue.x == 0)
+                {
+                    if(spriteRenderer.flipX == true)
+                    {
+                        this.transform.position = new Vector3(transform.position.x - 2.5f, transform.position.y, transform.position.z);
+                    }
+                    else
+                    {
+                        this.transform.position = new Vector3(transform.position.x + 2.5f, transform.position.y, transform.position.z);
+                    }
+                }
+                
                 _animator.SetBool("IsDashing", true);
             }
 
+        } 
+    }
+
+    void CheckLeftWall()
+    {
+        onWallLeft = Physics2D.OverlapCircle(wallPositionLeft.position, groundCheckCircle, wallLayer);
+        if(onWallLeft == true && !isGrounded && !isGroundFloor && moveValue.x != 0)
+        {
+            _animator.SetBool("LeftSlide", true);
+            this.transform.position = new Vector3(transform.position.x, Mathf.Max(transform.position.y - wallSlideSpeed), transform.position.z);
+
         }
-        
+        else
+        {
+            _animator.SetBool("LeftSlide", false);
+        }
+    }
+
+    void CheckRightWall()
+    {
+        onWallRight = Physics2D.OverlapCircle(wallPositionRight.position, groundCheckCircle, wallLayer);
+        if(onWallRight == true && !isGrounded && !isGroundFloor && moveValue.x != 0)
+        {
+            _animator.SetBool("RightSlide", true);
+            this.transform.position = new Vector3(transform.position.x, Mathf.Max(transform.position.y - wallSlideSpeed), transform.position.z);
+
+            //playerRb.linearVelocity = new Vector2(playerRb.linearVelocityX, Mathf.Max(playerRb.linearVelocityY - wallSlideSpeed));
+
+        }
+        else
+        {
+            _animator.SetBool("RightSlide", false);
+        }
     }
     void IsDead()
     {
