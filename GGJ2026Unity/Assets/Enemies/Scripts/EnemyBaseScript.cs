@@ -21,6 +21,8 @@ public class EnemyBaseScript : MonoBehaviour
     protected SpriteRenderer spriteRenderer;
     protected HealthComponent healthComponent;
     protected Animator animator;
+    private AbilityController abilityController;
+
 
     // Basic enemy stats and variables
 
@@ -74,6 +76,7 @@ public class EnemyBaseScript : MonoBehaviour
         healthComponent.E_EntityHasDied.AddListener(DeathState);
 
         animator = GetComponent<Animator>();
+        abilityController = GetComponent<AbilityController>();
 
     }
 
@@ -258,6 +261,7 @@ public class EnemyBaseScript : MonoBehaviour
         {
             if (!animator.GetBool("IsAttacking"))
             {
+                abilityController.EnemyAttack();
                 animator.SetBool("IsAttacking", true);
             }
 

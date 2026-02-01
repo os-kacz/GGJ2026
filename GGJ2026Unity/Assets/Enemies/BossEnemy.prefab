@@ -72,6 +72,18 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6096635283895360624, guid: be34118ac703db5499b8304c1711cabc, type: 3}
+      propertyPath: UsableMasks.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6096635283895360624, guid: be34118ac703db5499b8304c1711cabc, type: 3}
+      propertyPath: 'UsableMasks.Array.data[0]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 1e780c02262a31a43b4c2d95308622bb, type: 2}
+    - target: {fileID: 6096635283895360624, guid: be34118ac703db5499b8304c1711cabc, type: 3}
+      propertyPath: 'UsableMasks.Array.data[1]'
+      value: 
+      objectReference: {fileID: 11400000, guid: da9a5b2d683d34244b287391c41a6cde, type: 2}
     - target: {fileID: 7069614169959460007, guid: be34118ac703db5499b8304c1711cabc, type: 3}
       propertyPath: m_Name
       value: BossEnemy
@@ -79,35 +91,5 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 7069614169959460007, guid: be34118ac703db5499b8304c1711cabc, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 918329033580166302}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: be34118ac703db5499b8304c1711cabc, type: 3}
---- !u!1 &6282512945442295842 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7069614169959460007, guid: be34118ac703db5499b8304c1711cabc, type: 3}
-  m_PrefabInstance: {fileID: 3833593101333691525}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &918329033580166302
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6282512945442295842}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 946dfae85e582eb409ef677c11706b49, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Self: {fileID: 6282512945442295842}
-  Hitbox: {fileID: 4767547439140498170, guid: 443da95d7f4730b4c9ee9d3891dd4f36, type: 3}
-  UI: {fileID: 0}
-  AllMasks: []
-  AllWeapons: []
-  PlayerWeaponSlot1: {fileID: 0}
-  UsableMasks:
-  - {fileID: 11400000, guid: 1e780c02262a31a43b4c2d95308622bb, type: 2}
-  - {fileID: 11400000, guid: da9a5b2d683d34244b287391c41a6cde, type: 2}
-  EnemyWeapon: {fileID: 11400000, guid: baf308d1fdbdb7141bfc32e32bbcb847, type: 2}
