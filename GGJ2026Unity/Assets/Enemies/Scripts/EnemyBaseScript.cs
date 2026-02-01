@@ -82,6 +82,8 @@ public class EnemyBaseScript : MonoBehaviour
         abilityController = GetComponent<AbilityController>();
         audioSource = GetComponent<AudioSource>();
 
+        healthComponent.E_EntityHasBeenDamaged.AddListener(onHitAttack);
+
     }
 
     // Update is called once per frame
@@ -325,9 +327,11 @@ public class EnemyBaseScript : MonoBehaviour
         animator.SetFloat("VelocityX",  Math.Abs(playerRb.linearVelocityX));
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    public void onHitAttack()
     {
+        // hit timer and animations
     }
+
 }
 
 
