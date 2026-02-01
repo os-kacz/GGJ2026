@@ -327,11 +327,6 @@ public class EnemyBaseScript : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (!healthComponent.isDead && collision.gameObject.CompareTag("Player") && !animator.GetBool("HasBeenHit"))
-        {
-            healthComponent.DecreaseHealthBy(10);
-            animator.SetBool("HasBeenHit", true);
-        }
     }
 }
 
