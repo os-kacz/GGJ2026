@@ -15,7 +15,8 @@ MonoBehaviour:
   WeaponName: Flaming Chains
   WeaponType: 0
   WeaponIcon: {fileID: 0}
-  UIColour: {r: 1, g: 0.9887575, b: 0, a: 0}
+  UIColour: {r: 1, g: 0.9887575, b: 0, a: 1}
   Damage: 20
   Knockback: -100
+  AttackSpeed: 0
   ElementType: 1

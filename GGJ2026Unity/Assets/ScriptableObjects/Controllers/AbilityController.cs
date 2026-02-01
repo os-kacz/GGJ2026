@@ -1,8 +1,11 @@
 using System.ComponentModel;
 using System.Linq;
+using Microsoft.Unity.VisualStudio.Editor;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEditor.Animations;
 using UnityEngine;
+using UnityEngine.UI;
 
 // TODO: handle cooldowns for mask abilities
 
@@ -29,6 +32,21 @@ public class AbilityController : MonoBehaviour
     private NewMask PlayerMaskSlot1;
     private NewMask PlayerMaskSlot2;
 
+    public void Start()
+    {
+        if(PlayerWeaponSlot1)
+        {
+            GameObject WeaponSlot = UI.transform.Find("BottomPanel").gameObject.transform.Find("WeaponSlot").gameObject;
+            UnityEngine.UI.Image Border = WeaponSlot.transform.Find("SlotOuter").gameObject.GetComponent<UnityEngine.UI.Image>();
+            UnityEngine.UI.Image Icon = WeaponSlot.transform.Find("SlotIcon").gameObject.GetComponent<UnityEngine.UI.Image>();
+            TextMeshProUGUI Text = WeaponSlot.transform.Find("WeaponName").gameObject.GetComponent<TextMeshProUGUI>();
+
+            Border.color = PlayerWeaponSlot1.UIColour;
+            Icon.sprite = PlayerWeaponSlot1.WeaponIcon;
+            Text.text = PlayerWeaponSlot1.WeaponName;
+        }
+    }
+
     // player only
     public void CollectMask(string _maskName, int _slotNumber)
     {
@@ -37,11 +55,53 @@ public class AbilityController : MonoBehaviour
             if(Mask.MaskName == _maskName)
             {
                 // assign to correct slot (presumable an input from a ui choice)
-                if(_slotNumber == 1){PlayerMaskSlot1 = Mask;}
-                else{PlayerMaskSlot2 = Mask;}
+                if(_slotNumber == 1)
+                {
+                    PlayerMaskSlot1 = Mask;
+
+                    GameObject MaskSlot = UI.transform.Find("BottomPanel").gameObject.transform.Find("MaskSlot1").gameObject;
+                    UnityEngine.UI.Image Border = MaskSlot.transform.Find("SlotOuter").gameObject.GetComponent<UnityEngine.UI.Image>();
+                    UnityEngine.UI.Image Icon = MaskSlot.transform.Find("SlotIcon").gameObject.GetComponent<UnityEngine.UI.Image>();
+                    TextMeshProUGUI Text = MaskSlot.transform.Find("AbilityName").gameObject.GetComponent<TextMeshProUGUI>();
+                    UnityEngine.UI.Image ButtonPrompt =  MaskSlot.transform.Find("SlotButton").gameObject.GetComponent<UnityEngine.UI.Image>();
+
+                    Border.color = Mask.UIColour;
+                    Icon.sprite = Mask.MaskIcon;
+                    Text.text = Mask.AbilityName;
+                    ButtonPrompt.color = Mask.UIColour;
+                }   
+
+                else
+                {
+                    PlayerMaskSlot2 = Mask;
+                    GameObject MaskSlot = UI.transform.Find("BottomPanel").gameObject.transform.Find("MaskSlot2").gameObject;
+                    UnityEngine.UI.Image Border = MaskSlot.transform.Find("SlotOuter").gameObject.GetComponent<UnityEngine.UI.Image>();
+                    UnityEngine.UI.Image Icon = MaskSlot.transform.Find("SlotIcon").gameObject.GetComponent<UnityEngine.UI.Image>();
+                    TextMeshProUGUI Text = MaskSlot.transform.Find("AbilityName").gameObject.GetComponent<TextMeshProUGUI>();
+                    UnityEngine.UI.Image ButtonPrompt =  MaskSlot.transform.Find("SlotButton").gameObject.GetComponent<UnityEngine.UI.Image>();
+
+
+                    Border.color = Mask.UIColour;
+                    Icon.sprite = Mask.MaskIcon;
+                    Text.text = Mask.AbilityName;
+                    ButtonPrompt.color = Mask.UIColour;
+
+                }
 
                 // check if the mask unlocks a new weapon
-                if (Mask.WeaponUnlocked){PlayerWeaponSlot1 = Mask.WeaponUnlocked;}
+                if (Mask.WeaponUnlocked)
+                {
+                    PlayerWeaponSlot1 = Mask.WeaponUnlocked;
+
+                    GameObject WeaponSlot = UI.transform.Find("BottomPanel").gameObject.transform.Find("WeaponSlot").gameObject;
+                    UnityEngine.UI.Image Border = WeaponSlot.transform.Find("SlotOuter").gameObject.GetComponent<UnityEngine.UI.Image>();
+                    UnityEngine.UI.Image Icon = WeaponSlot.transform.Find("SlotIcon").gameObject.GetComponent<UnityEngine.UI.Image>();
+                    TextMeshProUGUI Text = WeaponSlot.transform.Find("WeaponName").gameObject.GetComponent<TextMeshProUGUI>();
+
+                    Border.color = PlayerWeaponSlot1.UIColour;
+                    Icon.sprite = PlayerWeaponSlot1.WeaponIcon;
+                    Text.text = PlayerWeaponSlot1.WeaponName;
+                }
 
                 return;
             }
@@ -109,28 +169,19 @@ public class AbilityController : MonoBehaviour
 
     private GameObject[] CreateHitbox(float Height, float Width, Vector2 Offset, AnimatorController HitboxVFX)
     {
-        //VISUALS
-        float velocity = Self.GetComponent<Rigidbody2D>().linearVelocityX;
-        Debug.Log(velocity);
         int direction = 1;
-        if(velocity < 0)
-        {
-            direction = -1;
-        }
+        if(Self.GetComponent<SpriteRenderer>().flipX){direction = -1;}
 
-        Vector2 SpritePos = new Vector2(Self.transform.position.x * direction, Self.transform.position.y * direction);
-        Vector2 HitboxSpawn = new Vector2(SpritePos.x + Offset.x, SpritePos.y + Offset.y);
+        //VISUALS
+        Vector2 SpritePos = new Vector2(Self.transform.Find("AttackPosition").gameObject.transform.position.x, Self.transform.Find("AttackPosition").gameObject.transform.position.y);
+        Vector2 HitboxSpawn = new Vector2(SpritePos.x + Offset.x * direction, SpritePos.y + Offset.y);
 
         GameObject NewHitbox = Instantiate(Hitbox, new Vector3(HitboxSpawn.x, HitboxSpawn.y, 0), Quaternion.identity);
         NewHitbox.transform.localScale = new Vector3(Width, Height, 1);
         NewHitbox.GetComponent<Animator>().runtimeAnimatorController = HitboxVFX;
+        Destroy(NewHitbox, NewHitbox.GetComponent<Animator>().GetCurrentAnimatorClipInfo(0).Length); 
+        if(direction == -1){NewHitbox.GetComponent<SpriteRenderer>().flipX = true;}
 
-
-        if(direction == -1)
-        {
-            NewHitbox.GetComponent<SpriteRenderer>().flipX = true;
-        }
-    
         // return an array of other things colliding (filter out self)
         Collider2D[] Colliders = Physics2D.OverlapCapsuleAll(HitboxSpawn, new Vector2(Width, Height), CapsuleDirection2D.Horizontal, 0f); // todo rotation value
 
@@ -205,7 +256,10 @@ public class AbilityController : MonoBehaviour
     {
         HandleMaskDamage(Mask);
 
-        Self.transform.position = new Vector3(Self.transform.position.x + 5, Self.transform.position.y + 2, Self.transform.position.z);
+        int direction = 1;
+        if(Self.GetComponent<SpriteRenderer>().flipX){direction = -1;}
+
+        Self.transform.position = new Vector3(Self.transform.position.x + 5 * direction, Self.transform.position.y + 2, Self.transform.position.z);
         Debug.Log(Mask.AbilityName);
     }
 }

@@ -6,7 +6,7 @@ using UnityEngine.Rendering;
 
 public class EnemyBaseScript : MonoBehaviour
 {
-    private enum EnemyState
+    protected enum EnemyState
     {
         Idle = 0,
         Patrol = 1,
@@ -17,10 +17,12 @@ public class EnemyBaseScript : MonoBehaviour
 
 
     // Physics and Controls
-    Rigidbody2D playerRb;
-    SpriteRenderer spriteRenderer;
-    HealthComponent healthComponent;
-    Animator animator;
+    protected Rigidbody2D playerRb;
+    protected SpriteRenderer spriteRenderer;
+    protected HealthComponent healthComponent;
+    protected Animator animator;
+    private AbilityController abilityController;
+
 
     // Basic enemy stats and variables
 
@@ -32,23 +34,23 @@ public class EnemyBaseScript : MonoBehaviour
 
     public float speed = 4f;
 
-    private float currentSpeed = 0f;
+    protected float currentSpeed = 0f;
     public float attackSpeedMultiplier = 1f;
 
     public float idleTime = 1f;
-    private float idleTimer = 0f;
+    protected float idleTimer = 0f;
 
     // AI
     [Header("AI")]
 
-    EnemyState enemyState = EnemyState.Idle;
+    protected EnemyState enemyState = EnemyState.Idle;
 
-    private Vector3 startLocation;
-    private Vector3 targetLocation;
+    protected Vector3 startLocation;
+    protected Vector3 targetLocation;
 
-    private GameObject targetPlayer;
+    protected GameObject targetPlayer;
 
-    private int lookingAtDirection = 1;
+    protected int lookingAtDirection = 1;
 
     // Ranges
     [Header("Ranges")]
@@ -58,7 +60,7 @@ public class EnemyBaseScript : MonoBehaviour
     public float attackRange = 1f;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    protected void Start()
+    protected virtual void Start()
     {
 
         startLocation = gameObject.transform.position;
@@ -74,6 +76,7 @@ public class EnemyBaseScript : MonoBehaviour
         healthComponent.E_EntityHasDied.AddListener(DeathState);
 
         animator = GetComponent<Animator>();
+        abilityController = GetComponent<AbilityController>();
 
     }
 
@@ -249,7 +252,7 @@ public class EnemyBaseScript : MonoBehaviour
         return false;
     }
 
-    public void AttackState()
+    public virtual void AttackState()
     {
 
         playerRb.linearVelocity = new Vector2(0, 0);
@@ -258,6 +261,7 @@ public class EnemyBaseScript : MonoBehaviour
         {
             if (!animator.GetBool("IsAttacking"))
             {
+                abilityController.EnemyAttack();
                 animator.SetBool("IsAttacking", true);
             }
 

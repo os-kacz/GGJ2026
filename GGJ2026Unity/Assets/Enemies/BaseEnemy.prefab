@@ -117,6 +117,7 @@ GameObject:
   - component: {fileID: 2108799173815892698}
   - component: {fileID: 3430231648021277082}
   - component: {fileID: 8941518590760100573}
+  - component: {fileID: 6096635283895360624}
   m_Layer: 7
   m_Name: BaseEnemy
   m_TagString: Untagged
@@ -256,8 +257,8 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.029132685, y: -0.09482524}
-  m_Size: {x: 0.23447578, y: 0.31330675}
+  m_Offset: {x: 0.024255913, y: -0.08241143}
+  m_Size: {x: 0.22472224, y: 0.28847986}
   m_Direction: 0
 --- !u!114 &2108799173815892698
 MonoBehaviour:
@@ -337,6 +338,26 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &6096635283895360624
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7069614169959460007}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 946dfae85e582eb409ef677c11706b49, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Self: {fileID: 7069614169959460007}
+  Hitbox: {fileID: 4767547439140498170, guid: 443da95d7f4730b4c9ee9d3891dd4f36, type: 3}
+  UI: {fileID: 0}
+  AllMasks: []
+  AllWeapons: []
+  PlayerWeaponSlot1: {fileID: 0}
+  UsableMasks: []
+  EnemyWeapon: {fileID: 11400000, guid: baf308d1fdbdb7141bfc32e32bbcb847, type: 2}
 --- !u!1001 &3830791356877602970
 PrefabInstance:
   m_ObjectHideFlags: 0
