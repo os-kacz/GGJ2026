@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using System.Runtime.CompilerServices;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -23,6 +24,8 @@ public class EnemyBaseScript : MonoBehaviour
     protected Animator animator;
     private AbilityController abilityController;
 
+    public AudioClip[] attackSoundArray;
+    private AudioSource audioSource;
 
     // Basic enemy stats and variables
 
@@ -77,6 +80,7 @@ public class EnemyBaseScript : MonoBehaviour
 
         animator = GetComponent<Animator>();
         abilityController = GetComponent<AbilityController>();
+        audioSource = GetComponent<AudioSource>();
 
     }
 
@@ -263,6 +267,8 @@ public class EnemyBaseScript : MonoBehaviour
             {
                 abilityController.EnemyAttack();
                 animator.SetBool("IsAttacking", true);
+
+                StartCoroutine(soundArray());
             }
 
         }
@@ -272,6 +278,20 @@ public class EnemyBaseScript : MonoBehaviour
             enemyState = EnemyState.Chase;
         }
         
+    }
+
+    IEnumerator soundArray()
+    {
+        yield return new WaitForSeconds(0.15f);
+
+        if (attackSoundArray.Length != 0)
+        {
+            int attackChosen = UnityEngine.Random.Range(0, attackSoundArray.Length - 1);
+
+
+            audioSource.PlayOneShot(attackSoundArray[attackChosen]);
+
+        }
     }
 
     public void CalculateNewTargetPosition()
