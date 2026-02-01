@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: FireMask
   m_EditorClassIdentifier: 
   MaskName: Fire Oni Mask
-  MaskIcon: {fileID: 1976944487, guid: d7216d012c27bdb4a9985d1947d10fe4, type: 3}
+  MaskIcon: {fileID: 0}
   UIColour: {r: 1, g: 0.6144982, b: 0, a: 1}
   PlayAnimation: 0
   AbilityID: 3

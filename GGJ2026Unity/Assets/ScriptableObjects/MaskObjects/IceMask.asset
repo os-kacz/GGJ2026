@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: IceMask
   m_EditorClassIdentifier: 
   MaskName: Frozen Mask
-  MaskIcon: {fileID: 1899584029, guid: 541a62e525596a044a3fea96cc3e5919, type: 3}
+  MaskIcon: {fileID: 0}
   UIColour: {r: 0, g: 0.9738939, b: 1, a: 1}
   PlayAnimation: 0
   AbilityID: 4
@@ -26,6 +26,6 @@ MonoBehaviour:
   Debuffs: 
   HitboxHeight: 3
   HitboxWidth: 2
-  HitboxSpawnOffset: {x: 2, y: 0.5}
+  HitboxSpawnOffset: {x: 10, y: 0}
   HitboxVfx: {fileID: 9100000, guid: 2e752cf352128b14e99d72159fe1454c, type: 2}
   WeaponUnlocked: {fileID: 0}

@@ -15,8 +15,7 @@ MonoBehaviour:
   WeaponName: Pistol
   WeaponType: 1
   WeaponIcon: {fileID: 0}
-  UIColour: {r: 0, g: 0, b: 0, a: 1}
+  UIColour: {r: 0, g: 0, b: 0, a: 0}
   Damage: 20
   Knockback: 2
-  AttackSpeed: 0
   ElementType: 0

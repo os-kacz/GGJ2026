@@ -29,8 +29,8 @@ RectTransform:
   m_GameObject: {fileID: 7709113456215019266}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.42, y: 0.42, z: 0.42}
-  m_ConstrainProportionsScale: 1
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -133,8 +133,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 2
-  m_fontSizeBase: 2
+  m_fontSize: 8
+  m_fontSizeBase: 8
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -171,7 +171,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 9.648022, y: 1.8059702, z: 9.706843, w: 2.7656808}
+  m_margin: {x: 8.947145, y: 0.023128033, z: 8.941168, w: 4.0983086}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   _SortingLayer: 0
@@ -202,10 +202,10 @@ Animation:
   m_GameObject: {fileID: 7709113456215019266}
   m_Enabled: 1
   serializedVersion: 4
-  m_Animation: {fileID: 7400000, guid: de571d0ac936a9846a8aad0cbb12d93f, type: 2}
+  m_Animation: {fileID: 7400000, guid: 81954aa6a4660a949a0771d636326c02, type: 2}
   m_Animations:
-  - {fileID: 7400000, guid: de571d0ac936a9846a8aad0cbb12d93f, type: 2}
-  - {fileID: 7400000, guid: 5623893a2c4d2c3419f765e014e33232, type: 2}
+  - {fileID: 7400000, guid: 1b46a0aa0408a524c86dcc4230f906ce, type: 2}
+  - {fileID: 7400000, guid: 81954aa6a4660a949a0771d636326c02, type: 2}
   m_WrapMode: 0
   m_PlayAutomatically: 0
   m_AnimatePhysics: 0
