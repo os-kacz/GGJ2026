@@ -26,6 +26,6 @@ MonoBehaviour:
   Debuffs: 
   HitboxHeight: 3
   HitboxWidth: 2
-  HitboxSpawnOffset: {x: 10, y: 0}
+  HitboxSpawnOffset: {x: 2, y: 0.5}
   HitboxVfx: {fileID: 9100000, guid: 2e752cf352128b14e99d72159fe1454c, type: 2}
   WeaponUnlocked: {fileID: 0}
