@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7487498209329751379}
   - component: {fileID: 1966555961861104238}
   - component: {fileID: 6654921146735560100}
+  - component: {fileID: 7977641402590805116}
   m_Layer: 0
   m_Name: DamageNumber
   m_TagString: DamageNumber
@@ -132,8 +133,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 5
-  m_fontSizeBase: 5
+  m_fontSize: 8
+  m_fontSizeBase: 8
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -170,7 +171,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 9.554217, y: 0.023128033, z: 9.52214, w: 4.4277687}
+  m_margin: {x: 8.947145, y: 0.023128033, z: 8.941168, w: 4.0983086}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   _SortingLayer: 0
@@ -192,3 +193,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   destroyTime: 0.5
+--- !u!111 &7977641402590805116
+Animation:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7709113456215019266}
+  m_Enabled: 1
+  serializedVersion: 4
+  m_Animation: {fileID: 7400000, guid: 81954aa6a4660a949a0771d636326c02, type: 2}
+  m_Animations:
+  - {fileID: 7400000, guid: 1b46a0aa0408a524c86dcc4230f906ce, type: 2}
+  - {fileID: 7400000, guid: 81954aa6a4660a949a0771d636326c02, type: 2}
+  m_WrapMode: 0
+  m_PlayAutomatically: 0
+  m_AnimatePhysics: 0
+  m_UpdateMode: 0
+  m_CullingType: 0

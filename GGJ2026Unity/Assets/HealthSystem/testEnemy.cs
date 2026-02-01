@@ -22,6 +22,6 @@ public class testEnemy : MonoBehaviour
 
     void PoopDoer()
     {
-        Debug.Log("Ementy has dieded");
+
     }
 }
