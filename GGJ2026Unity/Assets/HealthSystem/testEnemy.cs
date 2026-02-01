@@ -10,12 +10,18 @@ public class testEnemy : MonoBehaviour
 
         healthComponent.AddToCurrentStatus(HealthComponent.StatusEffect.Burning);
         healthComponent.AddToCurrentStatus(HealthComponent.StatusEffect.Electrified);
-        healthComponent.AddToCurrentStatus(HealthComponent.StatusEffect.Bleeding);
+
+        healthComponent.E_EntityHasDied.AddListener(PoopDoer);
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+        healthComponent.DecreaseHealthBy(1);
+    }
+
+    void PoopDoer()
+    {
+
     }
 }

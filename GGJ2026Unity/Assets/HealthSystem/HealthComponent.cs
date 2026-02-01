@@ -2,11 +2,20 @@ using System;
 using System.Collections;
 using System.Runtime.CompilerServices;
 using System.Timers;
+using Unity.VisualScripting;
 using UnityEditor.Rendering;
+using UnityEngine.Events;
 using UnityEngine;
+using TMPro;
 
 public class HealthComponent : MonoBehaviour
 {
+    public UnityEvent E_EntityHasDied;
+
+    public UnityEvent E_EntityHasBeenDamaged;
+
+    public GameObject DamageNumberPrefab;
+
     [Flags]
     public enum StatusEffect
     {
@@ -18,19 +27,20 @@ public class HealthComponent : MonoBehaviour
         Bleeding = 16,
     }
 
-    [SerializeField] private int maxHealth;
+    [SerializeField] private float maxHealth;
 
-    [SerializeField] private int currentHealth;
+    [SerializeField] private float currentHealth;
 
-    [SerializeField] private StatusEffect currentEffect = new();
+    [SerializeField] public StatusEffect currentEffect = new();
 
     public bool isDead = false;
 
-    private float burningDuration = 3f;
-    private float stunnedDuration = 1f;
-    private float frozenDuration = 2f;
-    private float electrifiedDuration = 4f;
-    private float bleedingDuration = 6f;
+    [Header("Status Effect Duration")]
+    [SerializeField] private float burningDuration = 3f;
+    [SerializeField] private float stunnedDuration = 1f;
+    [SerializeField] private float frozenDuration = 2f;
+    [SerializeField] private float electrifiedDuration = 4f;
+    [SerializeField] private float bleedingDuration = 6f;
 
     private float timerBurn;
     private float timerStun;
@@ -38,26 +48,65 @@ public class HealthComponent : MonoBehaviour
     private float timerElec;
     private float timerBleed;
 
+    [Header("Status Effect Tick Rate")]
+    [SerializeField] private float burningInterval = 0.5f;
+    [SerializeField] private float electrifiedInterval = 0.2f;
+    [SerializeField] private float bleedingInterval = 1f;
+
+    private float elapsedBurn;
+    private float elapsedElec;
+    private float elapsedBleed;
+
+    [Header("Status Effect Damage")]
+    [SerializeField] private int burnDamage = 3;
+    [SerializeField] private int electrifiedDamage = 1;
+    [SerializeField] private int bleedDamage = 5;
+
+    [Header("Damage Done Last Instance")]
+    public float accumulateDamageDone;
+    public float damageDoneLastInstance;
+
+    private float damageTimer;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         currentHealth = maxHealth;
+
+        if (E_EntityHasDied == null)
+        {
+            E_EntityHasDied = new UnityEvent();
+        }
+
+        if (DamageNumberPrefab == null)
+        {
+            DamageNumberPrefab = GameObject.FindGameObjectWithTag("DamageNumber");
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
+        damageTimer += Time.deltaTime;
+        if (damageTimer > 1f)
+        {
+            damageTimer = 0;
+            damageDoneLastInstance = accumulateDamageDone;
+            accumulateDamageDone = 0;
+        }
+
         if (currentEffect.HasFlag(StatusEffect.Burning))
         {
             timerBurn -= Time.deltaTime;
+            elapsedBurn += Time.deltaTime;
             if (timerBurn < 0)
             {
                 currentEffect &= ~StatusEffect.Burning;
             }
-            //Debug.Log(timerBurn % 0.5);
-            if (timerBurn % 0.5 <= 0.01f)
+            if (elapsedBurn > burningInterval)
             {
-                Debug.Log("OOF!");
+                DecreaseHealthBy(burnDamage);
+                elapsedBurn = 0;
             }
             // burning
         }
@@ -86,9 +135,15 @@ public class HealthComponent : MonoBehaviour
         if (currentEffect.HasFlag(StatusEffect.Electrified))
         {
             timerElec -= Time.deltaTime;
+            elapsedElec += Time.deltaTime;
             if (timerElec < 0)
             {
                 currentEffect &= ~StatusEffect.Electrified;
+            }
+            if (elapsedElec > electrifiedInterval)
+            {
+                DecreaseHealthBy(electrifiedDamage);
+                elapsedElec = 0;
             }
             // electrified
         }
@@ -96,29 +151,74 @@ public class HealthComponent : MonoBehaviour
         if (currentEffect.HasFlag(StatusEffect.Bleeding))
         {
             timerBleed -= Time.deltaTime;
+            elapsedBleed += Time.deltaTime;
             if (timerBleed < 0)
             {
                 currentEffect &= ~StatusEffect.Bleeding;
+            }
+            if (elapsedBleed > bleedingInterval)
+            {
+                DecreaseHealthBy(bleedDamage, StatusEffect.Bleeding);
+                elapsedBleed = 0;
             }
             // bleeding
         }
     }
 
-    public void DecreaseHealth(int damageDealt)
+    // - particle effects for damage numbers and statuseffect
+
+    public void DecreaseHealthBy(int damageDealt, StatusEffect statusEffect = StatusEffect.None)
     {
-        currentHealth -= damageDealt;
-        if (currentHealth < 0)
+        if (!isDead)
         {
-            isDead = true;
+            currentHealth -= damageDealt;
+            accumulateDamageDone += damageDealt;
+            damageTimer = 0f;
+            CreateDamageNumber(damageDealt, statusEffect);
+            if (currentHealth < 0)
+            {
+                E_EntityHasDied.Invoke();
+            }
+            if (Mathf.Sign(damageDealt) == 1)
+            {
+                E_EntityHasBeenDamaged.Invoke();
+            }
         }
     }
 
-    public int GetHealth()
+    private void CreateDamageNumber(float damage, StatusEffect statusEffect)
+    {
+        var textColour = Color.white;
+        if (DamageNumberPrefab != null)
+        {
+            switch (statusEffect)
+            {
+                case StatusEffect.Burning:
+                    textColour = Color.orangeRed;
+                    break;
+                case StatusEffect.Electrified:
+                    textColour = Color.aliceBlue;
+                    break;
+                case StatusEffect.Bleeding:
+                    textColour = Color.darkRed;
+                    break;
+            }
+            var go = Instantiate(DamageNumberPrefab, transform.position, Quaternion.identity, transform);
+            go.GetComponent<TextMeshPro>().text = damage.ToString();
+            go.GetComponent<TextMeshPro>().color = textColour;
+        }
+        else
+        {
+            Debug.Log("No damage number hooked up in prefab slot");
+        }
+    }
+
+    public float GetHealth()
     {
         return currentHealth;
     }
 
-    public int GetMaxHealth()
+    public float GetMaxHealth()
     {
         return maxHealth;
     }
