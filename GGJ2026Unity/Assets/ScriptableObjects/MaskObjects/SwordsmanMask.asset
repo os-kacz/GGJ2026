@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: SwordsmanMask
   m_EditorClassIdentifier: 
   MaskName: Swordsman Mastery
-  MaskIcon: {fileID: 0}
+  MaskIcon: {fileID: 21300000, guid: 8bb07b3e2c4bf3249860a5544a488538, type: 3}
   UIColour: {r: 1, g: 0, b: 0, a: 1}
   PlayAnimation: 1
   AbilityID: 1

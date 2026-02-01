@@ -14,6 +14,12 @@ public class HealthComponent : MonoBehaviour
 
     public UnityEvent E_EntityHasBeenDamaged;
 
+    public UnityEvent E_EntityBurning;
+    public UnityEvent E_EntityStunned;
+    public UnityEvent E_EntityFrozen;
+    public UnityEvent E_EntityElec;
+    public UnityEvent E_EntityBleeding;
+
     public GameObject DamageNumberPrefab;
 
     [Flags]
@@ -175,11 +181,12 @@ public class HealthComponent : MonoBehaviour
             accumulateDamageDone += damageDealt;
             damageTimer = 0f;
             CreateDamageNumber(damageDealt, statusEffect);
+            E_EntityHasBeenDamaged.Invoke();
             if (currentHealth < 0)
             {
                 E_EntityHasDied.Invoke();
             }
-            if (Mathf.Sign(damageDealt) == 1)
+            if (damageDealt > 0)
             {
                 E_EntityHasBeenDamaged.Invoke();
             }
@@ -191,21 +198,21 @@ public class HealthComponent : MonoBehaviour
         var textColour = Color.white;
         if (DamageNumberPrefab != null)
         {
+
+            var go = Instantiate(DamageNumberPrefab, transform.position, Quaternion.identity, transform);
+            go.GetComponent<TextMeshPro>().text = damage.ToString();
             switch (statusEffect)
             {
                 case StatusEffect.Burning:
-                    textColour = Color.orangeRed;
+                    go.GetComponent<TextMeshPro>().color = Color.orangeRed;
                     break;
                 case StatusEffect.Electrified:
-                    textColour = Color.aliceBlue;
+                    go.GetComponent<TextMeshPro>().color = Color.aliceBlue;
                     break;
                 case StatusEffect.Bleeding:
-                    textColour = Color.darkRed;
+                    go.GetComponent<TextMeshPro>().color = Color.darkRed;
                     break;
             }
-            var go = Instantiate(DamageNumberPrefab, transform.position, Quaternion.identity, transform);
-            go.GetComponent<TextMeshPro>().text = damage.ToString();
-            go.GetComponent<TextMeshPro>().color = textColour;
         }
         else
         {

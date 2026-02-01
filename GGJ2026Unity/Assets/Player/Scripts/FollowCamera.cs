@@ -8,6 +8,9 @@ public class FollowCamera : MonoBehaviour
   public Camera m_camera;
   public float cameraSize;
 
+
+
+
     void Start()
     {
         m_camera.orthographicSize = cameraSize;
@@ -20,4 +23,5 @@ public class FollowCamera : MonoBehaviour
         transform.position = smoothedPosition;
         
     }
+
 }
