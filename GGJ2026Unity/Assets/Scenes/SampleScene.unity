@@ -698,6 +698,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Self: {fileID: 572601718}
   Hitbox: {fileID: 4767547439140498170, guid: 443da95d7f4730b4c9ee9d3891dd4f36, type: 3}
+  UI: {fileID: 0}
   AllMasks:
   - {fileID: 11400000, guid: 4027008fc55b1b943b5a314fb6dfa17a, type: 2}
   - {fileID: 11400000, guid: ec8b80ba59e686844893b338890bcf07, type: 2}
