@@ -93,8 +93,8 @@ public class PlayerController : MonoBehaviour
         attackPosition.SetPositionAndRotation(new Vector3(transform.position.x + 0.2f,transform.position.y,0f), new Quaternion(0f,0f,0f,0f));
 
         abilityController = GetComponent<AbilityController>();
-        abilityController.CollectMask("Fire Oni Mask", 1);
-        abilityController.CollectMask("Void Oni Mask", 2);
+        abilityController.CollectMask("Ballistics Mask", 1);
+        abilityController.CollectMask("Frozen Mask", 2);
     }
 
     void Update()

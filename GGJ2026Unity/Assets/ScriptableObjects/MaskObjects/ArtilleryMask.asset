@@ -23,9 +23,9 @@ MonoBehaviour:
   Duration: 1
   Cooldown: 20
   ElementType: 0
-  Debuffs: 
+  Debuffs: 02000000
   HitboxHeight: 2
   HitboxWidth: 2
-  HitboxSpawnOffset: {x: 1.5, y: 0}
+  HitboxSpawnOffset: {x: 2, y: 0}
   HitboxVfx: {fileID: 9100000, guid: d40b82effcf2b904386235cf0b357589, type: 2}
-  WeaponUnlocked: {fileID: 11400000, guid: e40e1bf665338204eb855d3a7f33f9fc, type: 2}
+  WeaponUnlocked: {fileID: 0}

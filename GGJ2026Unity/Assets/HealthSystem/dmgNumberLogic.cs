@@ -16,7 +16,7 @@ public class dmgNumberLogic : MonoBehaviour
         }
         else
         {
-            textBounce.Play("DamageNumberNegative");
+            textBounce.Play("DamageNumberPositive");
         }
     }
 

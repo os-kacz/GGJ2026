@@ -22,7 +22,7 @@ public class EnemyBaseScript : MonoBehaviour
     protected SpriteRenderer spriteRenderer;
     protected HealthComponent healthComponent;
     protected Animator animator;
-    private AbilityController abilityController;
+    protected AbilityController abilityController;
 
     public AudioClip[] attackSoundArray;
     private AudioSource audioSource;
@@ -282,7 +282,7 @@ public class EnemyBaseScript : MonoBehaviour
         
     }
 
-    IEnumerator soundArray()
+    protected IEnumerator soundArray()
     {
         yield return new WaitForSeconds(0.15f);
 

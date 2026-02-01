@@ -188,7 +188,7 @@ public class AbilityController : MonoBehaviour
         int direction = 1;
         if(Self.GetComponent<SpriteRenderer>().flipX){direction = -1;}
  
-        Vector2 SpritePos = new Vector2(Self.transform.Find("AttackPosition").gameObject.transform.position.x, Self.transform.Find("AttackPosition").gameObject.transform.position.y);
+        Vector2 SpritePos = new Vector2(Self.transform.position.x, Self.transform.position.y);
         Vector2 HitboxSpawn = new Vector2(SpritePos.x + Mask.HitboxSpawnOffset.x * direction, SpritePos.y + Mask.HitboxSpawnOffset.y);
  
         //VISUAL ONLY
@@ -234,13 +234,13 @@ public class AbilityController : MonoBehaviour
  
         //VISUAL ONLY
         GameObject NewHitbox = Instantiate(Hitbox, new Vector3(HitboxSpawn.x, HitboxSpawn.y, 0), Quaternion.identity);
-        NewHitbox.transform.localScale = new Vector3(1.5f, 1.5f, 1);
+        NewHitbox.transform.localScale = new Vector3(2f, 2f, 1);
         // NewHitbox.GetComponent<Animator>().runtimeAnimatorController = Mask.HitboxVfx;
         // if(direction == -1){NewHitbox.GetComponent<SpriteRenderer>().flipX = true;}
  
         //SETS UP HITBOX COLLIDER
         BoxCollider2D HitboxOverlap = NewHitbox.GetComponent<BoxCollider2D>();
-        HitboxOverlap.size = new Vector2(1.1f, 0.75f);
+        HitboxOverlap.size = new Vector2(2f, 2f);
         NewHitbox.GetComponent<HitboxTrigger>().abilityController = this;
  
         float HitboxLifetime = 0.2f;
@@ -257,7 +257,25 @@ public class AbilityController : MonoBehaviour
                     Debug.Log("DEAL DAMAGE TO " + Character.name);
                     HealthComponent CharacterHealth = Character.GetComponent<HealthComponent>();
                     CharacterHealth.DecreaseHealthBy(weapon.Damage, HealthComponent.StatusEffect.None);
- 
+                    int randomStatus = UnityEngine.Random.Range(0,6);
+                    switch (randomStatus)
+                    {
+                        case 1:
+                            CharacterHealth.AddToCurrentStatus(HealthComponent.StatusEffect.Bleeding);
+                        break;
+                        case 2:
+                            CharacterHealth.AddToCurrentStatus(HealthComponent.StatusEffect.Burning);
+                        break;
+                        case 3:
+                            CharacterHealth.AddToCurrentStatus(HealthComponent.StatusEffect.Frozen);
+                        break;
+                        case 4:
+                            CharacterHealth.AddToCurrentStatus(HealthComponent.StatusEffect.Electrified);
+                        break;
+                        case 5:
+                            CharacterHealth.AddToCurrentStatus(HealthComponent.StatusEffect.Stunned);
+                        break;
+                    }
                     // add any debuffs the ability will inflict
                     // foreach(HealthComponent.StatusEffect Debuff in Mask.Debuffs){CharacterHealth.AddToCurrentStatus(Debuff); }
                 }

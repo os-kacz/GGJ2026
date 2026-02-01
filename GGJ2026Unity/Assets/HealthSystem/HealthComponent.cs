@@ -198,21 +198,21 @@ public class HealthComponent : MonoBehaviour
         var textColour = Color.white;
         if (DamageNumberPrefab != null)
         {
+
+            var go = Instantiate(DamageNumberPrefab, transform.position, Quaternion.identity, transform);
+            go.GetComponent<TextMeshPro>().text = damage.ToString();
             switch (statusEffect)
             {
                 case StatusEffect.Burning:
-                    textColour = Color.orangeRed;
+                    go.GetComponent<TextMeshPro>().color = Color.orangeRed;
                     break;
                 case StatusEffect.Electrified:
-                    textColour = Color.aliceBlue;
+                    go.GetComponent<TextMeshPro>().color = Color.aliceBlue;
                     break;
                 case StatusEffect.Bleeding:
-                    textColour = Color.darkRed;
+                    go.GetComponent<TextMeshPro>().color = Color.darkRed;
                     break;
             }
-            var go = Instantiate(DamageNumberPrefab, transform.position, Quaternion.identity, transform);
-            go.GetComponent<TextMeshPro>().text = damage.ToString();
-            go.GetComponent<TextMeshPro>().color = textColour;
         }
         else
         {

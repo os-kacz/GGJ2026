@@ -23,7 +23,7 @@ MonoBehaviour:
   Duration: 2
   Cooldown: 30
   ElementType: 2
-  Debuffs: 
+  Debuffs: 04000000
   HitboxHeight: 3
   HitboxWidth: 2
   HitboxSpawnOffset: {x: 2.2, y: 0.5}

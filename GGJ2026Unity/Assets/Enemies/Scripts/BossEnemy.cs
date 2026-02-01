@@ -16,12 +16,13 @@ public class BossEnemy : EnemyBaseScript
                 if (attackOrAbility == 0)
                 {
                     // Do normal Attack Sword
-                    // abilityController.EnemyAttack();
+                    abilityController.EnemyAttack();
+                    StartCoroutine(soundArray());
                 }
                 else
                 {
-                    // abilityController.EnemyUseMask();
-                    // Debug.Log("abILITY");
+                    abilityController.EnemyUseMask();
+                    Debug.Log("abILITY");
                 }
 
                 animator.SetBool("IsAttacking", true);
@@ -35,4 +36,5 @@ public class BossEnemy : EnemyBaseScript
             enemyState = EnemyState.Chase;
         }
     }
+    
 }
