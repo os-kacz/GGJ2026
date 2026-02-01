@@ -27,6 +27,11 @@ public class PlayerController : MonoBehaviour
 
     [SerializeField] private Animator _animator;
 
+    private AudioSource _audioSource;
+
+    [SerializeField] AudioClip[] swordSoundEffectArray;
+    [SerializeField] AudioClip[] runSoundEffectArray;
+
     // movement speed and jump force for player
     private float speed;
     public float baseSpeed;
@@ -77,6 +82,8 @@ public class PlayerController : MonoBehaviour
 
         _healthComponent = GetComponent<HealthComponent>();
         _healthComponent.E_EntityHasDied.AddListener(IsDead);
+
+        _audioSource = GetComponent<AudioSource>();
         
         //sets rigidbody
         playerRb = GetComponent<Rigidbody2D>();
@@ -143,6 +150,8 @@ public class PlayerController : MonoBehaviour
     {
         //gets the value from movement input
         moveValue = moveAction.ReadValue<Vector2>();
+        
+
 
         // checks which direction player is facing a flips the spirte
         if ( moveValue.x < 0)
@@ -236,7 +245,9 @@ public class PlayerController : MonoBehaviour
         {
             _animator.SetBool("IsAttacking", true);
             hitEnemy = Physics2D.OverlapCapsule(attackPosition.position, attackSize, CapsuleDirection2D.Horizontal, 0f, enemyLayer, -1f, 1f);
-            
+
+            StartCoroutine(SwordSoundDelay());
+
             if(hitEnemy == true)
             {
                 
@@ -248,6 +259,19 @@ public class PlayerController : MonoBehaviour
             
         }  
 
+        
+    }
+
+    IEnumerator SwordSoundDelay()
+    {
+        yield return new WaitForSeconds(0.15f);
+        if(swordSoundEffectArray.Length != 0)
+        {
+            int attackChosen = UnityEngine.Random.Range(0, swordSoundEffectArray.Length -1);
+            _audioSource.PlayOneShot(swordSoundEffectArray[attackChosen]);
+                          
+        }
+        Debug.Log("Attack Sound");
         
     }
 
