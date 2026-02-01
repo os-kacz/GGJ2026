@@ -12,10 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3a4156715eb02f34babcd4db311e4399, type: 3}
   m_Name: Greatsword
   m_EditorClassIdentifier: 
-  WeaponName: Ultra- Sw0rd
+  WeaponName: U1tra- Sw0rd
   WeaponType: 0
   WeaponIcon: {fileID: 0}
-  UIColour: {r: 1, g: 0, b: 0, a: 0}
+  UIColour: {r: 1, g: 0, b: 0, a: 1}
   Damage: 50
   Knockback: 25
+  AttackSpeed: 0
   ElementType: 0
