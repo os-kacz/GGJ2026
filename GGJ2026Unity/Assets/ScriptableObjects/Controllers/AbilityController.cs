@@ -9,6 +9,7 @@ public class AbilityController : MonoBehaviour
 {
     public GameObject Self; 
     public GameObject Hitbox;
+    public Canvas UI;
 
     //references to all the masks in the game
     [Header("Masks")]
