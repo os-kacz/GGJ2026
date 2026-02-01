@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 3
   tags:
   - DamageNumber
+  - Enemy
   layers:
   - Default
   - TransparentFX
