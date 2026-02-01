@@ -1,3 +1,6 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using Microsoft.Unity.VisualStudio.Editor;
@@ -5,6 +8,7 @@ using TMPro;
 using Unity.VisualScripting;
 using UnityEditor.Animations;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.UI;
 
 // TODO: handle cooldowns for mask abilities
@@ -14,6 +18,8 @@ public class AbilityController : MonoBehaviour
     public GameObject Self; 
     public GameObject Hitbox;
     public Canvas UI;
+
+    public List<GameObject> IntersectingColliders = new List<GameObject>();
 
     //references to all the masks in the game
     [Header("Masks")]
@@ -167,48 +173,54 @@ public class AbilityController : MonoBehaviour
 
     }
 
-    private GameObject[] CreateHitbox(float Height, float Width, Vector2 Offset, AnimatorController HitboxVFX)
+    IEnumerator Delay(float Lifetime)
     {
-        int direction = 1;
-        if(Self.GetComponent<SpriteRenderer>().flipX){direction = -1;}
+        yield return new WaitForSeconds(Lifetime);
+    }
 
-        //VISUALS
-        Vector2 SpritePos = new Vector2(Self.transform.Find("AttackPosition").gameObject.transform.position.x, Self.transform.Find("AttackPosition").gameObject.transform.position.y);
-        Vector2 HitboxSpawn = new Vector2(SpritePos.x + Offset.x * direction, SpritePos.y + Offset.y);
-
-        GameObject NewHitbox = Instantiate(Hitbox, new Vector3(HitboxSpawn.x, HitboxSpawn.y, 0), Quaternion.identity);
-        NewHitbox.transform.localScale = new Vector3(Width, Height, 1);
-        NewHitbox.GetComponent<Animator>().runtimeAnimatorController = HitboxVFX;
-        Destroy(NewHitbox, NewHitbox.GetComponent<Animator>().GetCurrentAnimatorClipInfo(0).Length); 
-        if(direction == -1){NewHitbox.GetComponent<SpriteRenderer>().flipX = true;}
-
-        // return an array of other things colliding (filter out self)
-        Collider2D[] Colliders = Physics2D.OverlapCapsuleAll(HitboxSpawn, new Vector2(Width, Height), CapsuleDirection2D.Horizontal, 0f); // todo rotation value
-
-        GameObject[] CharactersHit = {};
-        foreach(Collider2D Box in Colliders)
-        {
-            if(Box.gameObject.layer != Self.layer && Box.gameObject.layer != 1 && Box.gameObject.layer != 2 && Box.gameObject.layer != 3 && Box.gameObject.layer != 4 && Box.gameObject.layer != 5 && Box.gameObject.layer != 6)
-            {
-                CharactersHit.Append(Box.gameObject);
-            }
-        }
-
-        return CharactersHit;
+    private  void CreateHitbox(float Height, float Width, Vector2 Offset, AnimatorController HitboxVFX)
+    {
+       
     }
 
     private void HandleMaskDamage(NewMask Mask)
     {
-        GameObject[] CharactersHit = CreateHitbox(Mask.HitboxHeight, Mask.HitboxWidth, Mask.HitboxSpawnOffset, Mask.HitboxVfx);
+        int direction = 1;
+        if(Self.GetComponent<SpriteRenderer>().flipX){direction = -1;}
 
-        foreach(GameObject Character in CharactersHit)
+        Vector2 SpritePos = new Vector2(Self.transform.Find("AttackPosition").gameObject.transform.position.x, Self.transform.Find("AttackPosition").gameObject.transform.position.y);
+        Vector2 HitboxSpawn = new Vector2(SpritePos.x + Mask.HitboxSpawnOffset.x * direction, SpritePos.y + Mask.HitboxSpawnOffset.y);
+
+        //VISUAL ONLY
+        GameObject NewHitbox = Instantiate(Hitbox, new Vector3(HitboxSpawn.x, HitboxSpawn.y, 0), Quaternion.identity);
+        NewHitbox.transform.localScale = new Vector3(Mask.HitboxWidth, Mask.HitboxHeight, 1);
+        NewHitbox.GetComponent<Animator>().runtimeAnimatorController = Mask.HitboxVfx;
+        if(direction == -1){NewHitbox.GetComponent<SpriteRenderer>().flipX = true;}
+
+        //SETS UP HITBOX COLLIDER
+        BoxCollider2D HitboxOverlap = NewHitbox.GetComponent<BoxCollider2D>();
+        HitboxOverlap.size = new Vector2(Mask.HitboxWidth, Mask.HitboxHeight);
+        NewHitbox.GetComponent<HitboxTrigger>().abilityController = this;
+
+        float HitboxLifetime = NewHitbox.GetComponent<Animator>().GetCurrentAnimatorClipInfo(0).Length;
+        Destroy(NewHitbox, HitboxLifetime); 
+
+        StartCoroutine(Delay(HitboxLifetime));
+
+        foreach(GameObject Character in IntersectingColliders)
         {
-            // GET THE HEALTH COMPONENT AND DEAL DAMAGE AND APPLY STATUS EFFECTS
-            HealthComponent CharacterHealth = Character.GetComponent<HealthComponent>();
-            CharacterHealth.DecreaseHealthBy(Mask.AbilityDamage);
+            if (Character)
+            {
+                if(Character.layer != Self.layer)
+                {
+                    Debug.Log("DEAL DAMAGE TO " + Character.name);
+                    HealthComponent CharacterHealth = Character.GetComponent<HealthComponent>();
+                    CharacterHealth.DecreaseHealthBy(Mask.AbilityDamage, HealthComponent.StatusEffect.None);
 
-            // add any debuffs the ability will inflict
-            foreach(HealthComponent.StatusEffect Debuff in Mask.Debuffs){CharacterHealth.AddToCurrentStatus(Debuff); }
+                    // add any debuffs the ability will inflict
+                    foreach(HealthComponent.StatusEffect Debuff in Mask.Debuffs){CharacterHealth.AddToCurrentStatus(Debuff); }
+                }
+            }
         }
     }
 
