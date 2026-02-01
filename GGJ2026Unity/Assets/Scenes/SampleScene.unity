@@ -892,6 +892,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1392107679165114173, guid: 2a0d49784b69d7a49a1fdb6023d822e6, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1392107679165114173, guid: 2a0d49784b69d7a49a1fdb6023d822e6, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2518091850015391979, guid: 2a0d49784b69d7a49a1fdb6023d822e6, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2518091850015391979, guid: 2a0d49784b69d7a49a1fdb6023d822e6, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6352462586399252680, guid: 2a0d49784b69d7a49a1fdb6023d822e6, type: 3}
       propertyPath: m_Name
       value: OnScreenUI
@@ -1299,7 +1315,9 @@ MonoBehaviour:
   m_References:
     m_Keys:
     - ffc61e30331985945a1143358ca2348e
+    - e24ae47e3b70b5e4d87c051bb6f1b49f
     m_Values:
+    - {fileID: 0}
     - {fileID: 0}
 --- !u!4 &1858613138
 Transform:
