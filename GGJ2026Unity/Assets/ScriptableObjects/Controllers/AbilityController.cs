@@ -32,6 +32,21 @@ public class AbilityController : MonoBehaviour
     private NewMask PlayerMaskSlot1;
     private NewMask PlayerMaskSlot2;
 
+    public void Start()
+    {
+        if(PlayerWeaponSlot1)
+        {
+            GameObject WeaponSlot = UI.transform.Find("BottomPanel").gameObject.transform.Find("WeaponSlot").gameObject;
+            UnityEngine.UI.Image Border = WeaponSlot.transform.Find("SlotOuter").gameObject.GetComponent<UnityEngine.UI.Image>();
+            UnityEngine.UI.Image Icon = WeaponSlot.transform.Find("SlotIcon").gameObject.GetComponent<UnityEngine.UI.Image>();
+            TextMeshProUGUI Text = WeaponSlot.transform.Find("WeaponName").gameObject.GetComponent<TextMeshProUGUI>();
+
+            Border.color = PlayerWeaponSlot1.UIColour;
+            Icon.sprite = PlayerWeaponSlot1.WeaponIcon;
+            Text.text = PlayerWeaponSlot1.WeaponName;
+        }
+    }
+
     // player only
     public void CollectMask(string _maskName, int _slotNumber)
     {
@@ -48,10 +63,12 @@ public class AbilityController : MonoBehaviour
                     UnityEngine.UI.Image Border = MaskSlot.transform.Find("SlotOuter").gameObject.GetComponent<UnityEngine.UI.Image>();
                     UnityEngine.UI.Image Icon = MaskSlot.transform.Find("SlotIcon").gameObject.GetComponent<UnityEngine.UI.Image>();
                     TextMeshProUGUI Text = MaskSlot.transform.Find("AbilityName").gameObject.GetComponent<TextMeshProUGUI>();
+                    UnityEngine.UI.Image ButtonPrompt =  MaskSlot.transform.Find("SlotButton").gameObject.GetComponent<UnityEngine.UI.Image>();
 
                     Border.color = Mask.UIColour;
                     Icon.sprite = Mask.MaskIcon;
                     Text.text = Mask.AbilityName;
+                    ButtonPrompt.color = Mask.UIColour;
                 }   
 
                 else
@@ -61,10 +78,13 @@ public class AbilityController : MonoBehaviour
                     UnityEngine.UI.Image Border = MaskSlot.transform.Find("SlotOuter").gameObject.GetComponent<UnityEngine.UI.Image>();
                     UnityEngine.UI.Image Icon = MaskSlot.transform.Find("SlotIcon").gameObject.GetComponent<UnityEngine.UI.Image>();
                     TextMeshProUGUI Text = MaskSlot.transform.Find("AbilityName").gameObject.GetComponent<TextMeshProUGUI>();
+                    UnityEngine.UI.Image ButtonPrompt =  MaskSlot.transform.Find("SlotButton").gameObject.GetComponent<UnityEngine.UI.Image>();
+
 
                     Border.color = Mask.UIColour;
                     Icon.sprite = Mask.MaskIcon;
                     Text.text = Mask.AbilityName;
+                    ButtonPrompt.color = Mask.UIColour;
 
                 }
 
@@ -72,6 +92,15 @@ public class AbilityController : MonoBehaviour
                 if (Mask.WeaponUnlocked)
                 {
                     PlayerWeaponSlot1 = Mask.WeaponUnlocked;
+
+                    GameObject WeaponSlot = UI.transform.Find("BottomPanel").gameObject.transform.Find("WeaponSlot").gameObject;
+                    UnityEngine.UI.Image Border = WeaponSlot.transform.Find("SlotOuter").gameObject.GetComponent<UnityEngine.UI.Image>();
+                    UnityEngine.UI.Image Icon = WeaponSlot.transform.Find("SlotIcon").gameObject.GetComponent<UnityEngine.UI.Image>();
+                    TextMeshProUGUI Text = WeaponSlot.transform.Find("WeaponName").gameObject.GetComponent<TextMeshProUGUI>();
+
+                    Border.color = PlayerWeaponSlot1.UIColour;
+                    Icon.sprite = PlayerWeaponSlot1.WeaponIcon;
+                    Text.text = PlayerWeaponSlot1.WeaponName;
                 }
 
                 return;
