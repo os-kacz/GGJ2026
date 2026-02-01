@@ -175,11 +175,12 @@ public class HealthComponent : MonoBehaviour
             accumulateDamageDone += damageDealt;
             damageTimer = 0f;
             CreateDamageNumber(damageDealt, statusEffect);
+            E_EntityHasBeenDamaged.Invoke();
             if (currentHealth < 0)
             {
                 E_EntityHasDied.Invoke();
             }
-            if (Mathf.Sign(damageDealt) == 1)
+            if (damageDealt > 0)
             {
                 E_EntityHasBeenDamaged.Invoke();
             }
