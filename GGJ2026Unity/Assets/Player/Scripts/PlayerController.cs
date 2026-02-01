@@ -21,9 +21,16 @@ public class PlayerController : MonoBehaviour
     SpriteRenderer spriteRenderer;
     AbilityController abilityController;
 
+    BoxCollider2D enemyDetectionBox;
+
     HealthComponent _healthComponent;
 
     [SerializeField] private Animator _animator;
+
+    private AudioSource _audioSource;
+
+    [SerializeField] AudioClip[] swordSoundEffectArray;
+    [SerializeField] AudioClip[] runSoundEffectArray;
 
     // movement speed and jump force for player
     private float speed;
@@ -71,8 +78,13 @@ public class PlayerController : MonoBehaviour
         dodgeAction = InputSystem.actions.FindAction("Dodge");
         sprintActoin = InputSystem.actions.FindAction("Sprint");
 
+        enemyDetectionBox = GetComponent<BoxCollider2D>();
+
         _healthComponent = GetComponent<HealthComponent>();
         _healthComponent.E_EntityHasDied.AddListener(IsDead);
+
+        _audioSource = GetComponent<AudioSource>();
+        
         //sets rigidbody
         playerRb = GetComponent<Rigidbody2D>();
         // sets sprite renderer
@@ -81,7 +93,7 @@ public class PlayerController : MonoBehaviour
         attackPosition.SetPositionAndRotation(new Vector3(transform.position.x + 0.2f,transform.position.y,0f), new Quaternion(0f,0f,0f,0f));
 
         abilityController = GetComponent<AbilityController>();
-        abilityController.CollectMask("Frozen Mask", 1);
+        abilityController.CollectMask("Swordsman Mastery", 1);
         abilityController.CollectMask("Void Oni Mask", 2);
     }
 
@@ -130,12 +142,16 @@ public class PlayerController : MonoBehaviour
         }
 
 
+
+
     }
 
     void FixedUpdate()
     {
         //gets the value from movement input
         moveValue = moveAction.ReadValue<Vector2>();
+        
+
 
         // checks which direction player is facing a flips the spirte
         if ( moveValue.x < 0)
@@ -183,6 +199,7 @@ public class PlayerController : MonoBehaviour
 
     void Sprint()
     {
+
         if (sprintActoin.IsPressed() && isGrounded == true)
         {
             speed = sprintSpeed;
@@ -228,14 +245,16 @@ public class PlayerController : MonoBehaviour
         {
             _animator.SetBool("IsAttacking", true);
             hitEnemy = Physics2D.OverlapCapsule(attackPosition.position, attackSize, CapsuleDirection2D.Horizontal, 0f, enemyLayer, -1f, 1f);
-            
+
+            StartCoroutine(SwordSoundDelay());
+
             if(hitEnemy == true)
             {
                 
                 abilityController.PlayerAttack();
                 timer = 0f;
                 
-                //add ability.baseAttack function
+                
             }
             
         }  
@@ -243,19 +262,32 @@ public class PlayerController : MonoBehaviour
         
     }
 
+    IEnumerator SwordSoundDelay()
+    {
+        yield return new WaitForSeconds(0.15f);
+        if(swordSoundEffectArray.Length != 0)
+        {
+            int attackChosen = UnityEngine.Random.Range(0, swordSoundEffectArray.Length -1);
+            _audioSource.PlayOneShot(swordSoundEffectArray[attackChosen]);
+                          
+        }
+        Debug.Log("Attack Sound");
+        
+    }
+
     void Ability1()
     {
         if(abilityAction_1.WasPressedThisFrame())
         {
-            abilityController.TriggerAbility1();
+            // abilityController.TriggerAbility1();
 
-            // NewMask.AnimationState AnimID = abilityController.TriggerAbility1();
-            // switch(AnimID)
-            // {
-            //     case NewMask.AnimationState.Slam:
-            _animator.SetBool("IsSlamming", true);
-            //     break;
-            // }
+            NewMask.AnimationState AnimID = abilityController.TriggerAbility1();
+            switch(AnimID)
+            {
+                case NewMask.AnimationState.Slam:
+                _animator.SetBool("IsSlamming", true);
+                break;
+            }
 
         }
         
@@ -265,7 +297,13 @@ public class PlayerController : MonoBehaviour
     {
         if(abilityAction_2.WasPressedThisFrame())
         {
-            abilityController.TriggerAbility2();
+            NewMask.AnimationState AnimID = abilityController.TriggerAbility1();
+            switch(AnimID)
+            {
+                case NewMask.AnimationState.Slam:
+                _animator.SetBool("IsSlamming", true);
+                break;
+            }
         }
     }
 
@@ -332,6 +370,8 @@ public class PlayerController : MonoBehaviour
             _animator.SetBool("RightSlide", false);
         }
     }
+
+
     void IsDead()
     {
         _animator.SetBool("IsDead", true);

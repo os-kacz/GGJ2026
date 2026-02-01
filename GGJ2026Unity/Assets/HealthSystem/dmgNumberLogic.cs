@@ -10,7 +10,6 @@ public class dmgNumberLogic : MonoBehaviour
         Destroy(gameObject, destroyTime);
         var animToPlay = Random.Range(0, 2);
         textBounce = GetComponent<Animation>();
-        //textBounce.Play();
         if (animToPlay == 0)
         {
             textBounce.Play("DamageNumberPositive");

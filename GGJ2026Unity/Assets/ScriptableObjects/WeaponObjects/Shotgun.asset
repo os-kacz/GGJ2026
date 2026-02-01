@@ -15,8 +15,7 @@ MonoBehaviour:
   WeaponName: Big Bertha
   WeaponType: 0
   WeaponIcon: {fileID: 0}
-  UIColour: {r: 0.20506465, g: 1, b: 0, a: 1}
+  UIColour: {r: 0.20506465, g: 1, b: 0, a: 0}
   Damage: 30
   Knockback: 30
-  AttackSpeed: 0
   ElementType: 0
