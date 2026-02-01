@@ -12,8 +12,6 @@ public class BleedIcon : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player");
         healthComponent = player.GetComponent<HealthComponent>();
         icon = GetComponent<Image>();
-
-        healthComponent.AddToCurrentStatus(HealthComponent.StatusEffect.Bleeding);
     }
 
     // Update is called once per frame
