@@ -309,8 +309,23 @@ MonoBehaviour:
   E_EntityHasBeenDamaged:
     m_PersistentCalls:
       m_Calls: []
+  E_EntityBurning:
+    m_PersistentCalls:
+      m_Calls: []
+  E_EntityStunned:
+    m_PersistentCalls:
+      m_Calls: []
+  E_EntityFrozen:
+    m_PersistentCalls:
+      m_Calls: []
+  E_EntityElec:
+    m_PersistentCalls:
+      m_Calls: []
+  E_EntityBleeding:
+    m_PersistentCalls:
+      m_Calls: []
   DamageNumberPrefab: {fileID: 7709113456215019266, guid: c0182cf7f36b160469077488a6681927, type: 3}
-  maxHealth: 200
+  maxHealth: 400
   currentHealth: 0
   currentEffect: 0
   isDead: 0
@@ -342,6 +357,7 @@ MonoBehaviour:
   Self: {fileID: 3985552148017679609}
   Hitbox: {fileID: 4767547439140498170, guid: 443da95d7f4730b4c9ee9d3891dd4f36, type: 3}
   UI: {fileID: 0}
+  IntersectingColliders: []
   AllMasks:
   - {fileID: 11400000, guid: 4027008fc55b1b943b5a314fb6dfa17a, type: 2}
   - {fileID: 11400000, guid: ec8b80ba59e686844893b338890bcf07, type: 2}

@@ -22,11 +22,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 130034739740853945, guid: be34118ac703db5499b8304c1711cabc, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 8.43027
       objectReference: {fileID: 0}
     - target: {fileID: 130034739740853945, guid: be34118ac703db5499b8304c1711cabc, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: -1.19008
       objectReference: {fileID: 0}
     - target: {fileID: 130034739740853945, guid: be34118ac703db5499b8304c1711cabc, type: 3}
       propertyPath: m_LocalPosition.z
@@ -84,6 +84,14 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3430231648021277082, guid: be34118ac703db5499b8304c1711cabc, type: 3}
+      propertyPath: maxHealth
+      value: 500
+      objectReference: {fileID: 0}
+    - target: {fileID: 6096635283895360624, guid: be34118ac703db5499b8304c1711cabc, type: 3}
+      propertyPath: PlayerWeaponSlot1
+      value: 
+      objectReference: {fileID: 11400000, guid: baf308d1fdbdb7141bfc32e32bbcb847, type: 2}
     - target: {fileID: 6096635283895360624, guid: be34118ac703db5499b8304c1711cabc, type: 3}
       propertyPath: UsableMasks.Array.size
       value: 2
