@@ -284,9 +284,7 @@ MonoBehaviour:
   damageMultiplier: 1
   speed: 3
   attackSpeedMultiplier: 1
-  attackTime: 1
   idleTime: 1
-  deathTime: 2
   patrolRange: 10
   detectionRange: 5
   attackRange: 1
@@ -308,7 +306,7 @@ MonoBehaviour:
   E_EntityHasBeenDamaged:
     m_PersistentCalls:
       m_Calls: []
-  DamageNumberPrefab: {fileID: 0}
+  DamageNumberPrefab: {fileID: 7709113456215019266, guid: c0182cf7f36b160469077488a6681927, type: 3}
   maxHealth: 100
   currentHealth: 0
   currentEffect: 0
