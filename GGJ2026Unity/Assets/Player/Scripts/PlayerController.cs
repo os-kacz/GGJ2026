@@ -21,6 +21,8 @@ public class PlayerController : MonoBehaviour
     SpriteRenderer spriteRenderer;
     AbilityController abilityController;
 
+    BoxCollider2D enemyDetectionBox;
+
     HealthComponent _healthComponent;
 
     [SerializeField] private Animator _animator;
@@ -71,8 +73,11 @@ public class PlayerController : MonoBehaviour
         dodgeAction = InputSystem.actions.FindAction("Dodge");
         sprintActoin = InputSystem.actions.FindAction("Sprint");
 
+        enemyDetectionBox = GetComponent<BoxCollider2D>();
+
         _healthComponent = GetComponent<HealthComponent>();
         _healthComponent.E_EntityHasDied.AddListener(IsDead);
+        
         //sets rigidbody
         playerRb = GetComponent<Rigidbody2D>();
         // sets sprite renderer
@@ -130,6 +135,8 @@ public class PlayerController : MonoBehaviour
         }
 
 
+
+
     }
 
     void FixedUpdate()
@@ -183,6 +190,7 @@ public class PlayerController : MonoBehaviour
 
     void Sprint()
     {
+
         if (sprintActoin.IsPressed() && isGrounded == true)
         {
             speed = sprintSpeed;
@@ -235,7 +243,7 @@ public class PlayerController : MonoBehaviour
                 abilityController.PlayerAttack();
                 timer = 0f;
                 
-                //add ability.baseAttack function
+                
             }
             
         }  
@@ -247,15 +255,15 @@ public class PlayerController : MonoBehaviour
     {
         if(abilityAction_1.WasPressedThisFrame())
         {
-            abilityController.TriggerAbility1();
+            // abilityController.TriggerAbility1();
 
-            // NewMask.AnimationState AnimID = abilityController.TriggerAbility1();
-            // switch(AnimID)
-            // {
-            //     case NewMask.AnimationState.Slam:
-            _animator.SetBool("IsSlamming", true);
-            //     break;
-            // }
+            NewMask.AnimationState AnimID = abilityController.TriggerAbility1();
+            switch(AnimID)
+            {
+                case NewMask.AnimationState.Slam:
+                _animator.SetBool("IsSlamming", true);
+                break;
+            }
 
         }
         
@@ -265,7 +273,13 @@ public class PlayerController : MonoBehaviour
     {
         if(abilityAction_2.WasPressedThisFrame())
         {
-            abilityController.TriggerAbility2();
+            NewMask.AnimationState AnimID = abilityController.TriggerAbility1();
+            switch(AnimID)
+            {
+                case NewMask.AnimationState.Slam:
+                _animator.SetBool("IsSlamming", true);
+                break;
+            }
         }
     }
 
@@ -332,6 +346,8 @@ public class PlayerController : MonoBehaviour
             _animator.SetBool("RightSlide", false);
         }
     }
+
+
     void IsDead()
     {
         _animator.SetBool("IsDead", true);
