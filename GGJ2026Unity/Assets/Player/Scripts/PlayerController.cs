@@ -77,6 +77,7 @@ public class PlayerController : MonoBehaviour
 
         _healthComponent = GetComponent<HealthComponent>();
         _healthComponent.E_EntityHasDied.AddListener(IsDead);
+        
         //sets rigidbody
         playerRb = GetComponent<Rigidbody2D>();
         // sets sprite renderer
@@ -133,7 +134,7 @@ public class PlayerController : MonoBehaviour
             _animator.SetBool("IsSlamming", false);
         }
 
-        
+
 
 
     }
@@ -189,6 +190,7 @@ public class PlayerController : MonoBehaviour
 
     void Sprint()
     {
+
         if (sprintActoin.IsPressed() && isGrounded == true)
         {
             speed = sprintSpeed;
@@ -344,6 +346,7 @@ public class PlayerController : MonoBehaviour
             _animator.SetBool("RightSlide", false);
         }
     }
+
 
     void IsDead()
     {
