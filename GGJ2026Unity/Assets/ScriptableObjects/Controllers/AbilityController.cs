@@ -240,10 +240,10 @@ public class AbilityController : MonoBehaviour
 
         //SETS UP HITBOX COLLIDER
         BoxCollider2D HitboxOverlap = NewHitbox.GetComponent<BoxCollider2D>();
-        HitboxOverlap.size = new Vector2(1.5f, 1.5f);
+        HitboxOverlap.size = new Vector2(1.1f, 0.75f);
         NewHitbox.GetComponent<HitboxTrigger>().abilityController = this;
 
-        float HitboxLifetime = NewHitbox.GetComponent<Animator>().GetCurrentAnimatorClipInfo(0).Length;
+        float HitboxLifetime = 0.2f;
         Destroy(NewHitbox, HitboxLifetime); 
 
         StartCoroutine(Delay(HitboxLifetime));
@@ -270,7 +270,7 @@ public class AbilityController : MonoBehaviour
         if(WeaponToUse.WeaponType == NewWeapon.Weapon.Melee)
         {
             // MELEE ATTACK
-            BasicAttack(PlayerWeaponSlot1);
+            HandleWeaponDamage(PlayerWeaponSlot1);
         }
         else if(WeaponToUse.WeaponType == NewWeapon.Weapon.Ranged)
         {
