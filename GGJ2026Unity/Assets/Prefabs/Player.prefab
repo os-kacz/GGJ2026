@@ -300,7 +300,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   DamageNumberPrefab: {fileID: 7709113456215019266, guid: c0182cf7f36b160469077488a6681927, type: 3}
-  maxHealth: 100
+  maxHealth: 200
   currentHealth: 0
   currentEffect: 0
   isDead: 0

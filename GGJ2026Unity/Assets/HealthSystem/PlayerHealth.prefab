@@ -26,7 +26,7 @@ RectTransform:
   m_GameObject: {fileID: 950759267343053557}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 7.7760386, y: 7.7760386, z: 7.7760386}
+  m_LocalScale: {x: 0.58, y: 7.45, z: 1.9576079}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1810381478739824145}
@@ -52,7 +52,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthBar: {fileID: 1477692559162039044}
   previousHealthBar: {fileID: 8674726123296588040}
-  character: {fileID: 0}
+  character: {fileID: 3985552148017679609, guid: 1fcea1c326a3e0544a71f85943c09bb4, type: 3}
 --- !u!1 &1477692559162039044
 GameObject:
   m_ObjectHideFlags: 0
@@ -199,7 +199,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.9623752, g: 0.64465404, b: 1, a: 0.23921569}
+  m_Color: {r: 1, g: 0.6859157, b: 0, a: 0.7529412}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -346,7 +346,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.81244797, g: 0.022012413, b: 1, a: 1}
+  m_Color: {r: 1, g: 0.02352941, b: 0.08619733, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
