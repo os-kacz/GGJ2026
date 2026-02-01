@@ -169,14 +169,18 @@ public class AbilityController : MonoBehaviour
 
     private GameObject[] CreateHitbox(float Height, float Width, Vector2 Offset, AnimatorController HitboxVFX)
     {
+        int direction = 1;
+        if(Self.GetComponent<SpriteRenderer>().flipX){direction = -1;}
+
         //VISUALS
         Vector2 SpritePos = new Vector2(Self.transform.Find("AttackPosition").gameObject.transform.position.x, Self.transform.Find("AttackPosition").gameObject.transform.position.y);
-        Vector2 HitboxSpawn = new Vector2(SpritePos.x + Offset.x, SpritePos.y + Offset.y);
+        Vector2 HitboxSpawn = new Vector2(SpritePos.x + Offset.x * direction, SpritePos.y + Offset.y);
 
         GameObject NewHitbox = Instantiate(Hitbox, new Vector3(HitboxSpawn.x, HitboxSpawn.y, 0), Quaternion.identity);
         NewHitbox.transform.localScale = new Vector3(Width, Height, 1);
         NewHitbox.GetComponent<Animator>().runtimeAnimatorController = HitboxVFX;
         Destroy(NewHitbox, NewHitbox.GetComponent<Animator>().GetCurrentAnimatorClipInfo(0).Length); 
+        if(direction == -1){NewHitbox.GetComponent<SpriteRenderer>().flipX = true;}
 
         // return an array of other things colliding (filter out self)
         Collider2D[] Colliders = Physics2D.OverlapCapsuleAll(HitboxSpawn, new Vector2(Width, Height), CapsuleDirection2D.Horizontal, 0f); // todo rotation value
@@ -252,7 +256,10 @@ public class AbilityController : MonoBehaviour
     {
         HandleMaskDamage(Mask);
 
-        Self.transform.position = new Vector3(Self.transform.position.x + 5, Self.transform.position.y + 2, Self.transform.position.z);
+        int direction = 1;
+        if(Self.GetComponent<SpriteRenderer>().flipX){direction = -1;}
+
+        Self.transform.position = new Vector3(Self.transform.position.x + 5 * direction, Self.transform.position.y + 2, Self.transform.position.z);
         Debug.Log(Mask.AbilityName);
     }
 }
