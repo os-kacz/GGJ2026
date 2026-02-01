@@ -1,8 +1,11 @@
 using System.ComponentModel;
 using System.Linq;
+using Microsoft.Unity.VisualStudio.Editor;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEditor.Animations;
 using UnityEngine;
+using UnityEngine.UI;
 
 // TODO: handle cooldowns for mask abilities
 
@@ -37,11 +40,39 @@ public class AbilityController : MonoBehaviour
             if(Mask.MaskName == _maskName)
             {
                 // assign to correct slot (presumable an input from a ui choice)
-                if(_slotNumber == 1){PlayerMaskSlot1 = Mask;}
-                else{PlayerMaskSlot2 = Mask;}
+                if(_slotNumber == 1)
+                {
+                    PlayerMaskSlot1 = Mask;
+
+                    GameObject MaskSlot = UI.transform.Find("BottomPanel").gameObject.transform.Find("MaskSlot1").gameObject;
+                    UnityEngine.UI.Image Border = MaskSlot.transform.Find("SlotOuter").gameObject.GetComponent<UnityEngine.UI.Image>();
+                    UnityEngine.UI.Image Icon = MaskSlot.transform.Find("SlotIcon").gameObject.GetComponent<UnityEngine.UI.Image>();
+                    TextMeshProUGUI Text = MaskSlot.transform.Find("AbilityName").gameObject.GetComponent<TextMeshProUGUI>();
+
+                    Border.color = Mask.UIColour;
+                    Icon.sprite = Mask.MaskIcon;
+                    Text.text = Mask.AbilityName;
+                }   
+
+                else
+                {
+                    PlayerMaskSlot2 = Mask;
+                    GameObject MaskSlot = UI.transform.Find("BottomPanel").gameObject.transform.Find("MaskSlot2").gameObject;
+                    UnityEngine.UI.Image Border = MaskSlot.transform.Find("SlotOuter").gameObject.GetComponent<UnityEngine.UI.Image>();
+                    UnityEngine.UI.Image Icon = MaskSlot.transform.Find("SlotIcon").gameObject.GetComponent<UnityEngine.UI.Image>();
+                    TextMeshProUGUI Text = MaskSlot.transform.Find("AbilityName").gameObject.GetComponent<TextMeshProUGUI>();
+
+                    Border.color = Mask.UIColour;
+                    Icon.sprite = Mask.MaskIcon;
+                    Text.text = Mask.AbilityName;
+
+                }
 
                 // check if the mask unlocks a new weapon
-                if (Mask.WeaponUnlocked){PlayerWeaponSlot1 = Mask.WeaponUnlocked;}
+                if (Mask.WeaponUnlocked)
+                {
+                    PlayerWeaponSlot1 = Mask.WeaponUnlocked;
+                }
 
                 return;
             }

@@ -505,6 +505,11 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 1
+--- !u!223 &557517706 stripped
+Canvas:
+  m_CorrespondingSourceObject: {fileID: 5392179594882693239, guid: 2a0d49784b69d7a49a1fdb6023d822e6, type: 3}
+  m_PrefabInstance: {fileID: 1404028781}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &572601718
 GameObject:
   m_ObjectHideFlags: 0
@@ -737,7 +742,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Self: {fileID: 572601718}
   Hitbox: {fileID: 4767547439140498170, guid: 443da95d7f4730b4c9ee9d3891dd4f36, type: 3}
-  UI: {fileID: 0}
+  UI: {fileID: 557517706}
   AllMasks:
   - {fileID: 11400000, guid: 4027008fc55b1b943b5a314fb6dfa17a, type: 2}
   - {fileID: 11400000, guid: ec8b80ba59e686844893b338890bcf07, type: 2}
@@ -1255,6 +1260,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 582261551053232806, guid: 2a0d49784b69d7a49a1fdb6023d822e6, type: 3}
+      propertyPath: m_Color.a
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 609770894377602841, guid: 2a0d49784b69d7a49a1fdb6023d822e6, type: 3}
       propertyPath: m_Pivot.x
       value: 0
@@ -1335,9 +1344,57 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1976580510924777908, guid: 2a0d49784b69d7a49a1fdb6023d822e6, type: 3}
+      propertyPath: m_fontSize
+      value: 39
+      objectReference: {fileID: 0}
+    - target: {fileID: 1976580510924777908, guid: 2a0d49784b69d7a49a1fdb6023d822e6, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 63a4900f518bbbe43aaed8f0b35518e1, type: 2}
+    - target: {fileID: 1976580510924777908, guid: 2a0d49784b69d7a49a1fdb6023d822e6, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -5630691275057248707, guid: 63a4900f518bbbe43aaed8f0b35518e1, type: 2}
+    - target: {fileID: 1976580510924777908, guid: 2a0d49784b69d7a49a1fdb6023d822e6, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3071134271194494754, guid: 2a0d49784b69d7a49a1fdb6023d822e6, type: 3}
+      propertyPath: m_fontSize
+      value: 39
+      objectReference: {fileID: 0}
+    - target: {fileID: 3071134271194494754, guid: 2a0d49784b69d7a49a1fdb6023d822e6, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 63a4900f518bbbe43aaed8f0b35518e1, type: 2}
+    - target: {fileID: 3071134271194494754, guid: 2a0d49784b69d7a49a1fdb6023d822e6, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -5630691275057248707, guid: 63a4900f518bbbe43aaed8f0b35518e1, type: 2}
+    - target: {fileID: 3071134271194494754, guid: 2a0d49784b69d7a49a1fdb6023d822e6, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6352462586399252680, guid: 2a0d49784b69d7a49a1fdb6023d822e6, type: 3}
       propertyPath: m_Name
       value: OnScreenUI
+      objectReference: {fileID: 0}
+    - target: {fileID: 7141197888462415355, guid: 2a0d49784b69d7a49a1fdb6023d822e6, type: 3}
+      propertyPath: m_fontSize
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 7141197888462415355, guid: 2a0d49784b69d7a49a1fdb6023d822e6, type: 3}
+      propertyPath: m_fontAsset
+      value: 
+      objectReference: {fileID: 11400000, guid: 63a4900f518bbbe43aaed8f0b35518e1, type: 2}
+    - target: {fileID: 7141197888462415355, guid: 2a0d49784b69d7a49a1fdb6023d822e6, type: 3}
+      propertyPath: m_sharedMaterial
+      value: 
+      objectReference: {fileID: -5630691275057248707, guid: 63a4900f518bbbe43aaed8f0b35518e1, type: 2}
+    - target: {fileID: 7141197888462415355, guid: 2a0d49784b69d7a49a1fdb6023d822e6, type: 3}
+      propertyPath: m_hasFontAssetChanged
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
