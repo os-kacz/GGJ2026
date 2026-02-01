@@ -121,12 +121,12 @@ public class PlayerController : MonoBehaviour
 
         if(abilityAction_1.WasReleasedThisFrame())
         {
-            _animator.SetBool("IsSlamming", true);
+            _animator.SetBool("IsSlamming", false);
         }
 
         if(abilityAction_2.WasReleasedThisFrame())
         {
-            _animator.SetBool("IsSlamming", true);
+            _animator.SetBool("IsSlamming", false);
         }
 
 
@@ -253,7 +253,7 @@ public class PlayerController : MonoBehaviour
             // switch(AnimID)
             // {
             //     case NewMask.AnimationState.Slam:
-            //     _animator.SetBool("IsSlamming", true);
+            _animator.SetBool("IsSlamming", true);
             //     break;
             // }
 
