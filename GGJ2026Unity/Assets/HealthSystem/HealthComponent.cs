@@ -14,6 +14,12 @@ public class HealthComponent : MonoBehaviour
 
     public UnityEvent E_EntityHasBeenDamaged;
 
+    public UnityEvent E_EntityBurning;
+    public UnityEvent E_EntityStunned;
+    public UnityEvent E_EntityFrozen;
+    public UnityEvent E_EntityElec;
+    public UnityEvent E_EntityBleeding;
+
     public GameObject DamageNumberPrefab;
 
     [Flags]

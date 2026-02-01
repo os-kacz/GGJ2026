@@ -1025,10 +1025,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: OnScreenUI
       objectReference: {fileID: 0}
-    - target: {fileID: 6352462586399252680, guid: 2a0d49784b69d7a49a1fdb6023d822e6, type: 3}
-      propertyPath: m_TagString
-      value: Enemy
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1499,7 +1495,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7243130196828775517, guid: 1fcea1c326a3e0544a71f85943c09bb4, type: 3}
       propertyPath: maxHealth
-      value: 100
+      value: 200
       objectReference: {fileID: 0}
     - target: {fileID: 7243130196828775517, guid: 1fcea1c326a3e0544a71f85943c09bb4, type: 3}
       propertyPath: currentHealth
