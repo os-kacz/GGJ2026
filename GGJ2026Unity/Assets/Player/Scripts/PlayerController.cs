@@ -75,7 +75,7 @@ public class PlayerController : MonoBehaviour
 
         abilityController = GetComponent<AbilityController>();
         abilityController.CollectMask("Swordsman Mastery", 1);
-        abilityController.CollectMask("Void Oni Mask", 2);
+        abilityController.CollectMask("Frozen Mask", 2);
     }
 
     void Update()
@@ -157,12 +157,10 @@ public class PlayerController : MonoBehaviour
         if (sprintActoin.IsPressed() && isGrounded == true)
         {
             speed = sprintSpeed;
-            _animator.SetBool("IsRunning", true);
         }
         else
         {
             speed = baseSpeed;
-            _animator.SetBool("IsRunning", false);
         }
     }
 

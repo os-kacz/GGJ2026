@@ -1,5 +1,4 @@
 using System;
-using UnityEditor.Animations;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "NewMask", menuName = "Create new items/Mask")]
@@ -23,17 +22,10 @@ public class NewMask : ScriptableObject
         Teleport = 5,
     }
 
-    public enum AnimationState
-    {
-        None = 0,
-        Slam = 1,
-    }
-
     [Header("Information")]
     public string MaskName;
     public Sprite MaskIcon;
     public Color UIColour;
-    public AnimationState PlayAnimation;
 
 
     [Header("Ability Data")]
@@ -48,10 +40,10 @@ public class NewMask : ScriptableObject
     public HealthComponent.StatusEffect[] Debuffs;
 
     [Header("Hitbox Data")]
-    public float HitboxHeight;
-    public float HitboxWidth;
+    public int HitboxHeight;
+    public int HitboxWidth;
     public Vector2 HitboxSpawnOffset;
-    public AnimatorController HitboxVfx;
+    public AnimationClip HitboxVfx;
 
     [Header("Unlock Data")]
     public NewWeapon WeaponUnlocked;
