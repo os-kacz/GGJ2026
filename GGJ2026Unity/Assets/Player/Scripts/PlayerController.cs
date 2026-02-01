@@ -93,7 +93,7 @@ public class PlayerController : MonoBehaviour
         attackPosition.SetPositionAndRotation(new Vector3(transform.position.x + 0.2f,transform.position.y,0f), new Quaternion(0f,0f,0f,0f));
 
         abilityController = GetComponent<AbilityController>();
-        abilityController.CollectMask("Swordsman Mastery", 1);
+        abilityController.CollectMask("Fire Oni Mask", 1);
         abilityController.CollectMask("Void Oni Mask", 2);
     }
 
@@ -297,7 +297,7 @@ public class PlayerController : MonoBehaviour
     {
         if(abilityAction_2.WasPressedThisFrame())
         {
-            NewMask.AnimationState AnimID = abilityController.TriggerAbility1();
+            NewMask.AnimationState AnimID = abilityController.TriggerAbility2();
             switch(AnimID)
             {
                 case NewMask.AnimationState.Slam:

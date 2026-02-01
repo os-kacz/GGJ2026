@@ -1506,6 +1506,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!223 &2110265938 stripped
+Canvas:
+  m_CorrespondingSourceObject: {fileID: 5392179594882693239, guid: 2a0d49784b69d7a49a1fdb6023d822e6, type: 3}
+  m_PrefabInstance: {fileID: 1251723521}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8126644110354329847
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1514,6 +1519,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2699505495088684039, guid: 1fcea1c326a3e0544a71f85943c09bb4, type: 3}
+      propertyPath: UI
+      value: 
+      objectReference: {fileID: 2110265938}
     - target: {fileID: 3985552148017679609, guid: 1fcea1c326a3e0544a71f85943c09bb4, type: 3}
       propertyPath: m_Name
       value: Player
