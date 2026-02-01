@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using TreeEditor;
 using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
@@ -39,7 +40,13 @@ public class PlayerController : MonoBehaviour
     public Transform feetPosition;
     public float groundCheckCircle;
 
-    private Collider2D currentFloor;
+    public LayerMask wallLayer;
+    private bool onWallLeft;
+    private bool onWallRight;
+    public Transform wallPositionLeft;
+    public Transform wallPositionRight;
+
+    public float wallSlideSpeed;
 
     private bool hitEnemy;
     public Transform attackPosition;
@@ -75,7 +82,7 @@ public class PlayerController : MonoBehaviour
 
         abilityController = GetComponent<AbilityController>();
         abilityController.CollectMask("Swordsman Mastery", 1);
-        abilityController.CollectMask("Frozen Mask", 2);
+        abilityController.CollectMask("Void Oni Mask", 2);
     }
 
     void Update()
@@ -84,24 +91,44 @@ public class PlayerController : MonoBehaviour
         
         Jump();
         Sprint();
+        Dodge();
         if(timer >= 0.5f)
         {
             Attack();
         }
-        
-        if(abilityAction_1.WasPressedThisFrame())
-        {
-            abilityController.TriggerAbility1();
-        }
 
-         if(abilityAction_2.WasPressedThisFrame())
-        {
-            abilityController.TriggerAbility2();
-        }
+        Ability1();
+        Ability2();
+
+
+        CheckLeftWall();
+        CheckRightWall();
+
 
         isGroundFloor = Physics2D.OverlapCircle(feetPosition.position, groundCheckCircle, groundLayer);
         isGrounded = Physics2D.OverlapCircle(feetPosition.position, groundCheckCircle, groundFloorLayer);
         isOnEnemy = Physics2D.OverlapCircle(feetPosition.position, groundCheckCircle, enemyLayer);
+
+        if(attackAction.WasReleasedThisFrame())
+        {
+            _animator.SetBool("IsAttacking", false);
+        }
+
+        if(dodgeAction.WasReleasedThisFrame())
+        {
+            _animator.SetBool("IsDashing", false);
+        }
+
+        if(abilityAction_1.WasReleasedThisFrame())
+        {
+            _animator.SetBool("IsSlamming", true);
+        }
+
+        if(abilityAction_2.WasReleasedThisFrame())
+        {
+            _animator.SetBool("IsSlamming", true);
+        }
+
 
     }
 
@@ -150,6 +177,8 @@ public class PlayerController : MonoBehaviour
             _animator.SetBool("IsJumping", false);
 
         }
+
+
     }
 
     void Sprint()
@@ -157,12 +186,10 @@ public class PlayerController : MonoBehaviour
         if (sprintActoin.IsPressed() && isGrounded == true)
         {
             speed = sprintSpeed;
-            _animator.SetBool("IsRunning", true);
         }
         else
         {
             speed = baseSpeed;
-            _animator.SetBool("IsRunning", false);
         }
     }
 
@@ -199,11 +226,12 @@ public class PlayerController : MonoBehaviour
     {
         if(attackAction.WasPressedThisFrame())
         {
+            _animator.SetBool("IsAttacking", true);
             hitEnemy = Physics2D.OverlapCapsule(attackPosition.position, attackSize, CapsuleDirection2D.Horizontal, 0f, enemyLayer, -1f, 1f);
             
             if(hitEnemy == true)
             {
-                Debug.Log("Hit");
+                
                 abilityController.PlayerAttack();
                 timer = 0f;
                 
@@ -211,16 +239,98 @@ public class PlayerController : MonoBehaviour
             }
             
         }  
+
+        
     }
 
     void Ability1()
     {
+        if(abilityAction_1.WasPressedThisFrame())
+        {
+            abilityController.TriggerAbility1();
+
+            // NewMask.AnimationState AnimID = abilityController.TriggerAbility1();
+            // switch(AnimID)
+            // {
+            //     case NewMask.AnimationState.Slam:
+            //     _animator.SetBool("IsSlamming", true);
+            //     break;
+            // }
+
+        }
         
     }
 
     void Ability2()
     {
-        
+        if(abilityAction_2.WasPressedThisFrame())
+        {
+            abilityController.TriggerAbility2();
+        }
+    }
+
+    void Dodge()
+    {
+        if(dodgeAction.WasPressedThisFrame())
+        {
+            if(playerRb.linearVelocityY == 0)
+            {
+                if(moveValue.x > 0)
+                {
+                    this.transform.position = new Vector3(transform.position.x + 2.5f, transform.position.y, transform.position.z);
+                }
+                else if(moveValue.x < 0)
+                {
+                    this.transform.position = new Vector3(transform.position.x - 2.5f, transform.position.y, transform.position.z);
+                }
+                else if(moveValue.x == 0)
+                {
+                    if(spriteRenderer.flipX == true)
+                    {
+                        this.transform.position = new Vector3(transform.position.x - 2.5f, transform.position.y, transform.position.z);
+                    }
+                    else
+                    {
+                        this.transform.position = new Vector3(transform.position.x + 2.5f, transform.position.y, transform.position.z);
+                    }
+                }
+                
+                _animator.SetBool("IsDashing", true);
+            }
+
+        } 
+    }
+
+    void CheckLeftWall()
+    {
+        onWallLeft = Physics2D.OverlapCircle(wallPositionLeft.position, groundCheckCircle, wallLayer);
+        if(onWallLeft == true && !isGrounded && !isGroundFloor && moveValue.x != 0)
+        {
+            _animator.SetBool("LeftSlide", true);
+            this.transform.position = new Vector3(transform.position.x, Mathf.Max(transform.position.y - wallSlideSpeed), transform.position.z);
+
+        }
+        else
+        {
+            _animator.SetBool("LeftSlide", false);
+        }
+    }
+
+    void CheckRightWall()
+    {
+        onWallRight = Physics2D.OverlapCircle(wallPositionRight.position, groundCheckCircle, wallLayer);
+        if(onWallRight == true && !isGrounded && !isGroundFloor && moveValue.x != 0)
+        {
+            _animator.SetBool("RightSlide", true);
+            this.transform.position = new Vector3(transform.position.x, Mathf.Max(transform.position.y - wallSlideSpeed), transform.position.z);
+
+            //playerRb.linearVelocity = new Vector2(playerRb.linearVelocityX, Mathf.Max(playerRb.linearVelocityY - wallSlideSpeed));
+
+        }
+        else
+        {
+            _animator.SetBool("RightSlide", false);
+        }
     }
     void IsDead()
     {

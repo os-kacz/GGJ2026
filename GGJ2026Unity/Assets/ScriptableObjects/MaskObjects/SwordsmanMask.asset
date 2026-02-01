@@ -15,6 +15,7 @@ MonoBehaviour:
   MaskName: Swordsman Mastery
   MaskIcon: {fileID: 0}
   UIColour: {r: 1, g: 0, b: 0, a: 1}
+  PlayAnimation: 1
   AbilityID: 1
   AbilityName: Ground Sl4m
   AbilityDamage: 75
@@ -24,7 +25,7 @@ MonoBehaviour:
   ElementType: 0
   Debuffs: 
   HitboxHeight: 1
-  HitboxWidth: 5
-  HitboxSpawnOffset: {x: 3, y: 0}
-  HitboxVfx: {fileID: 7400000, guid: ee85e4597fdb37f46848210c8b951484, type: 2}
+  HitboxWidth: 2
+  HitboxSpawnOffset: {x: 1, y: 0}
+  HitboxVfx: {fileID: 9100000, guid: 8a3d545ff7765474fb2e720aa68916ab, type: 2}
   WeaponUnlocked: {fileID: 11400000, guid: 6c8ccedbb7636ac44bfaa7de1c2472b0, type: 2}
