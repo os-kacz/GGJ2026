@@ -15,7 +15,7 @@ MonoBehaviour:
   WeaponName: Sw0rd
   WeaponType: 0
   WeaponIcon: {fileID: 21300000, guid: 094286513d519c340855f335fa8cf4f4, type: 3}
-  UIColour: {r: 1, g: 0, b: 0.63153696, a: 0}
+  UIColour: {r: 1, g: 0, b: 0.63153696, a: 1}
   Damage: 25
   Knockback: 5
   AttackSpeed: 0

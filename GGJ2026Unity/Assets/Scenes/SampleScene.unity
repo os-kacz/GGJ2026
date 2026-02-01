@@ -729,6 +729,10 @@ PrefabInstance:
       propertyPath: m_AnchorMax.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6096635283895360624, guid: be34118ac703db5499b8304c1711cabc, type: 3}
+      propertyPath: PlayerWeaponSlot1
+      value: 
+      objectReference: {fileID: 11400000, guid: baf308d1fdbdb7141bfc32e32bbcb847, type: 2}
     - target: {fileID: 6392326660387347867, guid: be34118ac703db5499b8304c1711cabc, type: 3}
       propertyPath: m_Constraints
       value: 4
