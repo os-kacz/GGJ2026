@@ -224,11 +224,53 @@ public class AbilityController : MonoBehaviour
         }
     }
 
+    private void HandleWeaponDamage(NewWeapon weapon)
+    {
+        int direction = 1;
+        if(Self.GetComponent<SpriteRenderer>().flipX){direction = -1;}
+
+        Vector2 SpritePos = new Vector2(Self.transform.position.x, Self.transform.position.y);
+        Vector2 HitboxSpawn = new Vector2(SpritePos.x + 0.1f * direction, SpritePos.y);
+
+        //VISUAL ONLY
+        GameObject NewHitbox = Instantiate(Hitbox, new Vector3(HitboxSpawn.x, HitboxSpawn.y, 0), Quaternion.identity);
+        NewHitbox.transform.localScale = new Vector3(1.5f, 1.5f, 1);
+        // NewHitbox.GetComponent<Animator>().runtimeAnimatorController = Mask.HitboxVfx;
+        // if(direction == -1){NewHitbox.GetComponent<SpriteRenderer>().flipX = true;}
+
+        //SETS UP HITBOX COLLIDER
+        BoxCollider2D HitboxOverlap = NewHitbox.GetComponent<BoxCollider2D>();
+        HitboxOverlap.size = new Vector2(1.5f, 1.5f);
+        NewHitbox.GetComponent<HitboxTrigger>().abilityController = this;
+
+        float HitboxLifetime = NewHitbox.GetComponent<Animator>().GetCurrentAnimatorClipInfo(0).Length;
+        Destroy(NewHitbox, HitboxLifetime); 
+
+        StartCoroutine(Delay(HitboxLifetime));
+
+        foreach(GameObject Character in IntersectingColliders)
+        {
+            if (Character)
+            {
+                if(Character.layer != Self.layer)
+                {
+                    Debug.Log("DEAL DAMAGE TO " + Character.name);
+                    HealthComponent CharacterHealth = Character.GetComponent<HealthComponent>();
+                    CharacterHealth.DecreaseHealthBy(weapon.Damage, HealthComponent.StatusEffect.None);
+
+                    // add any debuffs the ability will inflict
+                    // foreach(HealthComponent.StatusEffect Debuff in Mask.Debuffs){CharacterHealth.AddToCurrentStatus(Debuff); }
+                }
+            }
+        }
+    }
+
     private void BasicAttack(NewWeapon WeaponToUse)
     {
         if(WeaponToUse.WeaponType == NewWeapon.Weapon.Melee)
         {
             // MELEE ATTACK
+            BasicAttack(PlayerWeaponSlot1);
         }
         else if(WeaponToUse.WeaponType == NewWeapon.Weapon.Ranged)
         {
