@@ -133,6 +133,8 @@ public class PlayerController : MonoBehaviour
             _animator.SetBool("IsSlamming", false);
         }
 
+        
+
 
     }
 
@@ -343,7 +345,6 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    
     void IsDead()
     {
         _animator.SetBool("IsDead", true);
