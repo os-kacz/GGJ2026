@@ -40,6 +40,7 @@ public class InventoryController : MonoBehaviour
         Border.color         = MaskToEquip.UIColour;
         Icon.sprite          = MaskToEquip.MaskIcon;
         Text.text            = MaskToEquip.AbilityName;
+        Text.color           = MaskToEquip.UIColour;
         ButtonPrompt.color   = MaskToEquip.UIColour;
     }
 
@@ -54,6 +55,7 @@ public class InventoryController : MonoBehaviour
         Border.color     = PlayerWeaponSlot1.UIColour;
         Icon.sprite      = PlayerWeaponSlot1.WeaponIcon;
         Text.text        = PlayerWeaponSlot1.WeaponName;   
+        Text.color       = PlayerWeaponSlot1.UIColour;
     }
 
     //PUBLIC METHOD WHEN THE PLAYER CLICKS THE EQUIP BUTTON
