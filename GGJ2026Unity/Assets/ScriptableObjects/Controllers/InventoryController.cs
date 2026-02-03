@@ -24,17 +24,10 @@ public class InventoryController : MonoBehaviour
 
     public void Start()
     {
-        if(PlayerWeaponSlot1)
-        {
-            GameObject WeaponSlot        = UI.transform.Find("BottomPanel").gameObject.transform.Find("WeaponSlot").gameObject;
-            UnityEngine.UI.Image Border  = WeaponSlot.transform.Find("SlotOuter").gameObject.GetComponent<UnityEngine.UI.Image>();
-            UnityEngine.UI.Image Icon    = WeaponSlot.transform.Find("SlotIcon").gameObject.GetComponent<UnityEngine.UI.Image>();
-            TextMeshProUGUI Text         = WeaponSlot.transform.Find("WeaponName").gameObject.GetComponent<TextMeshProUGUI>();
-
-            Border.color     = PlayerWeaponSlot1.UIColour;
-            Icon.sprite      = PlayerWeaponSlot1.WeaponIcon;
-            Text.text        = PlayerWeaponSlot1.WeaponName;
-        }
+        // INIT IF PLAYER STARTS WITH WEAPONS/ MASKS
+        if(PlayerWeaponSlot1){EquipWeapon(PlayerWeaponSlot1);}
+        if(PlayerMaskSlot1){EquipMask(PlayerMaskSlot1, 1);}
+        if(PlayerWeaponSlot1){EquipMask(PlayerMaskSlot2, 2);}
     }
 
     private void SetUISlotMask(GameObject MaskSlot, NewMask MaskToEquip)

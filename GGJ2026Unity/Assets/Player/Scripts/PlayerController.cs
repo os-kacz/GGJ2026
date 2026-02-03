@@ -20,6 +20,7 @@ public class PlayerController : MonoBehaviour
     Rigidbody2D playerRb;
     SpriteRenderer spriteRenderer;
     AbilityController abilityController;
+    InventoryController PlayerInventory;
 
     BoxCollider2D enemyDetectionBox;
 
@@ -93,8 +94,11 @@ public class PlayerController : MonoBehaviour
         attackPosition.SetPositionAndRotation(new Vector3(transform.position.x + 0.2f,transform.position.y,0f), new Quaternion(0f,0f,0f,0f));
 
         abilityController = GetComponent<AbilityController>();
-        abilityController.CollectMask("Ballistics Mask", 1);
-        abilityController.CollectMask("Frozen Mask", 2);
+        PlayerInventory.AddMaskToInventory("Ballistics Mask");
+        PlayerInventory.AddMaskToInventory("Frozen Mask");
+        PlayerInventory.AddMaskToInventory("Fire Oni Mask");
+        PlayerInventory.AddMaskToInventory("Swordsman Mastery");
+        PlayerInventory.AddMaskToInventory("Void Oni Mask");
     }
 
     void Update()

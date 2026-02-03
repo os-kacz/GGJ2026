@@ -12,7 +12,6 @@ public class AbilityController : MonoBehaviour
 {
     public GameObject Self;
     public GameObject Hitbox;
-    public InventoryController PlayerInventory;
     public Canvas UI;
  
     public List<GameObject> IntersectingColliders = new List<GameObject>();
@@ -50,7 +49,7 @@ public class AbilityController : MonoBehaviour
  
     public void PlayerAttack()
     {
-       BasicAttack(PlayerInventory.PlayerWeaponSlot1);
+       BasicAttack(Self.GetComponent<InventoryController>().PlayerWeaponSlot1);
     }
  
     public void EnemyAttack()
@@ -66,18 +65,18 @@ public class AbilityController : MonoBehaviour
  
     public NewMask.AnimationState TriggerAbility1()
     {
-        if(!PlayerInventory.PlayerMaskSlot1){return NewMask.AnimationState.None;} // some kind of feedback that there is no ability?
-        RunMaskAbility(PlayerInventory.PlayerMaskSlot1);
+        if(!Self.GetComponent<InventoryController>().PlayerMaskSlot1){return NewMask.AnimationState.None;} // some kind of feedback that there is no ability?
+        RunMaskAbility(Self.GetComponent<InventoryController>().PlayerMaskSlot1);
  
-        return PlayerInventory.PlayerMaskSlot1.PlayAnimation;
+        return Self.GetComponent<InventoryController>().PlayerMaskSlot1.PlayAnimation;
     }
  
     public NewMask.AnimationState TriggerAbility2()
     {
-        if(!PlayerInventory.PlayerMaskSlot2){return NewMask.AnimationState.None;} // some kind of feedback that there is no ability?
-        RunMaskAbility(PlayerInventory.PlayerMaskSlot2);
+        if(!Self.GetComponent<InventoryController>().PlayerMaskSlot2){return NewMask.AnimationState.None;} // some kind of feedback that there is no ability?
+        RunMaskAbility(Self.GetComponent<InventoryController>().PlayerMaskSlot2);
  
-        return PlayerInventory.PlayerMaskSlot2.PlayAnimation;
+        return Self.GetComponent<InventoryController>().PlayerMaskSlot2.PlayAnimation;
     }
  
     IEnumerator Delay(float Lifetime)
@@ -195,7 +194,7 @@ public class AbilityController : MonoBehaviour
         if(WeaponToUse.WeaponType == NewWeapon.Weapon.Melee)
         {
             // MELEE ATTACK
-            HandleWeaponDamage(PlayerInventory.PlayerWeaponSlot1);
+            HandleWeaponDamage(Self.GetComponent<InventoryController>().PlayerWeaponSlot1);
         }
         else if(WeaponToUse.WeaponType == NewWeapon.Weapon.Ranged)
         {
