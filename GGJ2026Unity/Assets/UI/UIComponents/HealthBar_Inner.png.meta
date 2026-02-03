@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: a99234c8186ea57438bc6d1431ae8c65
+guid: fc9b3cbb3b4a9a3459bd3fe330766da1
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -34,7 +34,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: 1
+    filterMode: 0
     aniso: 1
     mipBias: 0
     wrapU: 1
@@ -72,7 +72,7 @@ TextureImporter:
     maxTextureSize: 2048
     resizeAlgorithm: 0
     textureFormat: -1
-    textureCompression: 1
+    textureCompression: 0
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
@@ -175,13 +175,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: WeaponContainer_Border_0
+      name: HealthBar_Inner_0
       rect:
         serializedVersion: 2
-        x: 0
-        y: 0
-        width: 64
-        height: 64
+        x: 13
+        y: 6
+        width: 118
+        height: 22
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -190,8 +190,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 60888539c01cf624fb7ad979c134ec26
-      internalID: 1788928829
+      spriteID: faf0d0e2434d0c547b835ce7d9a7adbd
+      internalID: -1388679119
       vertices: []
       indices: 
       edges: []
@@ -200,7 +200,7 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 83d8e51c3b4ac2742915e7124689be21
+    spriteID: bf95f9306cea5104fa7a7a0c38f7dfd5
     internalID: 0
     vertices: []
     indices: 
@@ -212,7 +212,7 @@ TextureImporter:
       - key: SpriteEditor.SliceSettings
         value: '{"sliceOnImport":false,"gridCellCount":{"x":1.0,"y":1.0},"gridSpriteSize":{"x":64.0,"y":64.0},"gridSpriteOffset":{"x":0.0,"y":0.0},"gridSpritePadding":{"x":0.0,"y":0.0},"pivot":{"x":0.0,"y":0.0},"autoSlicingMethod":0,"spriteAlignment":0,"slicingType":0,"keepEmptyRects":false,"isAlternate":false}'
     nameFileIdTable:
-      WeaponContainer_Border_0: 1788928829
+      HealthBar_Inner_0: -1388679119
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 
